@@ -1,0 +1,2307 @@
+% !TEX program = xelatex
+\documentclass[12pt,oneside]{report}
+
+% -------- Packages --------
+% للطباعة مع تجليد يسار مطابق للصورة (A4 + هامش تجليد 8mm)
+\usepackage[a4paper,left=3cm,right=2.5cm,top=3cm,bottom=3cm,bindingoffset=8mm]{geometry}
+
+\usepackage{graphicx}
+\usepackage{tabularx}
+\usepackage{longtable}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{caption}
+\usepackage{float}
+\usepackage{setspace}
+\usepackage{titlesec}
+\usepackage{tocloft}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage{fontspec}
+\usepackage[hidelinks]{hyperref}
+\usepackage{polyglossia}
+\usepackage{ragged2e} % للضبط الكامل داخل الأعمدة
+
+\setmainlanguage{english}
+\setotherlanguage{arabic}
+
+% Fonts
+\setmainfont{Times New Roman}
+\newfontfamily\arabicfont[Script=Arabic]{Times New Roman}
+\newfontfamily\arialfont{Arial}
+
+% ----- FIX: dummy definition for \tbl_save_outer_table_cols: to avoid bidi+tabularx error -----
+\ExplSyntaxOn
+\cs_if_exist:NF \tbl_save_outer_table_cols:
+  {
+    \cs_new_protected:Npn \tbl_save_outer_table_cols: {}
+  }
+\ExplSyntaxOff
+% ----------------------------------------------------------------------- %
+
+% Line spacing (default 1.5 as requested)
+\onehalfspacing
+
+% Section formatting (clean look)
+\titleformat{\chapter}{\normalfont\Large\bfseries}{\thechapter}{1em}{}
+\titleformat{\section}{\normalfont\large\bfseries}{\thesection}{0.8em}{}
+\titleformat{\subsection}{\normalfont\normalsize\bfseries}{\thesubsection}{0.6em}{}
+
+% TOC spacing a bit tighter
+\setlength{\cftbeforechapskip}{6pt}
+\setlength{\cftbeforesecskip}{2pt}
+
+% Figure/Table captions (حجم أصغر وخط عريض لعنوان الكابتشن)
+\captionsetup{font=small,labelfont=bf}
+
+% ====== الإعداد المهم للجداول ======
+% 1) إلغاء "Table X:" من الكابتشن داخل النص، وطباعة محتوى \caption كما هو
+\captionsetup[table]{labelformat=empty,labelsep=none}
+% الأشكال بدون "Figure X:"
+\captionsetup[figure]{labelformat=empty,labelsep=none}
+% 2) في قائمة الجداول (List of Tables): إخفاء رقم الجدول التلقائي
+%    وترك نص الكابتشن كما هو (الذي يحتوي "Table 2.7.1 Login") مع نقاط وقائدات للصفحات
+\renewcommand{\cfttabpresnum}{}   % لا تطبع الرقم قبل العنوان
+\renewcommand{\cfttabaftersnum}{} % ولا أي فاصل بعده
+\setlength{\cfttabnumwidth}{0pt}  % عدم حجز عرض لرقم الجدول
+\renewcommand{\cfttableader}{\cftdotfill{\cftdotsep}} % تأكيد نقاط القيادة
+
+% ---- Placeholders ----
+\newcommand{\placeholderfigure}[1]{%
+  \begin{figure}[H]
+    \centering
+    \fbox{\parbox[c][6cm][c]{0.9\textwidth}{\centering \textbf{PLACEHOLDER:} #1\\[6pt] \textit{Insert figure file here}}}
+    \caption{#1}
+  \end{figure}
+}
+\newcommand{\pastehere}[1]{\noindent\textcolor{gray}{\textit{[PASTE HERE: #1]}}\par}
+
+% ---- Handy centered-column environments (جاهزة للصق) ----
+\newenvironment{ENcentercol}[1][0.8\textwidth]{%
+  \begin{center}\begin{minipage}{#1}\justifying
+}{%
+  \end{minipage}\end{center}
+}
+\newenvironment{ARcentercol}[1][0.8\textwidth]{%
+  \begin{Arabic}\begin{center}\begin{minipage}{#1}\justifying
+}{%
+  \end{minipage}\end{center}\end{Arabic}
+}
+% --- Helper: render multiple paragraphs as one visual block (no extra spacing/indent) ---
+\newenvironment{singlepara}{%
+  \begingroup
+  \setlength{\parindent}{0pt}%
+  \setlength{\parskip}{0pt}%
+}{\par\endgroup}
+
+% --- Chapter title on its own page (numbered + in TOC) ---
+\newcommand{\chaptertitlepage}[1]{%
+  \clearpage
+  \refstepcounter{chapter}% increase chapter counter
+  \setcounter{section}{0}% reset section numbering like \chapter would
+  \setcounter{subsection}{0}% reset subsection numbering
+  \addcontentsline{toc}{chapter}{Chapter \thechapter: #1}% TOC entry
+  \markboth{Chapter \thechapter: #1}{}
+  \thispagestyle{empty}
+  \vspace*{\fill}
+  \begin{center}
+    {\Huge\bfseries Chapter \thechapter: #1\par}
+  \end{center}
+  \vspace*{\fill}
+  \clearpage
+}
+
+
+\begin{document}
+
+% -------------------- Title Page --------------------
+\begin{titlepage}
+\thispagestyle{empty}
+\centering
+
+% --- University Logo placeholder (استبدله بـ \includegraphics) ---
+\vspace*{6mm}
+\includegraphics[width=0.37\textwidth]{ppu_logo.png}
+\\[10mm]
+
+{\Large \textbf{Palestine Polytechnic University}}\\[6pt]
+{\large College of Information Technology and Computer Engineering}\\[18pt]
+
+{\LARGE \textbf{Project Title:}}\\[6pt]
+{\Large \textbf{Machine-Learning-Based Land-Price Prediction System}}\\[20pt]
+
+{\large Team Members:}\\
+{\large Mohammad Alqadi \quad|\quad Mohammad Alamlah}\\[8pt]
+
+{\large Supervisor: Dr.~Hashem Altamimi}\\[28pt]
+
+\vfill
+
+\end{titlepage}
+
+% -------------------- Front Matter --------------------
+\pagenumbering{roman}
+
+% ===== Dedication + Acknowledgement on SAME page (جاهزة للصق) =====
+\begin{center}\Large\bfseries \textarabic{إهداء}\end{center}
+\addcontentsline{toc}{chapter}{Dedication / \textarabic{إهداء}}
+\begin{ARcentercol}
+\textbf{إلى والدينا}\\
+بفصاحة القلب وبكل احترام وتقدير، نتوجه إليكم برسالة ممتلئة بعمق المشاعر وارتفاع الجلال. إن ما نحمله في قلوبنا من امتنان ومودة لا يمكن وصفه بكلمات بسيطة، فأنتما الركيزة الثابتة التي بنينا عليها حياتنا، والشمعة الساطعة التي أضاءت دربنا في ظلمة الليالي..
+
+\medskip
+{\centering \large … \par}
+\medskip
+
+\textbf{إلى أصدقائنا}\\
+بكل احترام وتقدير، نرفع لكم تحية الود والاعتزاز، فأنتم أصدقاؤنا الأوفياء والرفاق المخلصون. لقد كنتم دائماً العون والسند في السراء والضراء، والصخرة الصلبة التي نستند إليها في عبور مياه الحياة العميقة. فشكرًا لكم على كل لحظة قضيناها معًا، وعلى كل دعمكم اللامحدود وتضحياتكم الجليلة.
+
+\medskip
+{\centering \large … \par}
+\end{ARcentercol}
+
+\vspace{2em}
+
+\begin{center}\Large\bfseries \textarabic{شكر وتقدير}\end{center}
+\addcontentsline{toc}{chapter}{Acknowledgement / \textarabic{شكر وتقدير}}
+\begin{ARcentercol}
+إلى أساتذتنا الكرام، نتقدم بأخلص الشكر والتقدير على الجهود الجبارة التي بذلتموها خلال سنواتنا في الدراسة. لقد كنتم قدوةً ومصدرَ إلهامٍ لنا، وساهمتم بشكل كبير في تشكيل مستقبلنا الأكاديمي والمهني.
+
+\medskip
+
+نود أن نخصّ بالشكر \textbf{الدكتور هاشم هشام التميمي} على تفانيه وإرشاده القيم، وعلى كل العلم والمعرفة التي شاركنا بها. لقد كنتم داعمًا لنا في كل خطوة نخطوها في طريقنا التعليمي.
+
+\medskip
+
+نشكركم على صبركم الذي لا يُضاهى واحتوائكم لنا في كل الظروف، وعلى توفير بيئة تعليمية محفِّزة ومليئة بالتشجيع. إن مساهماتكم \textbf{لن تُنسى}، وستظل خالدة في ذاكرتنا.
+
+\medskip
+
+ونخصّ بالشكر \textbf{المخمّن العقاري قيس ادعيس} على تزويدنا ببيانات ميدانية واقعية وإرشادات مهنية أسهمت مباشرةً في بناء قاعدة البيانات واختبار النموذج.
+
+\medskip
+
+ونتوجه بالشكر أيضًا إلى \textbf{جامعة بوليتكنك فلسطين} على توفير المرافق التعليمية المتميزة والخدمات التي ساعدتنا على تحقيق أهدافنا الأكاديمية بنجاح.
+
+\medskip
+
+ندعو الله أن يجزيكم خير الجزاء وأن يوفقكم في كل ما تسعون إليه من خير وتطور في خدمة العلم والتعليم.
+\end{ARcentercol}
+
+
+% ===== End (same page) =====
+
+% ===== English Abstract (centered title, own page) =====
+\clearpage
+\phantomsection
+\addcontentsline{toc}{chapter}{Abstract}
+\begin{center}
+  \Large\bfseries Abstract
+\end{center}
+
+\begin{ENcentercol}
+{\arialfont\singlespacing\justifying
+\begin{singlepara}
+In the era of artificial intelligence and technological  advancements, the process of predicting ( or estimating ) land prices is still implemented using traditional methods that rely on human estimation, which makes it  prone to bias and inconsistency in results.
+In response to these challenges, this project aims to develop an intelligent system that depends on machine learning and real-world data  to estimate land prices more objectively and more accurately, and in less time compared to traditional methods. The town of Bani Na'im, located in the Hebron Governorate in Palestine, was chosen as an experimental area to apply the system because there is enough available data about its lands, and local land appraisers cooperated by providing us with this data.
+
+The system is designed with an interactive user interface that provides a form with fields to enter  land features such as area, location, political classification, and other influencing factors, to provide an immediate estimated price for the user.
+The regression tree algorithm was chosen for the project in its early stage due to its simplicity and efficiency in dealing with a limited amount of data, which is the case with the data currently available.
+The used data included both numerical and categorical features, the model was trained on this data to estimate  the price based on the entered factors.
+The data was collected from various sources, the most important being the land appraisers from Bani Na'im as well as referring to official maps and structural plans to extract important information about the lands, such as their location, classification, shape, and price, so they can be manually entered into the system. The diverse sources helped build a realistic database,  and reinforced the authenticity of the model and its relevance to the practical field. Although the available data is limited, the model was optimized to achieve a balance between precision and speed, which makes it an effective helping tool for the decisions of real estate appraisers, since they are the main users who benefit from it.
+This project represents the first step in automating the process of real estate valuation, and it is planned to develop it in the future using more advanced algorithms such as CatBoost and Random Forest, to keep up with the  increasing volume and variety of available data.
+\end{singlepara}
+}
+\end{ENcentercol}
+
+% ===== Arabic Abstract (centered title, own page) =====
+\clearpage
+\phantomsection
+\addcontentsline{toc}{chapter}{\textarabic{الخلاصة}}
+\begin{center}
+  \Large\bfseries \textarabic{الخلاصة}
+\end{center}
+
+\begin{ARcentercol}
+\singlespacing
+في عصر نهضة الذكاء الاصطناعي والتطور الملحوظ لا تزال عملية تخمين (أو تثمين) أسعار الأراضي تُنفّذ بأساليب تقليدية تعتمد على التقدير البشري؛ فهذا يجعلها عرضة للتحيّز والتفاوت في النتائج.
+استجابةً لهذه التحديات، يهدف هذا المشروع إلى تطوير نظام ذكي يعتمد على تعلم الآلة لتقدير أسعار الأراضي بموضوعية ودقة أعلى، وفي زمن أقل مقارنةً بالأساليب التقليدية، وذلك بالاعتماد على بيانات واقعية تم جمعها. وقد تم اختيار بلدة بني نعيم الواقعة في محافظة الخليل، فلسطين، كنموذج أولي لتطبيق النظام. نظراً لتوفر بيانات كافية حول أراضيها، وتعاون مخمني الأراضي من خلال تزويدنا بها.
+تم تصميم النظام بواجهة مستخدم تفاعلية تتيح إدخال خصائص الأرض مثل المساحة، والموقع، والتصنيف السياسي، وغيرها من العوامل المؤثرة، ليحصل المستخدم على سعر تقديري فوري.
+اعتمد المشروع في مرحلته الأولى خوارزمية شجرة الانحدار (Regression Tree)، نظرًا لبساطتها وقدرتها على التعامل بكفاءة مع أحجام بيانات محدودة، كما هو الحال مع البيانات المتوفرة حاليًا.
+تضمنت البيانات المستخدمة خصائص عددية وأخرى تصنيفية وتم تدريب النموذج عليها لتقدير السعر بناءً على العوامل المدخلة.
+وقد تم تحصيل هذه البيانات من مصادر متنوعة أهمها مخمنو الأراضي في بلدة بني نعيم، بجانب الرجوع إلى خرائط رسمية ومخططات هيكلية لاستخلاص معلومات تنظيمية عن الأراضي مثل موقعها وتصنيفها وشكلها، وسعرها، وذلك لإدخالها يدويًا إلى النظام. ساعد هذا التنوع في بناء قاعدة بيانات واقعية، وعزّز من موثوقية النموذج وارتباطه بالميدان العملي. ورغم محدودية البيانات المتوفرة، تم ضبط النموذج لتحقيق توازن فعّال بين الدقة وسرعة التنفيذ، مما يجعله أداة مساعدة فعالة لقرارات المخمّنين العقاريين، كونهم الفئة المستفيدة منه بشكل رئيسي.
+يمثّل هذا المشروع الخطوة الأولى في أتمتة عملية التثمين العقاري، ويُخطط لتطويره لاحقًا باستخدام خوارزميات أكثر تقدمًا مثل CatBoost وRandom Forest، بما يتماشى مع الازدياد في حجم وتنوع البيانات المتوفرة.
+\end{ARcentercol}
+
+
+
+% ===== TOC / LOT / LOF each on its own page =====
+\clearpage
+\tableofcontents
+
+\clearpage
+{\renewcommand{\numberline}[1]{}\listoftables}
+
+\clearpage
+{\renewcommand{\numberline}[1]{}\listoffigures}
+
+
+\clearpage
+\pagenumbering{arabic}
+
+% -------------------- Chapter 1 --------------------
+\chaptertitlepage{Introduction}
+
+\section{Overview}
+This chapter introduces the main elements of the project. It begins with the idea of the project, then goes to its importance, followed by the goals of the project, the scope and limitations, and finally ends with the alternatives.
+\section{Idea of the Project}
+The main idea of the project is building a web application for an intelligent system that is capable of accurately predicting the land prices in the town of Bani Naim.
+In order for the system to predict accurately, it will depend on the techniques of artificial intelligence (AI) and machine learning (ML).
+The machine learning model will be trained by providing for it all the major factors affecting land prices, these factors include: area, distance to main roads and markets, availability of water and electricity supplies, among others. By feeding the machine learning algorithm with this data the project aims to provide a faster, more accurate, and more  transparent alternative to traditional land valuation methods.
+The project intends to benefit the appraisers and help them make objective and data driven decisions.
+
+\section{Importance}
+Due to the frequent transactions in the area, the need for a faster and more efficient pricing method  is growing, and one of the main advantages of this project's AI-powered approach is speed, while traditional/manual methods can take several hours to evaluate the price, the trained machine learning model can do it in seconds.
+Another need is reducing subjectivity, its crucial  to avoid the human bias in the field of land price evaluation because Human bias in land valuation can shift prices by thousands of shekels.  The project eliminates such bias by relying on data and algorithms alone, ensuring objective, data-driven, and transparent predictions.
+\section{Goals of the Project}
+The main goal of the project is to develop a machine learning model capable of accurately estimating land prices in Bani Na’im and to achieve this goal, the project has the following objectives:
+
+\begin{enumerate}[leftmargin=*, label=\arabic*-, align=left]
+    \item Data collection: Gather all relevant land data like the area, location, suitability for agriculture and more.
+    \item Data cleaning: After collecting the raw data, data cleaning is performed, where the data’s quality will be enhanced by removing duplicate and irrelevant data entries, and correcting inconsistencies.
+    \item Model development: Train machine learning algorithms with the cleaned data and compare them to select the most suitable algorithm in predicting the prices.
+    \item Model evaluation: Test the model and evaluate it by comparing the results of the model with the actual results of traditional pricing methods.
+    \item Tool implementation: Design a user-friendly website as a tool for the land appraisers.
+\end{enumerate}
+
+The project aims to increase the efficiency and transparency of the land price estimations as well as making the process of price estimation easier for the appraisers.
+
+
+
+
+\section{Scope and Limitations}
+This project aims to predict land prices in the town of Bani Na'im using machine learning techniques depending on available real Bani Na'im land data. 
+The scope of the project includes developing a predictive machine learning model that predicts land prices depending on features like:
+
+\begin{itemize}[leftmargin=*]
+    \item Location
+    \item Political classification of the land (area A, B, or C)
+    \item Intended land use (e.g., residential, commercial)
+    \item Land area
+    \item Availability of infrastructure
+    \item Proximity to essential public services (e.g., hospitals)
+\end{itemize}
+
+The project also involves designing a user-friendly interface that allows authorized users such as land appraisers, system admins, and data scientists to use the system — everyone as allowed to. 
+
+On the other hand, the project faces many challenges that may affect the accuracy of the prediction. The accuracy depends directly on data quality and completeness in addition to the used model. The most important limitations are:
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Limited data availability:} The collected data may be outdated or incomplete, and some land prices may not be documented.
+    \item \textbf{Assumption of data representativeness:} This project assumes that the available data reflects typical land characteristics in Bani Na’im.
+    \item \textbf{Geographic limitation:} The model is specifically designed for lands just in Bani Na’im.
+    \item \textbf{It's not possible to consider external factors:} The model does not account for sudden market shifts, and in Palestine, Palestinians are vulnerable to forced displacement at any moment, which could cause a sudden gap in land prices.
+    \item \textbf{Limited time:} Because of the limited time that we have, our team was not able to try many machine learning algorithms to choose the best one that validated our project.
+\end{itemize}
+
+
+\section{Alternatives}
+There are several alternative methods for evaluating the land prices, but the most common method used in Bani Na’im is \textbf{comparative market analysis (CMA)}, which is comparing the land to be evaluated to similar lands that were recently sold. These lands have shared attributes to be compared.
+
+Although this method is commonly used, it’s less accurate and less effective than the machine learning method, and also more complicated to justify the result because the CMA method relies heavily on the subjective judgment of experts rather than objective land statistics, which can introduce bias and inconsistency.
+
+In contrast, this project leverages \textbf{machine learning models}, which can automatically learn from vast amounts of data and adapt to changing market and political conditions to provide faster, more accurate predictions and justifiable, transparent results.
+
+
+\section{Chosen Algorithm for the Model}
+We will adopt the decision tree regression algorithm for our machine learning model as the base algorithm for the following reasons:
+
+\begin{enumerate}
+    \item It can handle both numerical and categorical data.
+    \item It works well with non-linear data.
+    \item Provides clear visualization of the decision-making process.
+    \item It works well with small to medium-sized datasets.
+    \item Its simple to use and easy to understand.
+\end{enumerate}
+
+
+\subsection{What is Decision Tree Regression?}
+To understand decision tree regression, we need to start with some background:
+
+\textbf{Artificial Intelligence (AI):} \\
+AI is basically the field in computer science that tries to make machines do tasks that normally need human intelligence, like problem-solving, learning, or making decisions.
+
+\textbf{Machine Learning (ML):} \\
+ML is a part of AI. It’s about creating algorithms that can learn from data and get better over time without someone needing to program every single step.
+
+\textbf{Types of Machine Learning:}
+\begin{itemize}
+    \item \textbf{Supervised Learning} – The model learns from labeled data (input with the correct output).
+    \item \textbf{Unsupervised Learning} – The model finds hidden patterns in unlabeled data.
+    \item \textbf{Reinforcement Learning} – The model learns by interacting with an environment and receiving rewards or penalties.
+\end{itemize}
+
+Since decision tree regression is a type of supervised learning, let’s focus more on that.
+
+\textbf{Supervised Learning:} \\
+In supervised learning, we give the model both the input data and the correct answers (labels). The idea is that the model learns the connection between them so it can predict the right output for new data. There are two main types:
+\begin{itemize}
+    \item \textbf{Classification} – used when the result is a category (like predicting if an email is spam or not).
+    \item \textbf{Regression} – used when the result is a continuous number (like predicting house prices).
+\end{itemize}
+
+\textbf{Decision Trees:} \\
+Think of a decision tree like a game of “20 Questions.” At each step, you ask a yes/no question about the data, and the answer decides which branch you follow. You keep going until you reach the end of a branch, which gives you the prediction.
+
+\textbf{Decision Tree Regression:} \\
+Decision tree regression is a type of regression that uses a decision tree to predict continuous values, and that how it works:
+\begin{enumerate}
+    \item The dataset is split into smaller and smaller regions based on feature values.
+    \item At each split, the algorithm chooses the feature and threshold that reduces the error the most, commonly by using the Sum of Squared Residuals (SSR).
+    \item This splitting continues until a stopping condition is reached (like maximum depth or minimum samples per leaf).
+    \item Each final region (leaf node) outputs the average value of the target variable for the samples inside it.
+\end{enumerate}
+
+This helps the model understand non-linear relationships between the inputs and the target. In the end, it gives us a model that’s easy to read, simple to explain, and works well for regression problems which is the case with our Land-Price Prediction project.
+
+
+% -------------------- Chapter 2 --------------------
+\chaptertitlepage{Requirement Specifications}
+
+\section{Overview}
+This chapter identifies the main users of the land pricing system and describes the role of each. 
+It also outlines the functional and non-functional requirements that define how the system should behave, 
+and shows how the components of the system interact with each other. 
+It also presents visual representations such as a use-case diagram and a context diagram as well as functional requirements tables.
+
+
+\section{Actors}
+The system has three main actors, each with distinct responsibilities:
+
+\begin{enumerate}[leftmargin=*, label=\arabic*-, align=left]
+  \item \textbf{Land Appraiser} — Enters target-land characteristics and receives an automated price prediction. Uses the result to validate their own estimate or as a data-backed estimation.
+  
+  \item \textbf{Admin} — Manages user accounts and system configuration (view roles/emails, activate/deactivate, update or remove users). Maintains a safe, secure, and smooth operation of the platform.
+  
+  \item \textbf{Data Scientist} — Ensures model and platform quality. Prepares/curates datasets, tests and validates the ML model with real or synthetic data, monitors accuracy and performance, and suggests improvements.
+\end{enumerate}
+
+Together, these actors keep the system reliable and continuously improving.
+
+% -------- Context Diagram (صفحة لوحدها + العنوان فوق الصورة) --------
+\clearpage
+\section{Context Diagram}
+
+\noindent\justifying
+Figure 2.3.1 illustrates the context diagram of the AI Land Price Estimation System, showing the main external entities and their interactions with the system. The key entities are the System Admin, Land Appraiser, Data Scientist, and Authentication/Email Service. Each entity communicates with the system through specific commands, data inputs, or reports, ensuring the overall functionality of user management, model development, account security, and land price estimation.
+
+\begin{figure}[H]
+  \centering
+  \caption{Figure 2.3.1 Context Diagram}
+  \vspace{6pt}
+  \includegraphics[width=\textwidth,height=1\textheight,keepaspectratio]{images/Context diagram.png}
+  \label{fig:context-diagram}
+\end{figure}
+\clearpage
+
+
+\section{Functional Requirements}
+
+\subsection{Land Appraiser's Side}
+\begin{enumerate}[leftmargin=*,label=\arabic*.,align=left]
+  \item \textbf{User Registration and Login}
+  \begin{itemize}[leftmargin=1.2em]
+    \item Appraisers must be able to register using a valid email address and password.
+    \item An activation code provided by the administrator is required to complete registration.
+    \item Once registered, appraisers can log in securely using their email and password.
+    \item A password reset option must be available in case appraisers forget their password.
+  \end{itemize}
+
+  \item \textbf{Profile Management}
+  \begin{itemize}[leftmargin=1.2em]
+    \item View and edit personal information (e.g., name, email).
+    \item Change password from profile settings.
+  \end{itemize}
+
+  \item \textbf{Add a New Project}
+  \begin{itemize}[leftmargin=1.2em]
+    \item Create a new project.
+    \item Input land details for estimation.
+  \end{itemize}
+
+  \item \textbf{Selecting an Old Project}
+  \begin{itemize}[leftmargin=1.2em]
+    \item Select a previously created project.
+    \item Edit the input data and re-estimate the price.
+  \end{itemize}
+
+  \item \textbf{Price Estimation}
+  \begin{itemize}[leftmargin=1.2em]
+    \item The system processes the entered data and displays the estimated land price.
+    \item The appraiser receives a summary of the estimation and the influencing factors.
+  \end{itemize}
+
+  \item \textbf{Project History}
+  \begin{itemize}[leftmargin=1.2em]
+    \item The system saves each submitted land estimation as a separate project.
+    \item The appraiser can view a list of all past projects.
+    \item Each project shows input details, results, and the date of submission.
+  \end{itemize}
+
+  \item \textbf{Edit or Delete Land Inputs (Before Submission)}
+  \begin{itemize}[leftmargin=1.2em]
+    \item Edit or clear the form data before submitting for estimation.
+  \end{itemize}
+
+  \item \textbf{Input Validation}
+  \begin{itemize}[leftmargin=1.2em]
+    \item The system checks for missing or invalid entries and shows helpful error messages.
+  \end{itemize}
+
+  \item \textbf{Rating the Estimation Result}
+  \begin{itemize}[leftmargin=1.2em]
+    \item The appraiser can rate the estimation result after it is displayed.
+  \end{itemize}
+\end{enumerate}
+
+
+\subsection{Admin's Side}
+\begin{enumerate}[leftmargin=*,label=\arabic*.,align=left]
+  \item \textbf{Login} — The admin can securely log in to the system using their credentials.
+
+  \item \textbf{Manage Users}
+  \begin{itemize}[leftmargin=1.2em]
+    \item View all registered users.
+    \item Remove user accounts.
+    \item Edit user roles.
+    \item Activate / Deactivate accounts.
+  \end{itemize}
+
+  \item \textbf{Creating Admin Accounts} — Create new admin accounts when necessary to expand system management.
+
+  \item \textbf{Manage Form Data} — Manage selectable regions and update system data fields relevant to land evaluation to keep the platform consistent with current geographic and regulatory information.
+
+  \item \textbf{View System Logs} — See records of user activity and system events to monitor and diagnose issues.
+
+  \item \textbf{Manage Backups} — Save backups of system data and restore them in case of data loss or system problems.
+\end{enumerate}
+
+
+\subsection{Data Scientist's Side}
+\begin{enumerate}[leftmargin=*,label=\arabic*.,align=left]
+  \item \textbf{User Registration and Login}
+  \begin{itemize}[leftmargin=1.2em]
+    \item Register using a valid email address and password.
+    \item Provide an activation code issued by the administrator to complete registration.
+    \item Log in securely using credentials once registered.
+    \item Reset password when needed.
+  \end{itemize}
+
+  \item \textbf{Test Model Accuracy} — Run tests using known or sample land data to evaluate model accuracy.
+
+  \item \textbf{Review Feature Impact} — View which land features (e.g., area, location) most influence the predicted price based on the model’s analysis.
+
+  \item \textbf{Monitor Model Performance Over Time} — Track model performance across time and compare older versions with newer ones.
+
+  \item \textbf{Select Any Project to Analyze} — Select any existing project in the system (including those created by any land appraiser) for analysis.
+\end{enumerate}
+
+% -------- Nonfunctional Requirements --------
+\section{Nonfunctional Requirements}
+The nonfunctional requirements describe how the system should behave to provide the best user experience.
+
+\begin{enumerate}[leftmargin=*,label=\arabic*.,align=left]
+
+  \item \textbf{Usability}
+  \begin{itemize}[leftmargin=1.2em]
+    \item The system should provide a simple and user-friendly interface.
+    \item The interface should support both desktop and mobile browsers.
+  \end{itemize}
+
+  \item \textbf{Performance}
+  \begin{itemize}[leftmargin=1.2em]
+    \item The system should return land price estimation results in less than 5 seconds after submission.
+    \item Login and registration should complete in less than 3 seconds under normal load.
+  \end{itemize}
+
+  \item \textbf{Availability}
+  \begin{itemize}[leftmargin=1.2em]
+    \item The system should be available at least 99\% of the time.
+  \end{itemize}
+
+  \item \textbf{Security}
+  \begin{itemize}[leftmargin=1.2em]
+    \item The system must protect user information by applying strong encryption methods.
+    \item Passwords should be securely hashed.
+    \item Only authorized users can access their personal projects and information.
+  \end{itemize}
+
+  \item \textbf{Data Backup and Recovery}
+  \begin{itemize}[leftmargin=1.2em]
+    \item All user accounts and project details should be backed up regularly.
+    \item When a system failure occurs, users should be able to recover their information without data loss.
+  \end{itemize}
+
+\end{enumerate}
+
+% -------- Use-Case Diagram (صفحة لوحدها + العنوان فوق الصورة) --------
+\clearpage
+\section{Use-Case Diagram}
+\begin{figure}[H]
+  \centering
+  \caption{Figure 2.5.1 Use Case Diagram}
+  \vspace{6pt}
+  \includegraphics[width=\textwidth,height=0.8\textheight,keepaspectratio]{images/use case diagram.png}
+  \label{fig:use-case-diagram}
+\end{figure}
+\clearpage
+
+\section{Appraiser’s Functional Requirements Tables}
+
+% ---- Example Requirement Table Template (copy for other requirements) ----
+\begin{table}[H]
+\centering
+\caption{Table 2.7.1 Login}
+\label{tab:req-login}
+\begin{tabularx}{\textwidth}{|p{3cm}|X|}
+\hline
+\textbf{Field} & \textbf{Content} \\ \hline
+
+Requirement & Login \\ \hline
+
+Actor & Land Appraiser \\ \hline
+
+Objective & Access the appraiser’s account \\ \hline
+
+Precondition & The appraiser must be registered. \\ \hline
+
+Scenario & 
+\begin{minipage}[t]{0.75\textwidth}
+\begin{enumerate}[leftmargin=*,label=\arabic*.]
+\item The appraiser enters email and password.
+\item The appraiser clicks `Submit`.
+\item The system verifies credentials and grants access.
+\end{enumerate}
+\end{minipage} \\ \hline
+
+Exceptions & 
+\begin{enumerate}[leftmargin=*,label=\arabic*.]
+\item Incorrect credentials — the system displays an error message.
+\item Account locked due to failed attempts.
+\item Account not activated.
+\item No internet connection.
+\item Server or network error — system prompts the user to try again later.
+\end{enumerate}
+%\end{minipage} 
+\\ \hline
+\end{tabularx}
+\end{table}
+
+% ---- Table 2.7.2 Register Account ----
+\begin{table}[H]
+\centering
+\caption{Table 2.7.2 Register Account}
+\label{tab:req-register}
+\begin{tabularx}{\textwidth}{|p{3cm}|X|}
+\hline
+\textbf{Field} & \textbf{Content} \\ \hline
+
+Requirement & Register Account \\ \hline
+
+Actor & Land Appraiser \\ \hline
+
+Objective & Create a new appraiser account. \\ \hline
+
+Precondition & The appraiser must have the activation key from the administrator. \\ \hline
+
+Scenario & 
+\begin{minipage}[t]{0.75\textwidth}
+\begin{enumerate}[leftmargin=*,label=\arabic*.]
+\item The appraiser selects `Register`.
+\item The appraiser enters the activation code.
+\item The appraiser fills in required details (name, email, phone, password).
+\item Verification code is sent to the entered email.
+\item The appraiser clicks the link in the email to confirm the email.
+\item The appraiser submits the form.
+\item The system creates the account and confirms registration.
+\end{enumerate}
+\end{minipage} \\ \hline
+
+Exceptions & 
+\begin{minipage}[t]{0.75\textwidth}
+\begin{enumerate}[leftmargin=*,label=\arabic*.]
+\item Email already in use.
+\item Weak or invalid password.
+\item Required fields missing.
+\item Activation code expired or incorrect.
+\item Server or network error.
+\end{enumerate}
+\end{minipage} \\ \hline
+\end{tabularx}
+\end{table}
+
+% ---- Table 2.7.3 Logout ----
+\begin{table}[H]
+\centering
+\caption{Table 2.7.3 Logout}
+\label{tab:req-logout}
+\begin{tabularx}{\textwidth}{|p{3cm}|X|}
+\hline
+\textbf{Field} & \textbf{Content} \\ \hline
+
+Requirement & Logout \\ \hline
+
+Actor & Land Appraiser \\ \hline
+
+Objective & Securely end the current session and prevent unauthorized access to the account. \\ \hline
+
+Precondition & The appraiser is logged into the system. \\ \hline
+
+Scenario & 
+\begin{minipage}[t]{0.75\textwidth}
+\begin{enumerate}[leftmargin=*,label=\arabic*.]
+\item The appraiser clicks the Logout button from the system interface.
+\item The system ends the current session.
+\item The appraiser is sent to the login page.
+\end{enumerate}
+\end{minipage} \\ \hline
+
+Exceptions & 
+\begin{minipage}[t]{0.75\textwidth}
+\begin{enumerate}[leftmargin=*,label=\arabic*.]
+\item Server or network error.
+\end{enumerate}
+\end{minipage} \\ \hline
+\end{tabularx}
+\end{table}
+
+% ---- Table 2.7.4 Reset Password ----
+\begin{table}[H]
+\centering
+\caption{Table 2.7.4 Reset Password}
+\label{tab:req-reset-password}
+\begin{tabularx}{\textwidth}{|p{3cm}|X|}
+\hline
+\textbf{Field} & \textbf{Content} \\ \hline
+
+Requirement & Reset Password \\ \hline
+
+Actor & Land Appraiser \\ \hline
+
+Objective & Change the password. \\ \hline
+
+Precondition & Appraiser has a valid registered email. \\ \hline
+
+Scenario & 
+\begin{minipage}[t]{0.75\textwidth}
+\begin{enumerate}[leftmargin=*,label=\arabic*.]
+\item Appraiser clicks "Forgot Password" on the login page or selects "Change Password" from their profile.
+\item If "Forgot Password":
+  \begin{enumerate}[label*=\arabic*.]
+  \item System prompts for the registered email.
+  \item Appraiser enters email and submits.
+  \item System sends a password reset link or code to the email.
+  \item Appraiser clicks the link or enters the code, then sets a new password.
+  \end{enumerate}
+\item If "Change Password" from profile:
+  \begin{enumerate}[label*=\arabic*.]
+  \item Appraiser enters current password and new password.
+  \item System verifies the current password and updates it.
+  \end{enumerate}
+\item System confirms that the password has been successfully updated.
+\end{enumerate}
+\end{minipage} \\ \hline
+
+Exceptions & 
+\begin{minipage}[t]{0.75\textwidth}
+\begin{enumerate}[leftmargin=*,label=\arabic*.]
+\item Email not found in the system.
+\item Invalid or expired reset link/code.
+\item Incorrect current password (when changing from profile).
+\item Server or database error during update.
+\end{enumerate}
+\end{minipage} \\ \hline
+\end{tabularx}
+\end{table}
+
+% ---- Table 2.7.5 Create Project ----
+\begin{table}[H]
+\centering
+\caption{Table 2.7.5 Create Project}
+\label{tab:req-create-project}
+\begin{tabularx}{\textwidth}{|p{3cm}|X|}
+\hline
+\textbf{Field} & \textbf{Content} \\ \hline
+
+Requirement & Add Project \\ \hline
+
+Actor & Land Appraiser \\ \hline
+
+Objective & Create a new project and enter information needed to estimate the land price. \\ \hline
+
+Precondition & Appraiser must be logged in. \\ \hline
+
+Scenario & 
+\begin{minipage}[t]{0.75\textwidth}
+\begin{enumerate}[leftmargin=*,label=\arabic*.]
+\item Appraiser selects ‘New Project’.
+\item Names the Project.
+\item Fills in land details.
+\item The system checks and validates the input data.
+\end{enumerate}
+\end{minipage} \\ \hline
+
+Exceptions & 
+\begin{minipage}[t]{0.75\textwidth}
+\begin{enumerate}[leftmargin=*,label=\arabic*.]
+\item Missing or invalid fields — display helpful error messages.
+\item Network failure.
+\end{enumerate}
+\end{minipage} \\ \hline
+\end{tabularx}
+\end{table}
+
+% ---- Table 2.7.6 Estimate Price ----
+\begin{table}[H]
+\centering
+\caption{Table 2.7.6 Estimate Price}
+\label{tab:req-estimate-price}
+\begin{tabularx}{\textwidth}{|p{3cm}|X|}
+\hline
+\textbf{Field} & \textbf{Content} \\ \hline
+
+Requirement & Estimate Price \\ \hline
+
+Actor & Land Appraiser \\ \hline
+
+Objective & Predict and view the price of the land. \\ \hline
+
+Precondition & Land data has been successfully submitted. \\ \hline
+
+Scenario & 
+\begin{minipage}[t]{0.75\textwidth}
+\begin{enumerate}[leftmargin=*,label=\arabic*.]
+\item Appraiser clicks “estimate price”.
+\item System runs the model on the input.
+\item Displays the estimated price and summary.
+\end{enumerate}
+\end{minipage} \\ \hline
+
+Exceptions & 
+\begin{minipage}[t]{0.75\textwidth}
+\begin{enumerate}[leftmargin=*,label=\arabic*.]
+\item System error in model execution.
+\item Timeout or delay in result.
+\item Server or network error.
+\end{enumerate}
+\end{minipage} \\ \hline
+\end{tabularx}
+\end{table}
+
+% ---- Table 2.7.7 View Projects ----
+\begin{table}[H]
+\centering
+\caption{Table 2.7.7 View Projects}
+\label{tab:req-view-projects}
+\begin{tabularx}{\textwidth}{|p{3cm}|X|}
+\hline
+\textbf{Field} & \textbf{Content} \\ \hline
+
+Requirement & View Projects \\ \hline
+
+Actor & Land Appraiser \\ \hline
+
+Objective & Access previously estimated land projects to view them. \\ \hline
+
+Precondition & Appraiser must be logged in. \\ \hline
+
+Scenario & 
+\begin{minipage}[t]{0.75\textwidth}
+\begin{enumerate}[leftmargin=*,label=\arabic*.]
+\item Appraiser selects ‘My Projects’.
+\item System displays a list of past projects.
+\item Appraiser can select any project to view.
+\end{enumerate}
+\end{minipage} \\ \hline
+
+Exceptions & 
+\begin{minipage}[t]{0.75\textwidth}
+\begin{enumerate}[leftmargin=*,label=\arabic*.]
+\item No saved projects.
+\item Database access failure.
+\item Network error.
+\end{enumerate}
+\end{minipage} \\ \hline
+\end{tabularx}
+\end{table}
+
+% ---- Table 2.7.8 Update Projects ----
+\begin{table}[H]
+\centering
+\caption{Table 2.7.8 Update Projects}
+\label{tab:req-update-projects}
+\begin{tabularx}{\textwidth}{|p{3cm}|X|}
+\hline
+\textbf{Field} & \textbf{Content} \\ \hline
+
+Requirement & Update Projects \\ \hline
+
+Actor & Land Appraiser \\ \hline
+
+Objective & Edit previously estimated land projects, perform new estimations, and keep a record of past estimations for the same project. \\ \hline
+
+Precondition & Appraiser must be logged in. \\ \hline
+
+Scenario & 
+\begin{minipage}[t]{0.75\textwidth}
+\begin{enumerate}[leftmargin=*,label=\arabic*.]
+\item Appraiser selects ‘My Projects’.
+\item System displays a list of past projects.
+\item Appraiser selects a project to update.
+\item Appraiser edits the project details.
+\item System generates a new estimation for the updated data.
+\item Previous estimations for the same project are saved and can be viewed.
+\end{enumerate}
+\end{minipage} \\ \hline
+
+Exceptions & 
+\begin{minipage}[t]{0.75\textwidth}
+\begin{enumerate}[leftmargin=*,label=\arabic*.]
+\item No saved projects.
+\item Database access failure.
+\item Network error.
+\end{enumerate}
+\end{minipage} \\ \hline
+\end{tabularx}
+\end{table}
+
+% ---- Table 2.7.9 View Profile ----
+\begin{table}[H]
+\centering
+\caption{Table 2.7.9 View Profile}
+\label{tab:req-view-profile}
+\begin{tabularx}{\textwidth}{|p{3cm}|X|}
+\hline
+\textbf{Field} & \textbf{Content} \\ \hline
+
+Requirement & View Profile \\ \hline
+
+Actor & Land Appraiser \\ \hline
+
+Objective & View the appraiser’s account information. \\ \hline
+
+Precondition & Appraiser must be logged in. \\ \hline
+
+Scenario & 
+\begin{minipage}[t]{0.75\textwidth}
+\begin{enumerate}[leftmargin=*,label=\arabic*.]
+\item Appraiser selects ‘Profile’.
+\item System displays current account information, including name, email, phone, and other profile details.
+\end{enumerate}
+\end{minipage} \\ \hline
+
+Exceptions & 
+\begin{minipage}[t]{0.75\textwidth}
+\begin{enumerate}[leftmargin=*,label=\arabic*.]
+\item Profile data not found.
+\item Database access failure.
+\item Network error.
+\end{enumerate}
+\end{minipage} \\ \hline
+\end{tabularx}
+\end{table}
+
+% ---- Table 2.7.10 Edit Profile ----
+\begin{table}[H]
+\centering
+\caption{Table 2.7.10 Edit Profile}
+\label{tab:req-edit-profile}
+\begin{tabularx}{\textwidth}{|p{3cm}|X|}
+\hline
+\textbf{Field} & \textbf{Content} \\ \hline
+
+Requirement & Edit Profile \\ \hline
+
+Actor & Land Appraiser \\ \hline
+
+Objective & Update appraiser’s account information. \\ \hline
+
+Precondition & Appraiser must be logged in and in the profile. \\ \hline
+
+Scenario & 
+\begin{minipage}[t]{0.75\textwidth}
+\begin{enumerate}[leftmargin=*,label=\arabic*.]
+\item Appraiser selects ‘Edit Profile’.
+\item Updates name, email, phone number, or password.
+\item Clicks ‘Save Changes’.
+\end{enumerate}
+\end{minipage} \\ \hline
+
+Exceptions & 
+\begin{minipage}[t]{0.75\textwidth}
+\begin{enumerate}[leftmargin=*,label=\arabic*.]
+\item Invalid email or password.
+\item Server error during update.
+\item Network or server error.
+\end{enumerate}
+\end{minipage} \\ \hline
+\end{tabularx}
+\end{table}
+
+% ---- Table 2.7.11 Rate Estimation Result ----
+\begin{table}[H]
+\centering
+\caption{Table 2.7.11 Rate Estimation Result}
+\label{tab:req-rate-estimation}
+\begin{tabularx}{\textwidth}{|p{3cm}|X|}
+\hline
+\textbf{Field} & \textbf{Content} \\ \hline
+
+Requirement & Rate Estimation Result \\ \hline
+
+Actor & Land Appraiser \\ \hline
+
+Objective & Provide feedback on the quality of the estimated result to help evaluate model performance. \\ \hline
+
+Precondition & An estimation result must be displayed. \\ \hline
+
+Scenario & 
+\begin{minipage}[t]{0.75\textwidth}
+\begin{enumerate}[leftmargin=*,label=\arabic*.]
+\item After viewing the estimation result, the appraiser is prompted to provide feedback.
+\item The appraiser selects a rating option (e.g., Thumbs Up or Thumbs Down).
+\item The appraiser can provide a more logical/accurate estimation in case of negative rating.
+\item The system saves the rating along with the estimation details and corrected estimation for the current project.
+\end{enumerate}
+\end{minipage} \\ \hline
+
+Exceptions & 
+\begin{minipage}[t]{0.75\textwidth}
+\begin{enumerate}[leftmargin=*,label=\arabic*.]
+\item Rating submission fails due to network error.
+\item Database save error.
+\end{enumerate}
+\end{minipage} \\ \hline
+\end{tabularx}
+\end{table}
+
+
+
+\section{Admin’s Functional Requirements Tables}
+% ---- Table 2.8.1 Login ----
+\begin{table}[H]
+\centering
+\caption{Table 2.8.1 Login}
+\label{tab:admin-login}
+\begin{tabularx}{\textwidth}{|p{3cm}|X|}
+\hline
+\textbf{Field} & \textbf{Content} \\ \hline
+
+Requirement & Login \\ \hline
+
+Actor & Admin \\ \hline
+
+Objective & Allow admin to securely log in to the system. \\ \hline
+
+Precondition & Admin must be registered and approved as an administrator by an existing admin. \\ \hline
+
+Scenario & 
+\begin{minipage}[t]{0.75\textwidth}
+\begin{enumerate}[leftmargin=*,label=\arabic*.]
+\item Admin visits login page.
+\item Enters email and password.
+\item Clicks "Login".
+\item The system verifies credentials and grants access.
+\end{enumerate}
+\end{minipage} \\ \hline
+
+Exceptions &
+\begin{minipage}[t]{0.75\textwidth}
+\begin{enumerate}[leftmargin=*,label=\arabic*.]
+\item Invalid email or password — system displays an error message.
+\item Server or network error — system prompts the user to try again later.
+\end{enumerate}
+\end{minipage} \\ \hline
+
+\end{tabularx}
+\end{table}
+
+% ---- Table 2.8.2 Logout ----
+\begin{table}[H]
+\centering
+\caption{Table 2.8.2 Logout}
+\label{tab:admin-logout}
+\begin{tabularx}{\textwidth}{|p{3cm}|X|}
+\hline
+\textbf{Field} & \textbf{Content} \\ \hline
+
+Requirement & Logout \\ \hline
+
+Actor & Admin \\ \hline
+
+Objective & Securely end the current session and prevent unauthorized access to the account. \\ \hline
+
+Precondition & Admin is logged into the system. \\ \hline
+
+Scenario & 
+\begin{minipage}[t]{0.75\textwidth}
+\begin{enumerate}[leftmargin=*,label=\arabic*.]
+\item Admin clicks the Logout button from the system interface.
+\item The system ends the current session.
+\item Admin is sent to the login page.
+\end{enumerate}
+\end{minipage} \\ \hline
+
+Exceptions &
+\begin{minipage}[t]{0.75\textwidth}
+\begin{enumerate}[leftmargin=*,label=\arabic*.]
+\item Server or network error.
+\end{enumerate}
+\end{minipage} \\ \hline
+
+\end{tabularx}
+\end{table}
+
+% ---- Table 2.8.3 Creating Admin Account ----
+\begin{table}[H]
+\centering
+\caption{Table 2.8.3 Creating Admin Account}
+\label{tab:admin-create-account}
+\begin{tabularx}{\textwidth}{|p{3cm}|X|}
+\hline
+\textbf{Field} & \textbf{Content} \\ \hline
+
+Requirement & Creating Admin Accounts \\ \hline
+
+Actor & Existing Admin \\ \hline
+
+Objective & Create new admin accounts. \\ \hline
+
+Precondition & Existing Admin is authorized to create admins. \\ \hline
+
+Scenario & 
+\begin{minipage}[t]{0.75\textwidth}
+\begin{enumerate}[leftmargin=*,label=\arabic*.]
+\item Authorized admin accesses the admin management interface.
+\item Creates an admin and enters admin details.
+\item Account is activated.
+\end{enumerate}
+\end{minipage} \\ \hline
+
+Exceptions &
+\begin{minipage}[t]{0.75\textwidth}
+\begin{enumerate}[leftmargin=*,label=\arabic*.]
+\item Invitation link expires.
+\item Unauthorized requester attempts to create an admin.
+\item Failure in account setup due to system error.
+\end{enumerate}
+\end{minipage} \\ \hline
+
+\end{tabularx}
+\end{table}
+
+% ---- Table 2.8.4 Manage Users ----
+\begin{table}[H]
+\centering
+\caption{Table 2.8.4 Manage Users}
+\label{tab:admin-manage-users}
+\begin{tabularx}{\textwidth}{|p{3cm}|X|}
+\hline
+\textbf{Field} & \textbf{Content} \\ \hline
+
+Requirement & View Users \\ \hline
+
+Actor & Admin \\ \hline
+
+Objective & View a list of all registered users with their details, and the ability to select any user to edit their account. \\ \hline
+
+Precondition & Admin is logged in. \\ \hline
+
+Scenario & 
+\begin{minipage}[t]{0.75\textwidth}
+\begin{enumerate}[leftmargin=*,label=\arabic*.]
+\item Admin opens the user management panel.
+\item System displays a list of all registered users with basic details (e.g., name, email, registration date, role).
+\item Admin can sort or filter the list.
+\item Admin can select any user to make actions.
+\item The actions are: Delete User, Deactivate Account (if activated), Activate Account (if deactivated), and Change Role.
+\end{enumerate}
+\end{minipage} \\ \hline
+
+Exceptions &
+\begin{minipage}[t]{0.75\textwidth}
+\begin{enumerate}[leftmargin=*,label=\arabic*.]
+\item No users found in the system.
+\item Server error when retrieving user data.
+\item Database connection failure.
+\item Failure of action.
+\end{enumerate}
+\end{minipage} \\ \hline
+
+\end{tabularx}
+\end{table}
+
+
+% ---- Table 2.8.5 Manage Form Data ----
+\begin{table}[H]
+\centering
+\caption{Table 2.8.5 Manage Form Data}
+\label{tab:admin-manage-form-data}
+\begin{tabularx}{\textwidth}{|p{3cm}|X|}
+\hline
+\textbf{Field} & \textbf{Content} \\ \hline
+
+Requirement & Manage Form Data \\ \hline
+
+Actor & Admin \\ \hline
+
+Objective & Edit or add options (e.g., locations or classifications) available during project creation. \\ \hline
+
+Precondition & Admin has access rights. \\ \hline
+
+Scenario & 
+\begin{minipage}[t]{0.75\textwidth}
+\begin{enumerate}[leftmargin=*,label=\arabic*.]
+\item Admin selects ‘Manage Data’.
+\item Chooses data category (e.g., regions).
+\item Edits, adds, or deletes entries.
+\item Saves changes.
+\end{enumerate}
+\end{minipage} \\ \hline
+
+Exceptions &
+\begin{minipage}[t]{0.75\textwidth}
+\begin{enumerate}[leftmargin=*,label=\arabic*.]
+\item Input is invalid.
+\item Changes not saved due to a database error.
+\end{enumerate}
+\end{minipage} \\ \hline
+
+\end{tabularx}
+\end{table}
+
+% ---- Table 2.8.6 View System Logs ----
+\begin{table}[H]
+\centering
+\caption{Table 2.8.6 View System Logs}
+\label{tab:admin-view-logs}
+\begin{tabularx}{\textwidth}{|p{3cm}|X|}
+\hline
+\textbf{Field} & \textbf{Content} \\ \hline
+
+Requirement & View System Logs \\ \hline
+
+Actor & Admin \\ \hline
+
+Objective & Monitor system events and user activity. \\ \hline
+
+Precondition & System logging is enabled. \\ \hline
+
+Scenario &
+\begin{minipage}[t]{0.75\textwidth}
+\begin{enumerate}[leftmargin=*,label=\arabic*.]
+\item Admin navigates to the ‘Logs’ section.
+\item Filters by date or activity type.
+\item Views login, registration, or error logs.
+\end{enumerate}
+\end{minipage} \\ \hline
+
+Exceptions &
+\begin{minipage}[t]{0.75\textwidth}
+\begin{enumerate}[leftmargin=*,label=\arabic*.]
+\item Logs not available.
+\item Permission denied.
+\end{enumerate}
+\end{minipage} \\ \hline
+
+\end{tabularx}
+\end{table}
+
+% ---- Table 2.8.7 Manage Backups ----
+\begin{table}[H]
+\centering
+\caption{Table 2.8.7 Manage Backups}
+\label{tab:admin-manage-backups}
+\begin{tabularx}{\textwidth}{|p{3cm}|X|}
+\hline
+\textbf{Field} & \textbf{Content} \\ \hline
+
+Requirement & Manage Backups \\ \hline
+
+Actor & Admin \\ \hline
+
+Objective & Ensure system and user data is regularly backed up. \\ \hline
+
+Precondition & Backup system is active. \\ \hline
+
+Scenario &
+\begin{minipage}[t]{0.75\textwidth}
+\begin{enumerate}[leftmargin=*,label=\arabic*.]
+\item Admin opens ‘Backup Settings’.
+\item Triggers manual backup or sets automatic schedule.
+\item Confirms successful completion.
+\end{enumerate}
+\end{minipage} \\ \hline
+
+Exceptions &
+\begin{minipage}[t]{0.75\textwidth}
+\begin{enumerate}[leftmargin=*,label=\arabic*.]
+\item Backup failed due to storage limit.
+\item Scheduled backup skipped due to server downtime.
+\end{enumerate}
+\end{minipage} \\ \hline
+
+\end{tabularx}
+\end{table}
+
+% ---- Table 2.8.8 Create Activation Key ----
+\begin{table}[H]
+\centering
+\caption{Table 2.8.8 Create Activation Key}
+\label{tab:admin-create-key}
+\begin{tabularx}{\textwidth}{|p{3cm}|X|}
+\hline
+\textbf{Field} & \textbf{Content} \\ \hline
+
+Requirement & Create Activation Key \\ \hline
+
+Actor & Admin \\ \hline
+
+Objective & Generate a unique activation key for a data scientist or appraiser to use when registering their account. \\ \hline
+
+Precondition & Admin is logged in. \\ \hline
+
+Scenario &
+\begin{minipage}[t]{0.75\textwidth}
+\begin{enumerate}[leftmargin=*,label=\arabic*.]
+\item Admin opens the "Activation Keys" panel.
+\item Selects the account type (Data Scientist or Appraiser).
+\item Clicks "Generate Key".
+\item System generates a unique activation key.Clicks
+\item Admin copies or sends the key Clicksto the intended recipient.
+\end{enumerate}
+\end{minipage} \\ \hline
+Exceptions &
+\begin{minipage}[t]{0.75\textwidth}
+\begin{enumerate}[leftmargin=*,label=\arabic*.]
+\item Server error during key generation.
+\item Database access failure when saving the new key.
+
+\end{enumerate}
+\end{minipage} \\ \hline
+\end{tabularx}
+\end{table}
+
+% ---- Table 2.8.9 Reset Password ----
+\begin{table}[H]
+\centering
+\caption{Table 2.8.9 Reset Password}
+\label{tab:admin-reset-password}
+\begin{tabularx}{\textwidth}{|p{3cm}|X|}
+\hline
+\textbf{Field} & \textbf{Content} \\ \hline
+
+Requirement & Reset Password \\ \hline
+
+Actor & Admin \\ \hline
+
+Objective & Change the password. \\ \hline
+
+Precondition & Admin has a registered account. \\ \hline
+
+Scenario &
+\begin{minipage}[t]{0.75\textwidth}
+\begin{enumerate}[leftmargin=*,label=\arabic*.]
+\item Admin clicks "Forgot Password" on the login page or selects "Change Password" from their profile.
+\item If "Forgot Password":
+    \begin{enumerate}[label*=\arabic*.]
+    \item System prompts for the registered email.
+    \item Admin enters email and submits.
+    \item System sends a password reset link or code to the email.
+    \item Admin clicks the link or enters the code, then sets a new password.
+    \end{enumerate}
+\item If "Change Password" from profile:
+    \begin{enumerate}[label*=\arabic*.]
+    \item Admin enters current password and new password.
+    \item System verifies the current password and updates it.
+    \end{enumerate}
+\item System confirms that the password has been successfully updated.
+\end{enumerate}
+\end{minipage} \\ \hline
+
+Exceptions &
+\begin{minipage}[t]{0.75\textwidth}
+\begin{enumerate}[leftmargin=*,label=\arabic*.]
+\item Email not found in the system.
+\item Invalid or expired reset link/code.
+\item Incorrect current password (when changing from profile).
+\item Server or database error during update.
+\end{enumerate}
+\end{minipage} \\ \hline
+
+\end{tabularx}
+\end{table}
+
+% ---- Table 2.8.10 View Profile ----
+\begin{table}[H]
+\centering
+\caption{Table 2.8.10 View Profile}
+\label{tab:admin-view-profile}
+\begin{tabularx}{\textwidth}{|p{3cm}|X|}
+\hline
+\textbf{Field} & \textbf{Content} \\ \hline
+
+Requirement & View Profile \\ \hline
+
+Actor & Admin \\ \hline
+
+Objective & View the admin’s account information. \\ \hline
+
+Precondition & Admin must be logged in. \\ \hline
+
+Scenario &
+\begin{minipage}[t]{0.75\textwidth}
+\begin{enumerate}[leftmargin=*,label=\arabic*.]
+\item Admin selects ‘Profile’.
+\item System displays current account information, including name, email, phone, and other profile details.
+\end{enumerate}
+\end{minipage} \\ \hline
+
+Exceptions &
+\begin{minipage}[t]{0.75\textwidth}
+\begin{enumerate}[leftmargin=*,label=\arabic*.]
+\item Profile data not found.
+\item Database access failure.
+\item Network error.
+\end{enumerate}
+\end{minipage} \\ \hline
+
+\end{tabularx}
+\end{table}
+
+% ---- Table 2.8.11 Edit Profile ----
+\begin{table}[H]
+\centering
+\caption{Table 2.8.11 Edit Profile}
+\label{tab:admin-edit-profile}
+\begin{tabularx}{\textwidth}{|p{3cm}|X|}
+\hline
+\textbf{Field} & \textbf{Content} \\ \hline
+
+Requirement & Edit Profile \\ \hline
+
+Actor & Admin \\ \hline
+
+Objective & Update Admin’s account information. \\ \hline
+
+Precondition & Admin must be logged in and in the profile. \\ \hline
+
+Scenario & 
+\begin{minipage}[t]{0.75\textwidth}
+\begin{enumerate}[leftmargin=*,label=\arabic*.]
+\item Admin selects ‘Edit Profile’.
+\item Updates name, email, phone number, or password.
+\item Clicks ‘Save Changes’.
+\end{enumerate}
+\end{minipage} \\ \hline
+
+Exceptions & 
+\begin{minipage}[t]{0.75\textwidth}
+\begin{enumerate}[leftmargin=*,label=\arabic*.]
+\item Invalid email or password.
+\item Server error during update.
+\item Network or server error.
+\end{enumerate}
+\end{minipage} \\ \hline
+
+\end{tabularx}
+\end{table}
+
+
+\section{Data Scientist’s Functional Requirements Tables}
+% ---- Table 2.9.1 Login ----
+\begin{table}[H]
+\centering
+\caption{Table 2.9.1 Login}
+\label{tab:ds-login}
+\begin{tabularx}{\textwidth}{|p{3cm}|X|}
+\hline
+\textbf{Field} & \textbf{Content} \\ \hline
+
+Requirement & Login \\ \hline
+
+Actor & Data Scientist \\ \hline
+
+Objective & Allow the data scientist to securely log in to the system. \\ \hline
+
+Precondition & The data scientist must be registered and approved as a data scientist by an admin. \\ \hline
+
+Scenario & 
+\begin{minipage}[t]{0.75\textwidth}
+\begin{enumerate}[leftmargin=*,label=\arabic*.]
+\item Data scientist visits login page.
+\item Enters a valid email and password.
+\item Clicks the Login button.
+\item The system verifies credentials and grants access.
+\end{enumerate}
+\end{minipage} \\ \hline
+
+Exceptions & 
+\begin{minipage}[t]{0.75\textwidth}
+\begin{enumerate}[leftmargin=*,label=\arabic*.]
+\item Invalid email or password — system displays an error message.
+\item Server or network error — system prompts the user to try again later.
+\end{enumerate}
+\end{minipage} \\ \hline
+
+\end{tabularx}
+\end{table}
+
+% ---- Table 2.9.2 Logout ----
+\begin{table}[H]
+\centering
+\caption{Table 2.9.2 Logout}
+\label{tab:ds-logout}
+\begin{tabularx}{\textwidth}{|p{3cm}|X|}
+\hline
+\textbf{Field} & \textbf{Content} \\ \hline
+
+Requirement & Logout \\ \hline
+
+Actor & Data Scientist \\ \hline
+
+Objective & Securely end the current session and prevent unauthorized access to the account. \\ \hline
+
+Precondition & The Data Scientist is logged into the system. \\ \hline
+
+Scenario & 
+\begin{minipage}[t]{0.75\textwidth}
+\begin{enumerate}[leftmargin=*,label=\arabic*.]
+\item The data scientist clicks the Logout button from the system.
+\item The system ends the current session.
+\item The data scientist is sent to the login page.
+\end{enumerate}
+\end{minipage} \\ \hline
+
+Exceptions & 
+\begin{minipage}[t]{0.75\textwidth}
+\begin{enumerate}[leftmargin=*,label=\arabic*.]
+\item Server or network error.
+\end{enumerate}
+\end{minipage} \\ \hline
+
+\end{tabularx}
+\end{table}
+
+% ---- Table 2.9.3 Register Account ----
+\begin{table}[H]
+\centering
+\caption{Table 2.9.3 Register Account}
+\label{tab:ds-register}
+\begin{tabularx}{\textwidth}{|p{3cm}|X|}
+\hline
+\textbf{Field} & \textbf{Content} \\ \hline
+
+Requirement & Register Account \\ \hline
+
+Actor & Data Scientist \\ \hline
+
+Objective & Create a new Data Scientist account. \\ \hline
+
+Precondition & The Data Scientist must have the activation key from the administrator. \\ \hline
+
+Scenario & 
+\begin{minipage}[t]{0.75\textwidth}
+\begin{enumerate}[leftmargin=*,label=\arabic*.]
+\item The Data Scientist selects ‘Register’.
+\item Data Scientist enters the activation code.
+\item The Data Scientist fills in required details (name, email, password).
+\item Verification code is sent to the entered email.
+\item Data Scientist clicks the link in the email to confirm the email.
+\item The Data Scientist submits the form.
+\item The system creates the account and confirms registration.
+\end{enumerate}
+\end{minipage} \\ \hline
+
+Exceptions &
+\begin{minipage}[t]{0.75\textwidth}
+\begin{enumerate}[leftmargin=*,label=\arabic*.]
+\item Email already in use.
+\item Weak or invalid password.
+\item Required fields missing.
+\item Activation code expired or incorrect.
+\item Server or network error.
+\end{enumerate}
+\end{minipage} \\ \hline
+
+\end{tabularx}
+\end{table}
+
+% ---- Table 2.9.4 Test Model Accuracy ----
+\begin{table}[H]
+\centering
+\caption{Table 2.9.4 Test Model Accuracy}
+\label{tab:ds-test-model}
+\begin{tabularx}{\textwidth}{|p{3cm}|X|}
+\hline
+\textbf{Field} & \textbf{Content} \\ \hline
+
+Requirement & Test Model Accuracy \\ \hline
+
+Actor & Data Scientist \\ \hline
+
+Objective & Evaluate the prediction accuracy of the machine learning model. \\ \hline
+
+Precondition & The system must have a trained model and a dataset available for testing. \\ \hline
+
+Scenario &
+\begin{minipage}[t]{0.75\textwidth}
+\begin{enumerate}[leftmargin=*,label=\arabic*.]
+\item The data scientist selects the "Model Testing" section.
+\item Uploads or selects a dataset for testing.
+\item Runs the model to predict prices.
+\item Compares predicted results with actual prices.
+\end{enumerate}
+\end{minipage} \\ \hline
+
+Exceptions &
+\begin{minipage}[t]{0.75\textwidth}
+\begin{enumerate}[leftmargin=*,label=\arabic*.]
+\item Incomplete or invalid test dataset.
+\item Model not available or not trained.
+\end{enumerate}
+\end{minipage} \\ \hline
+
+\end{tabularx}
+\end{table}
+
+% ---- Table 2.9.5 Review Feature Impact ----
+\begin{table}[H]
+\centering
+\caption{Table 2.9.5 Review Feature Impact}
+\label{tab:ds-feature-impact}
+\begin{tabularx}{\textwidth}{|p{3cm}|X|}
+\hline
+\textbf{Field} & \textbf{Content} \\ \hline
+
+Requirement & Review Feature Impact \\ \hline
+
+Actor & Data Scientist \\ \hline
+
+Objective & Analyze which features had the most influence on the land price prediction for a specific project. \\ \hline
+
+Precondition & 
+\begin{minipage}[t]{0.75\textwidth}
+\begin{enumerate}[leftmargin=*,label=\arabic*.]
+\item The model must be trained and support feature importance analysis.
+\item The project must have completed the estimation.
+\end{enumerate}
+\end{minipage} \\ \hline
+
+Scenario &
+\begin{minipage}[t]{0.75\textwidth}
+\begin{enumerate}[leftmargin=*,label=\arabic*.]
+\item Access the “Projects” section.
+\item Select a specific project from the list.
+\item Open the “Feature Importance” view for that project.
+\item View ranked list of features by their impact on the project’s prediction.
+\item Export or download the report if needed.
+\end{enumerate}
+\end{minipage} \\ \hline
+
+Exceptions &
+\begin{minipage}[t]{0.75\textwidth}
+\begin{enumerate}[leftmargin=*,label=\arabic*.]
+\item Feature analysis tool is unavailable or unsupported for that project.
+\item Insufficient project data to generate meaningful insights.
+\item Selected project not found or inaccessible.
+\end{enumerate}
+\end{minipage} \\ \hline
+
+\end{tabularx}
+\end{table}
+
+
+% ---- Table 2.9.6 Monitor Model Performance Over Time ----
+\begin{table}[H]
+\centering
+\caption{Table 2.9.6 Monitor Model Performance Over Time}
+\label{tab:ds-monitor-model}
+\begin{tabularx}{\textwidth}{|p{3cm}|X|}
+\hline
+\textbf{Field} & \textbf{Content} \\ \hline
+
+Requirement & Monitor Model Performance Over Time \\ \hline
+
+Actor & Data Scientist \\ \hline
+
+Objective & Track how the model performs across different versions and datasets, and test any selected version on demand. \\ \hline
+
+Precondition & 
+\begin{minipage}[t]{0.75\textwidth}
+\begin{enumerate}[leftmargin=*,label=\arabic*.]
+\item System must store model versions, related datasets, and performance logs.
+\item At least one model version must exist.
+\end{enumerate}
+\end{minipage} \\ \hline
+
+Scenario & 
+\begin{minipage}[t]{0.75\textwidth}
+\begin{enumerate}[leftmargin=*,label=\arabic*.]
+\item Go to the “Model History” tab.
+\item System displays a list of stored model versions with their details.
+\item Select a version to see its past results.
+\item Optionally, choose a dataset to re-test the selected model version.
+\item System runs the test and shows the new results.
+\end{enumerate}
+\end{minipage} \\ \hline
+
+Exceptions & 
+\begin{minipage}[t]{0.75\textwidth}
+\begin{enumerate}[leftmargin=*,label=\arabic*.]
+\item No stored model versions available.
+\item Past performance data is missing or incomplete.
+\item Testing fails due to corrupted data or unsupported dataset format.
+\item Network or server error during testing.
+\end{enumerate}
+\end{minipage} \\ \hline
+
+\end{tabularx}
+\end{table}
+
+% ---- Table 2.9.7 Select Project to Analyze ----
+\begin{table}[H]
+\centering
+\caption{Table 2.9.7 Select Project to Analyze}
+\label{tab:ds-select-project}
+\begin{tabularx}{\textwidth}{|p{3cm}|X|}
+\hline
+\textbf{Field} & \textbf{Content} \\ \hline
+
+Requirement & Select Project to Analyze \\ \hline
+
+Actor & Data Scientist \\ \hline
+
+Objective & Choose a specific project from the list of available projects to perform analysis on its estimations and related data. \\ \hline
+
+Precondition & 
+\begin{minipage}[t]{0.75\textwidth}
+\begin{enumerate}[leftmargin=*,label=\arabic*.]
+\item Data Scientist must be logged in.
+\item There must be at least one project available to analyze.
+\end{enumerate}
+\end{minipage} \\ \hline
+
+Scenario & 
+\begin{minipage}[t]{0.75\textwidth}
+\begin{enumerate}[leftmargin=*,label=\arabic*.]
+\item Data Scientist opens the “Projects” section.
+\item System displays a list of projects with basic details (e.g., project name, date, owner).
+\item Data Scientist searches, filters, or sorts projects if needed.
+\item Selects a project to open for detailed analysis.
+\end{enumerate}
+\end{minipage} \\ \hline
+
+Exceptions & 
+\begin{minipage}[t]{0.75\textwidth}
+\begin{enumerate}[leftmargin=*,label=\arabic*.]
+\item No available projects to analyze.
+\item Project data is incomplete or inaccessible.
+\item Network or server error while loading projects.
+\end{enumerate}
+\end{minipage} \\ \hline
+
+\end{tabularx}
+\end{table}
+
+% ---- Table 2.9.8 Reset Password ----
+\begin{table}[H]
+\centering
+\caption{Table 2.9.8 Reset Password}
+\label{tab:ds-reset-password}
+\begin{tabularx}{\textwidth}{|>{\raggedright\arraybackslash}p{3cm}|X|}
+\hline
+\textbf{Field} & \textbf{Content} \\ \hline
+
+Requirement & Reset Password \\ \hline
+Actor & Data Scientist \\ \hline
+Objective & Change the password. \\ \hline
+Precondition & The data scientist has a valid registered email. \\ \hline
+
+Scenario &
+\begin{minipage}[t]{\linewidth}
+\begin{enumerate}[leftmargin=*,label=\arabic*.,itemsep=0pt,topsep=2pt]
+  \item The data scientist clicks ``Forgot Password'' on the login page or selects ``Change Password'' from their profile.
+  \item If ``Forgot Password'':
+    \begin{enumerate}[label*=\arabic*.,itemsep=0pt,topsep=2pt]
+      \item System prompts for the registered email.
+      \item The data scientist enters the email and submits.
+      \item System sends a password reset link or code to the email.
+      \item The data scientist clicks the link or enters the code, then sets a new password.
+    \end{enumerate}
+  \item If ``Change Password'' from profile:
+    \begin{enumerate}[label*=\arabic*.,itemsep=0pt,topsep=2pt]
+      \item The data scientist enters current password and new password.
+      \item System verifies the current password and updates it.
+    \end{enumerate}
+  \item System confirms that the password has been successfully updated.
+\end{enumerate}
+\end{minipage}
+\\ \hline
+
+Exceptions &
+\begin{minipage}[t]{\linewidth}
+\begin{enumerate}[leftmargin=*,label=\arabic*.,itemsep=0pt,topsep=2pt]
+  \item Email not found in the system.
+  \item Invalid or expired reset link/code.
+  \item Incorrect current password (when changing from profile).
+  \item Server or database error during update.
+\end{enumerate}
+\end{minipage}
+\\ \hline
+
+\end{tabularx}
+\end{table}
+
+
+% ---- Table 2.9.9 View Profile ----
+\begin{table}[H]
+\centering
+\caption{Table 2.9.9 View Profile}
+\label{tab:ds-view-profile}
+\begin{tabularx}{\textwidth}{|p{3cm}|X|}
+\hline
+\textbf{Field} & \textbf{Content} \\ \hline
+
+Requirement & View Profile \\ \hline
+
+Actor & Data Scientist \\ \hline
+
+Objective & View the Data Scientist’s account information. \\ \hline
+
+Precondition & Data Scientist must be logged in. \\ \hline
+
+Scenario & 
+\begin{minipage}[t]{0.75\textwidth}
+\begin{enumerate}[leftmargin=*,label=\arabic*.]
+\item Data Scientist selects ‘Profile’.
+\item System displays current account information, including name, email, phone, and other profile details.
+\end{enumerate}
+\end{minipage} \\ \hline
+
+Exceptions & 
+\begin{minipage}[t]{0.75\textwidth}
+\begin{enumerate}[leftmargin=*,label=\arabic*.]
+\item Profile data not found.
+\item Database access failure.
+\item Network error.
+\end{enumerate}
+\end{minipage} \\ \hline
+
+\end{tabularx}
+\end{table}
+
+% ---- Table 2.9.10 Edit Profile ----
+\begin{table}[H]
+\centering
+\caption{Table 2.9.10 Edit Profile}
+\label{tab:ds-edit-profile}
+\begin{tabularx}{\textwidth}{|p{3cm}|X|}
+\hline
+\textbf{Field} & \textbf{Content} \\ \hline
+
+Requirement & Edit Profile \\ \hline
+
+Actor & Data Scientist \\ \hline
+
+Objective & Update Data Scientist’s account information. \\ \hline
+
+Precondition & Data Scientist must be logged in and in the profile. \\ \hline
+
+Scenario & 
+\begin{minipage}[t]{0.75\textwidth}
+\begin{enumerate}[leftmargin=*,label=\arabic*.]
+\item Data Scientist selects ‘Edit Profile’.
+\item Updates name, email, phone number, or password.
+\item Clicks ‘Save Changes’.
+\end{enumerate}
+\end{minipage} \\ \hline
+
+Exceptions & 
+\begin{minipage}[t]{0.75\textwidth}
+\begin{enumerate}[leftmargin=*,label=\arabic*.]
+\item Invalid email or password.
+\item Server error during update.
+\item Network or server error.
+\end{enumerate}
+\end{minipage} \\ \hline
+
+\end{tabularx}
+\end{table}
+
+
+% -------------------- Chapter 3 --------------------
+\chaptertitlepage{Architecture and Design}
+
+\section{Overview}
+\noindent\justifying
+This chapter explains how the Land Price Estimator system is organized and how its parts work together. It covers the system's design, the chosen architecture and its possible alternatives, the database structure, and the main interfaces for the user, administrator, and data scientist.
+
+
+\section{Chosen Architecture Design}
+\noindent\justifying
+We studied multiple architecture design options, and concluded that the MVT (Model–View–Template) architecture is the best fit for our project.
+
+\begin{table}[H]
+\centering
+\caption{Table 3.2.1 MVT Components}
+\label{tab:mvt-components}
+\setlength{\arrayrulewidth}{0.6pt}   % سماكة حدود الخلايا (اختياري)
+\renewcommand{\arraystretch}{1.25}   % تهوية الصفوف (اختياري)
+\begin{tabularx}{\textwidth}{|>{\raggedright\arraybackslash}p{3.2cm}|X|}
+\hline
+\textbf{Component} & \textbf{Role} \\ \hline
+Model    & Manages data, database structure, and rules. \\ \hline
+View     & Handles user actions; retrieves data from the model and selects the appropriate template to display results. \\ \hline
+Template & Presentation layer controlling how data is rendered to the user (HTML). \\ \hline
+\end{tabularx}
+\end{table}
+
+
+The separation makes it easy for developers to work on different components of the application at the same time without affecting each other's work, and makes future scalability as well as maintaining, debugging, and testing the application easier.
+
+\noindent\textbf{Why MVT?} The MVT architecture is provided by Django, which is the framework we are using to develop the web application for the Land-Price Prediction system.
+
+
+\section{Architecture Implementation}
+In our Land-Price Prediction system, the MVT architecture is implemented as follows:
+
+\begin{description}
+    \item[Model:] Stores all the data related to each entity of the system, such as the lands and users attributes, and how they are stored in the database and how to retrieve them.
+    
+    \item[View:] The view stores the business logic and connects the models with the templates; it processes user requests, retrieves data from the model, and gives it to the template.
+    
+    \item[Template:] It's the interface that the user sees and interacts with. Through it, the user sees the results of the predictions and other information. The template has no business logic to ensure a clean separation from backend processing.
+\end{description}
+
+This structured method ensures that each layer is independent but still connected.
+
+\begin{figure}[H]
+  \captionsetup{position=top, labelformat=empty, labelsep=none}
+  \centering
+  \vspace{1cm}
+   \caption{Figure 3.3.1 MVT Architecture}
+  \includegraphics[width=\textwidth]{images/MVT.png}
+  \label{fig:mvt}
+\end{figure}
+
+
+
+\subsection{Example Models in the System}
+
+The project will have multiple models to manage the data effectively within the MVT architecture. Each model represents an entity of the Land-Price Prediction system and has its own attributes. Example models include:
+
+\begin{enumerate}
+    \item \textbf{User:} Represents a system user. Attributes include \texttt{id}, \texttt{full\_name}, \texttt{email}, \texttt{password}, \texttt{role}, and \texttt{created\_at}.
+    
+    \item \textbf{Project:} Represents a land estimation project. Attributes include \texttt{id}, \texttt{name}, \texttt{description}, \texttt{created\_by}, \texttt{created\_at}, and \texttt{status}.
+    
+    \item \textbf{Plot (Land Parcel):} Represents a land parcel. Attributes include \texttt{id}, \texttt{plot\_code}, \texttt{governorate\_id}, \texttt{town\_id}, \texttt{neighborhood\_id}, \texttt{area\_m2}, \texttt{slope}, \texttt{soil\_type\_id}, \texttt{rock\_type\_id}, \texttt{current\_land\_use}, \texttt{planned\_land\_use}, \texttt{far}, \texttt{coverage\_ratio}, \texttt{is\_current}, \texttt{version\_no}, \texttt{created\_by}, and \texttt{created\_at}.
+    
+    \item \textbf{Plot Document:} Represents documents related to a plot. Attributes include \texttt{id}, \texttt{plot\_id}, \texttt{doc\_type\_id}, \texttt{issuing\_authority\_id}, \texttt{doc\_number}, \texttt{issue\_date}, \texttt{share\_type}, and \texttt{share\_ratio}.
+    
+    \item \textbf{Model:} Represents a machine learning model. Attributes include \texttt{id}, \texttt{name}, \texttt{version}, \texttt{description}, \texttt{created\_by}, \texttt{created\_at}, and \texttt{is\_active}.
+    
+    \item \textbf{Valuation:} Represents the output of a model prediction for a plot in a project. Attributes include \texttt{id}, \texttt{project\_id}, \texttt{plot\_id}, \texttt{model\_id}, \texttt{predicted\_price}, \texttt{created\_at}, and \texttt{created\_by}.
+    
+    \item \textbf{Project Plot:} Represents the association between a project and its plots. Attributes include \texttt{id}, \texttt{project\_id}, \texttt{plot\_id}, \texttt{valuation\_id}, and \texttt{note}.
+    
+    \item \textbf{Plot Feedback:} Stores user feedback on a plot's estimated price. Attributes include \texttt{id}, \texttt{plot\_id}, \texttt{user\_id}, \texttt{is\_price\_accepted}, \texttt{suggested\_price}, and \texttt{created\_at}.
+    
+    \item \textbf{Governorate, Town, Neighborhood:} Represent geographical hierarchy. Attributes include \texttt{id}, \texttt{code}, \texttt{name\_ar}, and relevant foreign keys.
+    
+    \item \textbf{Supporting Lookup Tables:} Includes \texttt{Admin Zoning}, \texttt{Ownership Document Type}, \texttt{Issuing Authority}, \texttt{Soil Type}, \texttt{Rock Type}, \texttt{Crop Type}, \texttt{Nuisance Type}, and \texttt{Restriction Type} with their respective codes and labels.
+    
+    \item \textbf{Plot Crops, Plot Nuisances, Plot Restrictions:} Represent details of crops, nuisances, and restrictions on a plot. Attributes include plot foreign key, type foreign key, and specific measurements such as \texttt{coverage\_pct}, \texttt{tree\_count}, or \texttt{severity}.
+\end{enumerate}
+
+\clearpage
+\section{ER Diagram}
+\begin{figure}[H]
+  \captionsetup{position=top,labelformat=empty,labelsep=none}
+  \centering
+  \caption{Figure 3.4.1 ER Diagram}
+  \vspace{6pt}
+  \includegraphics[width=0.7\textheight]{images/ER.png}
+  \label{fig:erd}
+\end{figure}
+\clearpage
+
+\section{Database Description}
+
+\subsection{Users}
+\begin{itemize}[leftmargin=*,itemsep=2pt]
+  \item \texttt{id}: integer; PK; auto-increment.
+  \item \texttt{full\_name}: string; not-null.
+  \item \texttt{email}: string; unique; not-null.
+  \item \texttt{password}: string; not-null; $\geq$ 8 chars.
+  \item \texttt{role}: enum \{ADMIN, ASSESSOR, DATA\_SCIENTIST\}; not-null.
+  \item \texttt{created\_at}: datetime; not-null.
+\end{itemize}
+
+\subsection{Projects}
+\begin{itemize}[leftmargin=*,itemsep=2pt]
+  \item \texttt{id}: UUID; PK.
+  \item \texttt{name}: string; not-null.
+  \item \texttt{description}: string; not-null.
+  \item \texttt{created\_by}: integer; FK $\rightarrow$ \texttt{users.id}; not-null.
+  \item \texttt{created\_at}: datetime; not-null.
+  \item \texttt{status}: enum \{ACTIVE, ARCHIVED\}; not-null.
+\end{itemize}
+
+\subsection{Plots (Land Parcels)}
+\begin{itemize}[leftmargin=*,itemsep=2pt]
+  \item \texttt{id}: UUID; PK.
+  \item \texttt{plot\_code}: string; unique; not-null.
+  \item \texttt{governorate\_id}: integer; FK $\rightarrow$ \texttt{governorates.id}; not-null.
+  \item \texttt{town\_id}: integer; FK $\rightarrow$ \texttt{towns.id}; not-null.
+  \item \texttt{neighborhood\_id}: integer; FK $\rightarrow$ \texttt{neighborhoods.id}; not-null.
+  \item \texttt{area\_m2}: \texttt{decimal(12,2)}; $\geq 0$; not-null.
+  \item \texttt{slope}: enum \{FLAT, SLIGHT, MODERATE, STEEP\}; not-null.
+  \item \texttt{soil\_type\_id}: integer; FK $\rightarrow$ \texttt{soil\_type.id}; nullable.
+  \item \texttt{rock\_type\_id}: integer; FK $\rightarrow$ \texttt{rock\_type.id}; nullable.
+  \item \texttt{current\_land\_use}: enum \{RES, COM, AGR, IND, MIX, VACANT\}; not-null.
+  \item \texttt{planned\_land\_use}: enum \{RES, COM, AGR, IND, MIX, VACANT\}; nullable.
+  \item \texttt{far}: \texttt{decimal(6,3)}; $\geq 0$; nullable.
+  \item \texttt{coverage\_ratio}: \texttt{decimal(4,2)}; 0–1; nullable.
+  \item \texttt{is\_current}: boolean; not-null.
+  \item \texttt{version\_no}: integer; not-null.
+  \item \texttt{created\_by}: integer; FK $\rightarrow$ \texttt{users.id}; not-null.
+  \item \texttt{created\_at}: datetime; not-null.
+\end{itemize}
+
+\subsection{Plot\_Documents}
+\begin{itemize}[leftmargin=*,itemsep=2pt]
+  \item \texttt{id}: integer; PK; auto-increment.
+  \item \texttt{plot\_id}: UUID; FK $\rightarrow$ \texttt{plots.id}; not-null.
+  \item \texttt{doc\_type\_id}: integer; FK $\rightarrow$ \texttt{ownership\_document\_type.id}; not-null.
+  \item \texttt{issuing\_authority\_id}: integer; FK $\rightarrow$ \texttt{issuing\_authority.id}; not-null.
+  \item \texttt{doc\_number}: string; not-null.
+  \item \texttt{issue\_date}: date; not-null.
+  \item \texttt{share\_type}: enum \{INDIVIDUAL, MUSHA\}; not-null.
+  \item \texttt{share\_ratio}: string (e.g., “3/8”); nullable if \texttt{INDIVIDUAL}.
+\end{itemize}
+
+\subsection{Models}
+\begin{itemize}[leftmargin=*,itemsep=2pt]
+  \item \texttt{id}: UUID; PK.
+  \item \texttt{name}: string; not-null.
+  \item \texttt{version}: string; not-null.
+  \item \texttt{description}: string; not-null.
+  \item \texttt{created\_by}: integer; FK $\rightarrow$ \texttt{users.id}; not-null.
+  \item \texttt{created\_at}: datetime; not-null.
+  \item \texttt{is\_active}: boolean; not-null.
+\end{itemize}
+
+\subsection{Valuations}
+\begin{itemize}[leftmargin=*,itemsep=2pt]
+  \item \texttt{id}: UUID; PK.
+  \item \texttt{project\_id}: UUID; FK $\rightarrow$ \texttt{projects.id}; not-null.
+  \item \texttt{plot\_id}: UUID; FK $\rightarrow$ \texttt{plots.id}; not-null.
+  \item \texttt{model\_id}: UUID; FK $\rightarrow$ \texttt{models.id}; not-null.
+  \item \texttt{predicted\_price}: \texttt{decimal(12,2)}; not-null.
+  \item \texttt{created\_at}: datetime; not-null.
+  \item \texttt{created\_by}: integer; FK $\rightarrow$ \texttt{users.id}; not-null.
+\end{itemize}
+
+\subsection{Project\_Plots}
+\begin{itemize}[leftmargin=*,itemsep=2pt]
+  \item \texttt{id}: integer; PK; auto-increment.
+  \item \texttt{project\_id}: UUID; FK $\rightarrow$ \texttt{projects.id}; not-null.
+  \item \texttt{plot\_id}: UUID; FK $\rightarrow$ \texttt{plots.id}; not-null.
+  \item \texttt{valuation\_id}: UUID; FK $\rightarrow$ \texttt{valuations.id}; nullable.
+  \item \texttt{note}: string; optional short label.
+\end{itemize}
+
+\subsection{Plot\_Feedback}
+\begin{itemize}[leftmargin=*,itemsep=2pt]
+  \item \texttt{id}: integer; PK; auto-increment.
+  \item \texttt{plot\_id}: UUID; FK $\rightarrow$ \texttt{plots.id}; not-null.
+  \item \texttt{user\_id}: integer; FK $\rightarrow$ \texttt{users.id}; not-null.
+  \item \texttt{is\_price\_accepted}: boolean; not-null.
+  \item \texttt{suggested\_price}: \texttt{decimal(12,2)}; required if not accepted.
+  \item \texttt{created\_at}: datetime; not-null.
+\end{itemize}
+
+\subsection{Governorates}
+\begin{itemize}[leftmargin=*,itemsep=2pt]
+  \item \texttt{id}: integer; PK; auto-increment.
+  \item \texttt{code}: string; unique; not-null.
+  \item \texttt{name\_ar}: string; not-null.
+\end{itemize}
+
+\subsection{Towns}
+\begin{itemize}[leftmargin=*,itemsep=2pt]
+  \item \texttt{id}: integer; PK; auto-increment.
+  \item \texttt{governorate\_id}: integer; FK $\rightarrow$ \texttt{governorates.id}; not-null.
+  \item \texttt{code}: string; unique; not-null.
+  \item \texttt{name\_ar}: string; not-null.
+\end{itemize}
+
+\subsection{Neighborhoods}
+\begin{itemize}[leftmargin=*,itemsep=2pt]
+  \item \texttt{id}: integer; PK; auto-increment.
+  \item \texttt{town\_id}: integer; FK $\rightarrow$ \texttt{towns.id}; not-null.
+  \item \texttt{code}: string; unique; not-null.
+  \item \texttt{name\_ar}: string; not-null.
+\end{itemize}
+
+\subsection{Admin\_Zoning}
+\begin{itemize}[leftmargin=*,itemsep=2pt]
+  \item \texttt{id}: integer; PK; auto-increment.
+  \item \texttt{code}: string; unique; not-null.
+  \item \texttt{label\_ar}: string; not-null.
+\end{itemize}
+
+\subsection{Ownership\_Document\_Type}
+\begin{itemize}[leftmargin=*,itemsep=2pt]
+  \item \texttt{id}: integer; PK; auto-increment.
+  \item \texttt{code}: string; unique; not-null.
+  \item \texttt{label\_ar}: string; not-null.
+\end{itemize}
+
+\subsection{Issuing\_Authority}
+\begin{itemize}[leftmargin=*,itemsep=2pt]
+  \item \texttt{id}: integer; PK; auto-increment.
+  \item \texttt{code}: string; unique; not-null.
+  \item \texttt{label\_ar}: string; not-null.
+\end{itemize}
+
+\subsection{Soil\_Type}
+\begin{itemize}[leftmargin=*,itemsep=2pt]
+  \item \texttt{id}: integer; PK; auto-increment.
+  \item \texttt{code}: string; unique; not-null.
+  \item \texttt{label\_ar}: string; not-null.
+\end{itemize}
+
+\subsection{Rock\_Type}
+\begin{itemize}[leftmargin=*,itemsep=2pt]
+  \item \texttt{id}: integer; PK; auto-increment.
+  \item \texttt{code}: string; unique; not-null.
+  \item \texttt{label\_ar}: string; not-null.
+\end{itemize}
+
+\subsection{Crop\_Type}
+\begin{itemize}[leftmargin=*,itemsep=2pt]
+  \item \texttt{id}: integer; PK; auto-increment.
+  \item \texttt{code}: string; unique; not-null.
+  \item \texttt{label\_ar}: string; not-null.
+\end{itemize}
+
+\subsection{Nuisance\_Type}
+\begin{itemize}[leftmargin=*,itemsep=2pt]
+  \item \texttt{id}: integer; PK; auto-increment.
+  \item \texttt{code}: string; unique; not-null.
+  \item \texttt{label\_ar}: string; not-null.
+\end{itemize}
+
+\subsection{Restriction\_Type}
+\begin{itemize}[leftmargin=*,itemsep=2pt]
+  \item \texttt{id}: integer; PK; auto-increment.
+  \item \texttt{code}: string; unique; not-null.
+  \item \texttt{label\_ar}: string; not-null.
+\end{itemize}
+
+\subsection{Plot\_Crops}
+\begin{itemize}[leftmargin=*,itemsep=2pt]
+  \item \texttt{id}: integer; PK; auto-increment.
+  \item \texttt{plot\_id}: UUID; FK $\rightarrow$ \texttt{plots.id}; not-null.
+  \item \texttt{crop\_type\_id}: integer; FK $\rightarrow$ \texttt{crop\_type.id}; not-null.
+  \item \texttt{coverage\_pct}: \texttt{decimal(5,2)}; 0–100; nullable.
+  \item \texttt{tree\_count}: integer; $\geq 0$; nullable.
+\end{itemize}
+
+\subsection{Plot\_Nuisances}
+\begin{itemize}[leftmargin=*,itemsep=2pt]
+  \item \texttt{id}: integer; PK; auto-increment.
+  \item \texttt{plot\_id}: UUID; FK $\rightarrow$ \texttt{plots.id}; not-null.
+  \item \texttt{nuisance\_type\_id}: integer; FK $\rightarrow$ \texttt{nuisance\_type.id}; not-null.
+  \item \texttt{severity}: enum \{LOW, MEDIUM, HIGH\}; not-null.
+\end{itemize}
+
+\subsection{Plot\_Restrictions}
+\begin{itemize}[leftmargin=*,itemsep=2pt]
+  \item \texttt{id}: integer; PK; auto-increment.
+  \item \texttt{plot\_id}: UUID; FK $\rightarrow$ \texttt{plots.id}; not-null.
+  \item \texttt{restriction\_type\_id}: integer; FK $\rightarrow$ \texttt{restriction\_type.id}; not-null.
+\end{itemize}
+
+
+\section{Interfaces}
+% --- UI Snapshots ---
+
+\begin{figure}[H]
+\centering
+\captionsetup{position=top}
+\caption{Figure 3.6.1 Account Registration}
+\includegraphics[width=1\textwidth]{images/Register.png} 
+\label{fig:account-registration}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\captionsetup{position=top}
+\caption{Figure 3.6.2 Login Page}
+\includegraphics[width=1\textwidth]{images/Login_1.png} 
+\label{fig:login_page}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\captionsetup{position=top}
+\caption{Figure 3.6.3 Forgot Password}
+\includegraphics[width=1\textwidth]{images/Reset_password.png} 
+\label{fig:forgot_password}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\captionsetup{position=top}
+\caption{Figure 3.6.4 Home Page}
+\includegraphics[width=1\textwidth]{images/Home_page.png} 
+\label{fig:home_page}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\captionsetup{position=top}
+\caption{Figure 3.6.5 Create New Project}
+\includegraphics[width=1\textwidth]{images/Create_new_project.png} 
+\label{fig:Create_New_Project}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\captionsetup{position=top}
+\caption{Figure 3.6.6 View Projects}
+\includegraphics[width=1\textwidth]{images/View_projects_Appraiser.png} 
+\label{fig:View_Projects}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\captionsetup{position=top}
+\caption{Figure 3.6.7 View Profile}
+\includegraphics[width=1\textwidth]{images/Profile.png} 
+\label{fig:View_Profile}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\captionsetup{position=top}
+\caption{Figure 3.6.8 Edit Profile}
+\includegraphics[width=1\textwidth]{images/Edit_profile.png} 
+\label{fig:Edit_Profile}
+\end{figure}
+
+% --- Placeholders ---
+
+\begin{figure}[H]
+\centering
+\captionsetup{position=top}
+\caption{Figure 3.6.9 Select Project To Analyze}
+\includegraphics[width=1\textwidth]{images/View_projects_Data_scientist.png}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\captionsetup{position=top}
+\caption{Figure 3.6.10 Test Model Accuracy}
+\includegraphics[width=1\textwidth]{images/Model_testing.png}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\captionsetup{position=top}
+\caption{Figure 3.6.11 Review Feature Impact}
+\includegraphics[width=1\textwidth]{images/Feature_impact_2.png}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\captionsetup{position=top}
+\caption{Figure 3.6.12 Monitor Model Performance Over Time}
+\includegraphics[width=1\textwidth]{images/Model_history.png}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\captionsetup{position=top}
+\caption{Figure 3.6.13 Admin Dashboard}
+\includegraphics[width=1\textwidth]{images/Admin_dashboard.png}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\captionsetup{position=top}
+\caption{Figure 3.6.14 View And Manage Users}
+\includegraphics[width=1\textwidth]{images/User_management.png}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\captionsetup{position=top}
+\caption{Figure 3.6.15 View Admin Accounts}
+\includegraphics[width=1\textwidth]{images/Admin_management_2.png}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\captionsetup{position=top}
+\caption{Figure 3.6.16 Create Admin Account}
+\includegraphics[width=1\textwidth]{images/Admin_management_2.png}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\captionsetup{position=top}
+\caption{Figure 3.6.17 Manage Form Data}
+\includegraphics[width=1\textwidth]{images/Manage_Data_1.png}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\captionsetup{position=top}
+\caption{Figure 3.6.18 View System Logs}
+\includegraphics[width=1\textwidth]{images/System_logs.png}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\captionsetup{position=top}
+\caption{Figure 3.6.19 Manage Backups}
+\includegraphics[width=1\textwidth]{images/Backup_management.png}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\captionsetup{position=top}
+\caption{Figure 3.6.20 Create Activation Key}
+\includegraphics[width=1\textwidth]{images/Activation_keys.png}
+\end{figure}
+
+% -------------------- References --------------------
+\chapter*{References}
+\addcontentsline{toc}{chapter}{References}
+
+\begin{enumerate}[label={[\arabic*]}]
+
+\item J.~Starmer, ``Regression Trees, Clearly Explained!!!,'' \textit{StatQuest with Josh Starmer}, YouTube, 2020. [Online]. Available: \url{https://youtu.be/g9c66TUylZ4?si=0V35RgYavNRFB-yx}. Accessed: Jul.~3,~2025.
+
+\item J.~Starmer, ``CatBoost Part 1: Ordered Target Encoding,'' \textit{StatQuest with Josh Starmer}, YouTube, 2023. [Online]. Available: \url{https://youtu.be/KXOTSkPL2X4?si=Iq890z0lxjhSlImH}. Accessed: Jul.~3,~2025.
+
+\item J.~Starmer, ``CatBoost Part 2: Building and Using Trees,'' \textit{StatQuest with Josh Starmer}, YouTube, 2023. [Online]. Available: \url{https://youtu.be/3Bg2XRFOTzg?si=SUU2vVzNxbofFelA}. Accessed: Jul.~3,~2025.
+
+\end{enumerate}
+
+\end{document}
