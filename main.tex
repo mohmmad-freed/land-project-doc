@@ -54,13 +54,20 @@
 % Figure/Table captions (حجم أصغر وخط عريض لعنوان الكابتشن)
 \captionsetup{font=small,labelfont=bf}
 
-% ====== الإعداد المهم للجداول ======
+% ====== الإعداد المهم للجداول ======% 
 % 1) إلغاء "Table X:" من الكابتشن داخل النص، وطباعة محتوى \caption كما هو
 \captionsetup[table]{labelformat=empty,labelsep=none}
+
 % الأشكال بدون "Figure X:"
 \captionsetup[figure]{labelformat=empty,labelsep=none}
-% 2) في قائمة الجداول (List of Tables): إخفاء رقم الجدول التلقائي
-%    وترك نص الكابتشن كما هو (الذي يحتوي "Table 2.7.1 Login") مع نقاط وقائدات للصفحات
+
+% 2) في قائمة الأشكال (List of Figures): إخفاء رقم الشكل التلقائي
+\renewcommand{\cftfigpresnum}{}   % لا تطبع الرقم قبل العنوان
+\renewcommand{\cftfigaftersnum}{} % ولا أي فاصل بعده
+\setlength{\cftfignumwidth}{0pt}  % عدم حجز عرض لرقم الشكل
+\renewcommand{\cftfigleader}{\cftdotfill{\cftdotsep}} % تأكيد نقاط القيادة
+
+% 3) في قائمة الجداول (List of Tables): إخفاء رقم الجدول التلقائي
 \renewcommand{\cfttabpresnum}{}   % لا تطبع الرقم قبل العنوان
 \renewcommand{\cfttabaftersnum}{} % ولا أي فاصل بعده
 \setlength{\cfttabnumwidth}{0pt}  % عدم حجز عرض لرقم الجدول
@@ -2350,7 +2357,19 @@ Overall, Django was selected for this project due to its robust security feature
 \end{itemize}
 
 \subsection{Supporting Libraries}
+In addition to the main frameworks and development tools, several supporting libraries were used to facilitate backend development, form handling, authentication, and machine learning model training.
 
+\begin{itemize}[leftmargin=*, itemsep=3pt]
+    \item \textbf{Django Built-in Libraries:} The system relies  on Django’s built-in libraries to implement core backend functionalities. These include modules for authentication, authorization, form handling, and request processing. Django’s authentication utilities were used to manage user login, logout, and access control, ensuring that only authorized users can access specific system features.
+
+    \item \textbf{Django Forms:} Django’s ModelForm system was used to generate and manage forms based on database models. This approach simplifies form creation, enforces data validation at the server level, and ensures consistency between user input and stored data. 
+
+    \item \textbf{Machine Learning Libraries:} For machine learning model development, scikit-learn (imported using the sklearn module) was used to implement the Decision Tree Regression algorithm. The train\_test\_split function was utilized to divide the dataset into training and testing subsets, enabling proper model evaluation.
+
+    \item \textbf{Data Processing Library:} Pandas was used for data manipulation and preprocessing during the machine learning development phase. It was employed to load datasets, handle missing values, and prepare structured data suitable for training the regression model.
+
+
+\end{itemize}
 
 
 
