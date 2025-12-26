@@ -2319,7 +2319,35 @@ The Land Price Estimator system is built using a combination of programming and 
 
 \subsection{Web Framework}
 
+The Land Price Estimator system is developed using the \textbf{Django} web framework. Django is a high-level Python web framework that follows the \textbf{Model--View--Template (MVT)} architectural pattern and is designed to support rapid development, scalability, and secure web-based applications.
+
+Django serves as the core backend framework of the system and is responsible for handling HTTP requests, implementing business logic, managing database interactions, and rendering dynamic web pages. The MVT architecture is clearly reflected in the project structure, where models define the data schema, views contain the application logic, and templates generate the user interface presented to the users.
+
+The system adopts a \textbf{server-side rendering} approach using Django’s template engine. Dynamic content is generated on the server and delivered to the client as fully rendered HTML pages, ensuring better security, simplified logic flow, and compatibility across different browsers and devices.
+
+Django’s built-in \textbf{Object-Relational Mapping (ORM)} is used to interact with the database using Python objects instead of raw SQL queries. This abstraction improves code readability, maintainability, and reduces the risk of SQL injection vulnerabilities.
+
+User authentication and authorization are implemented using Django’s authentication framework with a \textbf{custom user model}. This design allows the system to support multiple user roles, including normal users, data scientists, and administrators. Role-based access control is enforced using decorators such as \texttt{@login\_required}, and users are redirected to the appropriate application section based on their account type after successful authentication.
+
+Django Forms and ModelForms are used to handle user input, perform server-side validation, manage file uploads, and securely process sensitive information such as passwords. Password management relies on Django’s built-in hashing mechanisms, ensuring that user credentials are stored and handled securely.
+
+The project follows a \textbf{modular multi-application structure}, where each user role is implemented as a separate Django application. This approach improves code organization, scalability, and maintainability by clearly separating concerns between different system components.
+
+Overall, Django was selected for this project due to its robust security features, clear architectural design, built-in authentication system, and strong support for data-driven web applications.
+
+
 \subsection{Development Tools}
+\begin{itemize}[leftmargin=*, itemsep=3pt]
+    \item \textbf{Integrated Development Environment (IDE):} Visual Studio Code (VS Code) was used as the primary integrated development environment. It provides strong support for Python and Django development, including syntax highlighting, debugging tools, code formatting, and extension support. Its flexibility and lightweight nature made it suitable for managing both backend and frontend code within the same environment.
+
+    \item \textbf{Version Control System:} Git was used for version control to track changes in the project source code, manage development history, and support collaboration between team members. The project repository was hosted on GitHub, which enabled centralized code management, backup, and easy sharing of the project.
+
+    \item \textbf{Database Management:} During development, SQLite was used as the default database system provided by Django. It is lightweight and easy to configure. Django’s Object-Relational Mapping (ORM) was used to interact with the database without writing raw SQL queries.
+
+    \item \textbf{Web Browser and Testing Tools:} Modern web browsers such as Brave and Comet were used for testing and debugging the frontend interface. Built-in developer tools were utilized to inspect HTML elements, debug JavaScript behavior, and test responsiveness across different screen sizes.
+
+    \item \textbf{Machine Learning Development Environment:} Google Colab was used to develop, train, and validate the machine learning model for predicting land prices. Using Python libraries such as scikit-learn, the Decision Tree Regression algorithm was implemented and trained on historical land parcel datasets. After model training, the resulting trained model was exported and later integrated into the Django backend. This allows the system to receive user-submitted land parcel data through a form, pass it to the trained model, and return predicted land prices in real time.
+\end{itemize}
 
 \subsection{Supporting Libraries}
 

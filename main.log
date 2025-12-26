@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999997 (MiKTeX 25.4) (preloaded format=xelatex 2025.12.23)  25 DEC 2025 17:51
+This is XeTeX, Version 3.141592653-2.6-0.999997 (MiKTeX 25.4) (preloaded format=xelatex 2025.12.23)  26 DEC 2025 15:23
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1385,30 +1385,55 @@ File: images/Activation_keys.png Graphic file (type bmp)
 <images/Activation_keys.png>
  [55] [56] [57
 
-] [58
+]
+Overfull \hbox (1.64746pt too wide) in paragraph at lines 2322--2323
+[]\TU/TimesNewRoman(0)/m/n/12 The Land Price Estimator system is developed usin
+g the \TU/TimesNewRoman(0)/b/n/12 Django \TU/TimesNewRoman(0)/m/n/12 web framew
+ork. Django[]
+ []
+
+[58
 
 ] [59]
-Overfull \hbox (1.68239pt too wide) in paragraph at lines 2335--2336
+Overfull \hbox (5.87221pt too wide) in paragraph at lines 2345--2346
+[][]\TU/TimesNewRoman(0)/b/n/12 Database Management: \TU/TimesNewRoman(0)/m/n/1
+2 During development, SQLite was used as the default database[]
+ []
+
+
+Overfull \hbox (0.35919pt too wide) in paragraph at lines 2349--2350
+[]\TU/TimesNewRoman(0)/m/n/12 train, and validate the machine learning model fo
+r predicting land prices. Using Python[]
+ []
+
+
+Overfull \hbox (0.59877pt too wide) in paragraph at lines 2349--2350
+[]\TU/TimesNewRoman(0)/m/n/12 libraries such as scikit-learn, the Decision Tree
+ Regression algorithm was implemented[]
+ []
+
+[60]
+Overfull \hbox (1.68239pt too wide) in paragraph at lines 2363--2364
 [][]\TU/TimesNewRoman(0)/m/n/12 J. Starmer, “Regression Trees, Clearly Explaine
 d!!!,” \TU/TimesNewRoman(0)/m/it/12 StatQuest with Josh Starmer\TU/TimesNewRoma
 n(0)/m/n/12 ,[]
  []
 
 
-Overfull \hbox (14.30504pt too wide) in paragraph at lines 2337--2338
+Overfull \hbox (14.30504pt too wide) in paragraph at lines 2365--2366
 []\TU/TimesNewRoman(0)/m/it/12 Starmer\TU/TimesNewRoman(0)/m/n/12 , YouTube, 20
 23. [Online]. Available: [][]$[][][][][] [] [] [] [][][][][] [] [][] [] [][][][
 ][][][][][][][] []$[][]
  []
 
 
-Overfull \hbox (14.30504pt too wide) in paragraph at lines 2339--2340
+Overfull \hbox (14.30504pt too wide) in paragraph at lines 2367--2368
 []\TU/TimesNewRoman(0)/m/it/12 Starmer\TU/TimesNewRoman(0)/m/n/12 , YouTube, 20
 23. [Online]. Available: [][]$[][][][][] [] [] [] [][][][][] [] [][] [] [][][][
 ][][][][][][][] []$[][]
  []
 
-[60
+[61
 
 ] (main.aux)
  ***********
@@ -1427,4 +1452,4 @@ Here is how much of TeX's memory you used:
  1348 hyphenation exceptions out of 8191
  82i,13n,93p,1189b,758s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on main.pdf (70 pages).
+Output written on main.pdf (71 pages).
