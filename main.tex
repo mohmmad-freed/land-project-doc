@@ -253,16 +253,18 @@ This project represents the first step in automating the process of real estate 
 \chaptertitlepage{Introduction}
 
 \section{Overview}
-This chapter introduces the main elements of the project. It begins with the idea of the project, then goes to its importance, followed by the goals of the project, the scope and limitations, and finally ends with the alternatives.
+This chapter introduces the main elements of the project. It begins with the idea of the project, then goes to its importance, followed by the goals of the project, the scope and limitations, the theoretical background, and finally the chosen algorithm and alternatives.
+
 \section{Idea of the Project}
-The main idea of the project is building a web application for an intelligent system that is capable of accurately predicting the land prices in the town of Bani Naim.
+The main idea of the project is building a web application for an intelligent system that is capable of accurately predicting the land prices in the town of Bani Na'im.
 In order for the system to predict accurately, it will depend on the techniques of artificial intelligence (AI) and machine learning (ML).
-The machine learning model will be trained by providing for it all the major factors affecting land prices, these factors include: area, distance to main roads and markets, availability of water and electricity supplies, among others. By feeding the machine learning algorithm with this data the project aims to provide a faster, more accurate, and more  transparent alternative to traditional land valuation methods.
+The machine learning model will be trained by providing for it all the major factors affecting land prices, these factors include: area, distance to main roads and markets, availability of water and electricity supplies, among others. By feeding the machine learning algorithm with this data the project aims to provide a faster, more accurate, and more transparent alternative to traditional land valuation methods.
 The project intends to benefit the appraisers and help them make objective and data driven decisions.
 
 \section{Importance}
-Due to the frequent transactions in the area, the need for a faster and more efficient pricing method  is growing, and one of the main advantages of this project's AI-powered approach is speed, while traditional/manual methods can take several hours to evaluate the price, the trained machine learning model can do it in seconds.
-Another need is reducing subjectivity, its crucial  to avoid the human bias in the field of land price evaluation because Human bias in land valuation can shift prices by thousands of shekels.  The project eliminates such bias by relying on data and algorithms alone, ensuring objective, data-driven, and transparent predictions.
+Due to the frequent transactions in the area, the need for a faster and more efficient pricing method is growing, and one of the main advantages of this project's AI-powered approach is speed, while traditional/manual methods can take several hours to evaluate the price, the trained machine learning model can do it in seconds.
+Another need is reducing subjectivity, it is crucial to avoid the human bias in the field of land price evaluation because human bias in land valuation can shift prices by thousands of shekels. The project eliminates such bias by relying on data and algorithms alone, ensuring objective, data-driven, and transparent predictions.
+
 \section{Goals of the Project}
 The main goal of the project is to develop a machine learning model capable of accurately estimating land prices in Bani Na’im and to achieve this goal, the project has the following objectives:
 
@@ -276,11 +278,8 @@ The main goal of the project is to develop a machine learning model capable of a
 
 The project aims to increase the efficiency and transparency of the land price estimations as well as making the process of price estimation easier for the appraisers.
 
-
-
-
 \section{Scope and Limitations}
-This project aims to predict land prices in the town of Bani Na'im using machine learning techniques depending on available real Bani Na'im land data. 
+This project aims to predict land prices in the town of Bani Na'im using machine learning techniques depending on available real Bani Na'im land data.
 The scope of the project includes developing a predictive machine learning model that predicts land prices depending on features like:
 
 \begin{itemize}[leftmargin=*]
@@ -292,7 +291,7 @@ The scope of the project includes developing a predictive machine learning model
     \item Proximity to essential public services (e.g., hospitals)
 \end{itemize}
 
-The project also involves designing a user-friendly interface that allows authorized users such as land appraisers, system admins, and data scientists to use the system — everyone as allowed to. 
+The project also involves designing a user-friendly interface that allows authorized users such as land appraisers, system admins, and data scientists to use the system — everyone as allowed to.
 
 On the other hand, the project faces many challenges that may affect the accuracy of the prediction. The accuracy depends directly on data quality and completeness in addition to the used model. The most important limitations are:
 
@@ -300,69 +299,125 @@ On the other hand, the project faces many challenges that may affect the accurac
     \item \textbf{Limited data availability:} The collected data may be outdated or incomplete, and some land prices may not be documented.
     \item \textbf{Assumption of data representativeness:} This project assumes that the available data reflects typical land characteristics in Bani Na’im.
     \item \textbf{Geographic limitation:} The model is specifically designed for lands just in Bani Na’im.
-    \item \textbf{It's not possible to consider external factors:} The model does not account for sudden market shifts, and in Palestine, Palestinians are vulnerable to forced displacement at any moment, which could cause a sudden gap in land prices.
+    \item \textbf{Not considering all external factors:} The model does not account for sudden market shifts, and in Palestine, Palestinians are vulnerable to forced displacement at any moment, which could cause a sudden gap in land prices.
     \item \textbf{Limited time:} Because of the limited time that we have, our team was not able to try many machine learning algorithms to choose the best one that validated our project.
 \end{itemize}
 
+\section{Background}
+\subsection{Artificial Intelligence (AI)}
+Artificial Intelligence (AI) is one of the most significant fields in modern computer science. It aims to develop intelligent systems capable of performing tasks that traditionally require human intelligence, such as reasoning, decision-making, pattern recognition, and prediction. AI systems rely on processing large datasets, extracting meaningful relationships, and generating insights that enable faster, more accurate, and more objective decisions compared to traditional manual approaches. In recent years, AI applications have expanded across numerous domains, including the real estate sector, where AI contributes to producing reliable, data-driven land and property price estimations.
+
+\subsection{Machine Learning (ML)}
+Machine Learning (ML) is a core discipline within AI that focuses on constructing models capable of learning automatically from data rather than being explicitly programmed for every possible case. ML models analyze historical data, discover patterns and relationships between input features and target variables, and utilize this knowledge to make predictions on new, unseen data.
+
+Machine learning approaches are commonly categorized into three main types:
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Supervised Learning:} The model is trained using labeled data that includes both input features and their corresponding correct outputs. This enables the model to learn the mapping between inputs and outputs.
+    \item \textbf{Unsupervised Learning:} The model learns from unlabeled data, aiming to uncover hidden structures, clusters, or patterns within the dataset.
+    \item \textbf{Reinforcement Learning:} The model learns by interacting with an environment, receiving feedback in the form of rewards or penalties, and improving its performance over time.
+\end{itemize}
+
+Since the objective of this project is to predict a continuous numerical value representing land price, the most suitable approach is supervised regression learning.
+
+\subsection{Regression in Machine Learning}
+Regression techniques are used when the target variable is continuous rather than categorical. In this project, regression is employed to estimate land prices based on multiple influential features, including:
+\begin{itemize}[leftmargin=*]
+    \item Geographic location
+    \item Land area
+    \item Administrative and political classification
+    \item Availability of services and infrastructure
+    \item Proximity to main roads and essential facilities
+\end{itemize}
+
+Using regression enables objective, consistent, and data-driven valuation while reducing reliance on subjective human estimation, which may vary among assessors.
+
+\subsection{Regression Tree}
+A Regression Tree is one of the widely used supervised learning algorithms for predicting continuous values such as real estate and land prices. A regression tree consists of internal nodes, branches, and terminal leaf nodes.
+
+The dataset is recursively divided into increasingly homogeneous subsets by selecting the most informative feature and an appropriate splitting threshold at each node. This process continues until specific stopping criteria are satisfied, such as:
+\begin{itemize}[leftmargin=*]
+    \item Reaching a maximum tree depth
+    \item Reaching a minimum number of samples in a node
+    \item Achieving an acceptable prediction error
+\end{itemize}
+
+Ultimately, each leaf node represents a group of lands sharing similar characteristics, and a corresponding price estimation is assigned to that group.
+
+\subsection{Overfitting and Pruning}
+Regression trees may suffer from overfitting when the tree becomes too complex, learns noise from the training data, and performs poorly on new data. To address this limitation, pruning techniques are applied.
+
+Pre-pruning restricts tree growth through constraints such as limiting maximum depth or requiring a minimum number of samples per node. Post-pruning builds a full tree and then removes branches that do not contribute significantly to prediction performance. These methods enhance the model’s generalization capability and improve the stability of predictions.
+
+\subsection{Reason for Choosing Regression Tree}
+The Regression Tree algorithm was selected for this project because it provides interpretable decision-making, supports both numerical and categorical data, performs effectively with small to medium-sized datasets, captures non-linear relationships, and matches the multi-factor nature of land price estimation. Therefore, it represents a scientifically justified and practically efficient choice for predicting land prices in Bani Na’im.
+
+\section{Mathematical Background}
+The Regression Tree model implemented in this project is mathematically supported by several fundamental principles governing node splitting, prediction generation, and model complexity control.
+
+\subsection{Sum of Squared Residuals (SSR)}
+At each node, the quality of the grouping is evaluated using the Sum of Squared Residuals (SSR), which measures how close the values are to their mean:
+\[
+SSR = \sum_{i=1}^{n}(y_i - \bar{y})^2
+\]
+where \(y_i\) is the actual price of sample \(i\), \(\bar{y}\) is the mean price of samples in the node, and \(n\) is the number of samples in the node.
+A lower SSR indicates better homogeneity and therefore a better-quality node.
+
+\subsection{Best Split Criterion}
+For each potential split, SSR is computed for the left and right subsets. The total resulting error is:
+\[
+SSR_{total} = SSR_{left} + SSR_{right}
+\]
+The optimal split is the one that minimizes \(SSR_{total}\), ensuring that the resulting subsets are more homogeneous and stable.
+
+\subsection{Leaf Node Prediction}
+After the splitting process terminates, each leaf node represents a set of similar samples. The predicted value assigned to a leaf node is the mean value of all samples within it:
+\[
+\hat{y} = \frac{1}{n}\sum_{i=1}^{n} y_i
+\]
+Any new instance that reaches this leaf will be assigned this value as its predicted land price.
+
+\subsection{Model Complexity Control (Cost Complexity Pruning)}
+To avoid overfitting, a penalty term is introduced to balance accuracy and structural complexity:
+\[
+R_\alpha(T) = R(T) + \alpha |T|
+\]
+where \(R(T)\) is the prediction error of the tree, \(|T|\) is the number of terminal nodes, and \(\alpha\) is a regularization parameter controlling complexity.
+Increasing \(\alpha\) reduces tree size and enhances generalization capability.
+
+\subsection{Summary}
+These mathematical foundations ensure objective and optimal splitting decisions, accurate prediction generation, and an appropriate balance between accuracy and complexity. As a result, the Regression Tree model used in this project provides reliable, stable, and data-driven land price estimation.
 
 \section{Alternatives}
 There are several alternative methods for evaluating the land prices, but the most common method used in Bani Na’im is \textbf{comparative market analysis (CMA)}, which is comparing the land to be evaluated to similar lands that were recently sold. These lands have shared attributes to be compared.
 
-Although this method is commonly used, it’s less accurate and less effective than the machine learning method, and also more complicated to justify the result because the CMA method relies heavily on the subjective judgment of experts rather than objective land statistics, which can introduce bias and inconsistency.
+Although this method is commonly used, it is less accurate and less effective than the machine learning method, and also more complicated to justify the result because the CMA method relies heavily on the subjective judgment of experts rather than objective land statistics, which can introduce bias and inconsistency.
 
-In contrast, this project leverages \textbf{machine learning models}, which can automatically learn from vast amounts of data and adapt to changing market and political conditions to provide faster, more accurate predictions and justifiable, transparent results.
-
+In contrast, this project leverages machine learning models, which can automatically learn from data and adapt to changing market and political conditions to provide faster, more accurate predictions and justifiable, transparent results.
 
 \section{Chosen Algorithm for the Model}
-We will adopt the decision tree regression algorithm for our machine learning model as the base algorithm for the following reasons:
+We adopt the decision tree regression algorithm as the base machine learning model in this project. This choice is consistent with the theoretical and mathematical background presented in the previous sections and is motivated by the following reasons:
 
-\begin{enumerate}
+\begin{enumerate}[leftmargin=*]
     \item It can handle both numerical and categorical data.
-    \item It works well with non-linear data.
-    \item Provides clear visualization of the decision-making process.
-    \item It works well with small to medium-sized datasets.
-    \item Its simple to use and easy to understand.
+    \item It works well with non-linear relationships between features and the target.
+    \item It provides a clear, interpretable visualization of the decision-making process.
+    \item It performs well with small to medium-sized datasets, which matches the available data for Bani Na’im.
+    \item It is relatively simple to implement and easy to understand, which facilitates further development and maintenance.
 \end{enumerate}
 
+\subsection{Practical Behavior of Decision Tree Regression in This Project}
+In the context of this project, the decision tree regression model operates as follows:
 
-\subsection{What is Decision Tree Regression?}
-To understand decision tree regression, we need to start with some background:
-
-\textbf{Artificial Intelligence (AI):} \\
-AI is basically the field in computer science that tries to make machines do tasks that normally need human intelligence, like problem-solving, learning, or making decisions.
-
-\textbf{Machine Learning (ML):} \\
-ML is a part of AI. It’s about creating algorithms that can learn from data and get better over time without someone needing to program every single step.
-
-\textbf{Types of Machine Learning:}
-\begin{itemize}
-    \item \textbf{Supervised Learning} – The model learns from labeled data (input with the correct output).
-    \item \textbf{Unsupervised Learning} – The model finds hidden patterns in unlabeled data.
-    \item \textbf{Reinforcement Learning} – The model learns by interacting with an environment and receiving rewards or penalties.
-\end{itemize}
-
-Since decision tree regression is a type of supervised learning, let’s focus more on that.
-
-\textbf{Supervised Learning:} \\
-In supervised learning, we give the model both the input data and the correct answers (labels). The idea is that the model learns the connection between them so it can predict the right output for new data. There are two main types:
-\begin{itemize}
-    \item \textbf{Classification} – used when the result is a category (like predicting if an email is spam or not).
-    \item \textbf{Regression} – used when the result is a continuous number (like predicting house prices).
-\end{itemize}
-
-\textbf{Decision Trees:} \\
-Think of a decision tree like a game of “20 Questions.” At each step, you ask a yes/no question about the data, and the answer decides which branch you follow. You keep going until you reach the end of a branch, which gives you the prediction.
-
-\textbf{Decision Tree Regression:} \\
-Decision tree regression is a type of regression that uses a decision tree to predict continuous values, and that how it works:
-\begin{enumerate}
-    \item The dataset is split into smaller and smaller regions based on feature values.
-    \item At each split, the algorithm chooses the feature and threshold that reduces the error the most, commonly by using the Sum of Squared Residuals (SSR).
-    \item This splitting continues until a stopping condition is reached (like maximum depth or minimum samples per leaf).
-    \item Each final region (leaf node) outputs the average value of the target variable for the samples inside it.
+\begin{enumerate}[leftmargin=*]
+    \item The input features (such as area, location, political classification, and infrastructure availability) are used to recursively split the data into smaller regions.
+    \item At each split, the model selects the feature and threshold that minimize the sum of squared residuals, as described in the mathematical background.
+    \item Splitting continues until one of the stopping criteria is met, such as maximum depth or minimum number of samples per leaf.
+    \item Each terminal node (leaf) stores the average land price of the training samples that fall into that region.
+    \item When a new land instance is entered into the system, it is routed through the tree according to its features until it reaches a leaf, where the stored average price is returned as the predicted land value.
 \end{enumerate}
 
-This helps the model understand non-linear relationships between the inputs and the target. In the end, it gives us a model that’s easy to read, simple to explain, and works well for regression problems which is the case with our Land-Price Prediction project.
+This behavior allows the model to capture complex relationships between land characteristics and price, while maintaining a structure that is transparent and explainable to domain experts such as land appraisers.
+
 
 
 % -------------------- Chapter 2 --------------------

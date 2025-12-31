@@ -1,33 +1,33 @@
-\contentsline {table}{\numberline {2.1}{\ignorespaces \xpg@aux {}{english}\ignorespaces Table 2.7.1 Login}}{14}{table.caption.5}%
-\contentsline {table}{\numberline {2.2}{\ignorespaces \xpg@aux {}{english}\ignorespaces Table 2.7.2 Register Account}}{15}{table.caption.6}%
-\contentsline {table}{\numberline {2.3}{\ignorespaces \xpg@aux {}{english}\ignorespaces Table 2.7.3 Logout}}{15}{table.caption.7}%
-\contentsline {table}{\numberline {2.4}{\ignorespaces \xpg@aux {}{english}\ignorespaces Table 2.7.4 Reset Password}}{16}{table.caption.8}%
-\contentsline {table}{\numberline {2.5}{\ignorespaces \xpg@aux {}{english}\ignorespaces Table 2.7.5 Create Project}}{17}{table.caption.9}%
-\contentsline {table}{\numberline {2.6}{\ignorespaces \xpg@aux {}{english}\ignorespaces Table 2.7.6 Estimate Price}}{17}{table.caption.10}%
-\contentsline {table}{\numberline {2.7}{\ignorespaces \xpg@aux {}{english}\ignorespaces Table 2.7.7 View Projects}}{18}{table.caption.11}%
-\contentsline {table}{\numberline {2.8}{\ignorespaces \xpg@aux {}{english}\ignorespaces Table 2.7.8 Update Projects}}{18}{table.caption.12}%
-\contentsline {table}{\numberline {2.9}{\ignorespaces \xpg@aux {}{english}\ignorespaces Table 2.7.9 View Profile}}{19}{table.caption.13}%
-\contentsline {table}{\numberline {2.10}{\ignorespaces \xpg@aux {}{english}\ignorespaces Table 2.7.10 Edit Profile}}{19}{table.caption.14}%
-\contentsline {table}{\numberline {2.11}{\ignorespaces \xpg@aux {}{english}\ignorespaces Table 2.7.11 Rate Estimation Result}}{20}{table.caption.15}%
-\contentsline {table}{\numberline {2.12}{\ignorespaces \xpg@aux {}{english}\ignorespaces Table 2.8.1 Login}}{20}{table.caption.16}%
-\contentsline {table}{\numberline {2.13}{\ignorespaces \xpg@aux {}{english}\ignorespaces Table 2.8.2 Logout}}{21}{table.caption.17}%
-\contentsline {table}{\numberline {2.14}{\ignorespaces \xpg@aux {}{english}\ignorespaces Table 2.8.3 Creating Admin Account}}{21}{table.caption.18}%
-\contentsline {table}{\numberline {2.15}{\ignorespaces \xpg@aux {}{english}\ignorespaces Table 2.8.4 Manage Users}}{22}{table.caption.19}%
-\contentsline {table}{\numberline {2.16}{\ignorespaces \xpg@aux {}{english}\ignorespaces Table 2.8.5 Manage Form Data}}{22}{table.caption.20}%
-\contentsline {table}{\numberline {2.17}{\ignorespaces \xpg@aux {}{english}\ignorespaces Table 2.8.6 View System Logs}}{23}{table.caption.21}%
-\contentsline {table}{\numberline {2.18}{\ignorespaces \xpg@aux {}{english}\ignorespaces Table 2.8.7 Manage Backups}}{23}{table.caption.22}%
-\contentsline {table}{\numberline {2.19}{\ignorespaces \xpg@aux {}{english}\ignorespaces Table 2.8.8 Create Activation Key}}{24}{table.caption.23}%
-\contentsline {table}{\numberline {2.20}{\ignorespaces \xpg@aux {}{english}\ignorespaces Table 2.8.9 Reset Password}}{25}{table.caption.24}%
-\contentsline {table}{\numberline {2.21}{\ignorespaces \xpg@aux {}{english}\ignorespaces Table 2.8.10 View Profile}}{26}{table.caption.25}%
-\contentsline {table}{\numberline {2.22}{\ignorespaces \xpg@aux {}{english}\ignorespaces Table 2.8.11 Edit Profile}}{26}{table.caption.26}%
-\contentsline {table}{\numberline {2.23}{\ignorespaces \xpg@aux {}{english}\ignorespaces Table 2.9.1 Login}}{27}{table.caption.27}%
-\contentsline {table}{\numberline {2.24}{\ignorespaces \xpg@aux {}{english}\ignorespaces Table 2.9.2 Logout}}{27}{table.caption.28}%
-\contentsline {table}{\numberline {2.25}{\ignorespaces \xpg@aux {}{english}\ignorespaces Table 2.9.3 Register Account}}{28}{table.caption.29}%
-\contentsline {table}{\numberline {2.26}{\ignorespaces \xpg@aux {}{english}\ignorespaces Table 2.9.4 Test Model Accuracy}}{29}{table.caption.30}%
-\contentsline {table}{\numberline {2.27}{\ignorespaces \xpg@aux {}{english}\ignorespaces Table 2.9.5 Review Feature Impact}}{29}{table.caption.31}%
-\contentsline {table}{\numberline {2.28}{\ignorespaces \xpg@aux {}{english}\ignorespaces Table 2.9.6 Monitor Model Performance Over Time}}{30}{table.caption.32}%
-\contentsline {table}{\numberline {2.29}{\ignorespaces \xpg@aux {}{english}\ignorespaces Table 2.9.7 Select Project to Analyze}}{31}{table.caption.33}%
-\contentsline {table}{\numberline {2.30}{\ignorespaces \xpg@aux {}{english}\ignorespaces Table 2.9.8 Reset Password}}{32}{table.caption.34}%
-\contentsline {table}{\numberline {2.31}{\ignorespaces \xpg@aux {}{english}\ignorespaces Table 2.9.9 View Profile}}{33}{table.caption.35}%
-\contentsline {table}{\numberline {2.32}{\ignorespaces \xpg@aux {}{english}\ignorespaces Table 2.9.10 Edit Profile}}{33}{table.caption.36}%
-\contentsline {table}{\numberline {3.1}{\ignorespaces \xpg@aux {}{english}\ignorespaces Table 3.2.1 MVT Components}}{35}{table.caption.37}%
+\contentsline {table}{\numberline {2.1}{\ignorespaces \xpg@aux {}{english}\ignorespaces Table 2.7.1 Login}}{17}{table.caption.5}%
+\contentsline {table}{\numberline {2.2}{\ignorespaces \xpg@aux {}{english}\ignorespaces Table 2.7.2 Register Account}}{18}{table.caption.6}%
+\contentsline {table}{\numberline {2.3}{\ignorespaces \xpg@aux {}{english}\ignorespaces Table 2.7.3 Logout}}{18}{table.caption.7}%
+\contentsline {table}{\numberline {2.4}{\ignorespaces \xpg@aux {}{english}\ignorespaces Table 2.7.4 Reset Password}}{19}{table.caption.8}%
+\contentsline {table}{\numberline {2.5}{\ignorespaces \xpg@aux {}{english}\ignorespaces Table 2.7.5 Create Project}}{20}{table.caption.9}%
+\contentsline {table}{\numberline {2.6}{\ignorespaces \xpg@aux {}{english}\ignorespaces Table 2.7.6 Estimate Price}}{20}{table.caption.10}%
+\contentsline {table}{\numberline {2.7}{\ignorespaces \xpg@aux {}{english}\ignorespaces Table 2.7.7 View Projects}}{21}{table.caption.11}%
+\contentsline {table}{\numberline {2.8}{\ignorespaces \xpg@aux {}{english}\ignorespaces Table 2.7.8 Update Projects}}{21}{table.caption.12}%
+\contentsline {table}{\numberline {2.9}{\ignorespaces \xpg@aux {}{english}\ignorespaces Table 2.7.9 View Profile}}{22}{table.caption.13}%
+\contentsline {table}{\numberline {2.10}{\ignorespaces \xpg@aux {}{english}\ignorespaces Table 2.7.10 Edit Profile}}{22}{table.caption.14}%
+\contentsline {table}{\numberline {2.11}{\ignorespaces \xpg@aux {}{english}\ignorespaces Table 2.7.11 Rate Estimation Result}}{23}{table.caption.15}%
+\contentsline {table}{\numberline {2.12}{\ignorespaces \xpg@aux {}{english}\ignorespaces Table 2.8.1 Login}}{23}{table.caption.16}%
+\contentsline {table}{\numberline {2.13}{\ignorespaces \xpg@aux {}{english}\ignorespaces Table 2.8.2 Logout}}{24}{table.caption.17}%
+\contentsline {table}{\numberline {2.14}{\ignorespaces \xpg@aux {}{english}\ignorespaces Table 2.8.3 Creating Admin Account}}{24}{table.caption.18}%
+\contentsline {table}{\numberline {2.15}{\ignorespaces \xpg@aux {}{english}\ignorespaces Table 2.8.4 Manage Users}}{25}{table.caption.19}%
+\contentsline {table}{\numberline {2.16}{\ignorespaces \xpg@aux {}{english}\ignorespaces Table 2.8.5 Manage Form Data}}{25}{table.caption.20}%
+\contentsline {table}{\numberline {2.17}{\ignorespaces \xpg@aux {}{english}\ignorespaces Table 2.8.6 View System Logs}}{26}{table.caption.21}%
+\contentsline {table}{\numberline {2.18}{\ignorespaces \xpg@aux {}{english}\ignorespaces Table 2.8.7 Manage Backups}}{26}{table.caption.22}%
+\contentsline {table}{\numberline {2.19}{\ignorespaces \xpg@aux {}{english}\ignorespaces Table 2.8.8 Create Activation Key}}{27}{table.caption.23}%
+\contentsline {table}{\numberline {2.20}{\ignorespaces \xpg@aux {}{english}\ignorespaces Table 2.8.9 Reset Password}}{28}{table.caption.24}%
+\contentsline {table}{\numberline {2.21}{\ignorespaces \xpg@aux {}{english}\ignorespaces Table 2.8.10 View Profile}}{29}{table.caption.25}%
+\contentsline {table}{\numberline {2.22}{\ignorespaces \xpg@aux {}{english}\ignorespaces Table 2.8.11 Edit Profile}}{29}{table.caption.26}%
+\contentsline {table}{\numberline {2.23}{\ignorespaces \xpg@aux {}{english}\ignorespaces Table 2.9.1 Login}}{30}{table.caption.27}%
+\contentsline {table}{\numberline {2.24}{\ignorespaces \xpg@aux {}{english}\ignorespaces Table 2.9.2 Logout}}{30}{table.caption.28}%
+\contentsline {table}{\numberline {2.25}{\ignorespaces \xpg@aux {}{english}\ignorespaces Table 2.9.3 Register Account}}{31}{table.caption.29}%
+\contentsline {table}{\numberline {2.26}{\ignorespaces \xpg@aux {}{english}\ignorespaces Table 2.9.4 Test Model Accuracy}}{32}{table.caption.30}%
+\contentsline {table}{\numberline {2.27}{\ignorespaces \xpg@aux {}{english}\ignorespaces Table 2.9.5 Review Feature Impact}}{32}{table.caption.31}%
+\contentsline {table}{\numberline {2.28}{\ignorespaces \xpg@aux {}{english}\ignorespaces Table 2.9.6 Monitor Model Performance Over Time}}{33}{table.caption.32}%
+\contentsline {table}{\numberline {2.29}{\ignorespaces \xpg@aux {}{english}\ignorespaces Table 2.9.7 Select Project to Analyze}}{34}{table.caption.33}%
+\contentsline {table}{\numberline {2.30}{\ignorespaces \xpg@aux {}{english}\ignorespaces Table 2.9.8 Reset Password}}{35}{table.caption.34}%
+\contentsline {table}{\numberline {2.31}{\ignorespaces \xpg@aux {}{english}\ignorespaces Table 2.9.9 View Profile}}{36}{table.caption.35}%
+\contentsline {table}{\numberline {2.32}{\ignorespaces \xpg@aux {}{english}\ignorespaces Table 2.9.10 Edit Profile}}{36}{table.caption.36}%
+\contentsline {table}{\numberline {3.1}{\ignorespaces \xpg@aux {}{english}\ignorespaces Table 3.2.1 MVT Components}}{38}{table.caption.37}%
