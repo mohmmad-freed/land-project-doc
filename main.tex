@@ -350,8 +350,9 @@ Regression trees may suffer from overfitting when the tree becomes too complex, 
 
 Pre-pruning restricts tree growth through constraints such as limiting maximum depth or requiring a minimum number of samples per node. Post-pruning builds a full tree and then removes branches that do not contribute significantly to prediction performance. These methods enhance the model’s generalization capability and improve the stability of predictions.
 
-\subsection{Reason for Choosing Regression Tree}
+\subsection{Reasons for Choosing Decision Tree Regression}
 The Regression Tree algorithm was selected for this project because it provides interpretable decision-making, supports both numerical and categorical data, performs effectively with small to medium-sized datasets, captures non-linear relationships, and matches the multi-factor nature of land price estimation. Therefore, it represents a scientifically justified and practically efficient choice for predicting land prices in Bani Na’im.
+In addition, and  from a computational perspective, regression trees are efficient to train and evaluate, making them suitable for deployment within a web-based system. Their relatively low computational cost ensures fast response times during user interactions, which enhances system usability and scalability.
 
 \section{Mathematical Background}
 The Regression Tree model implemented in this project is mathematically supported by several fundamental principles governing node splitting, prediction generation, and model complexity control.
@@ -386,41 +387,12 @@ R_\alpha(T) = R(T) + \alpha |T|
 where \(R(T)\) is the prediction error of the tree, \(|T|\) is the number of terminal nodes, and \(\alpha\) is a regularization parameter controlling complexity.
 Increasing \(\alpha\) reduces tree size and enhances generalization capability.
 
-\subsection{Summary}
-These mathematical foundations ensure objective and optimal splitting decisions, accurate prediction generation, and an appropriate balance between accuracy and complexity. As a result, the Regression Tree model used in this project provides reliable, stable, and data-driven land price estimation.
-
 \section{Alternatives}
 There are several alternative methods for evaluating the land prices, but the most common method used in Bani Na’im is \textbf{comparative market analysis (CMA)}, which is comparing the land to be evaluated to similar lands that were recently sold. These lands have shared attributes to be compared.
 
 Although this method is commonly used, it is less accurate and less effective than the machine learning method, and also more complicated to justify the result because the CMA method relies heavily on the subjective judgment of experts rather than objective land statistics, which can introduce bias and inconsistency.
 
 In contrast, this project leverages machine learning models, which can automatically learn from data and adapt to changing market and political conditions to provide faster, more accurate predictions and justifiable, transparent results.
-
-\section{Chosen Algorithm for the Model}
-We adopt the decision tree regression algorithm as the base machine learning model in this project. This choice is consistent with the theoretical and mathematical background presented in the previous sections and is motivated by the following reasons:
-
-\begin{enumerate}[leftmargin=*]
-    \item It can handle both numerical and categorical data.
-    \item It works well with non-linear relationships between features and the target.
-    \item It provides a clear, interpretable visualization of the decision-making process.
-    \item It performs well with small to medium-sized datasets, which matches the available data for Bani Na’im.
-    \item It is relatively simple to implement and easy to understand, which facilitates further development and maintenance.
-\end{enumerate}
-
-\subsection{Practical Behavior of Decision Tree Regression in This Project}
-In the context of this project, the decision tree regression model operates as follows:
-
-\begin{enumerate}[leftmargin=*]
-    \item The input features (such as area, location, political classification, and infrastructure availability) are used to recursively split the data into smaller regions.
-    \item At each split, the model selects the feature and threshold that minimize the sum of squared residuals, as described in the mathematical background.
-    \item Splitting continues until one of the stopping criteria is met, such as maximum depth or minimum number of samples per leaf.
-    \item Each terminal node (leaf) stores the average land price of the training samples that fall into that region.
-    \item When a new land instance is entered into the system, it is routed through the tree according to its features until it reaches a leaf, where the stored average price is returned as the predicted land value.
-\end{enumerate}
-
-This behavior allows the model to capture complex relationships between land characteristics and price, while maintaining a structure that is transparent and explainable to domain experts such as land appraisers.
-
-
 
 % -------------------- Chapter 2 --------------------
 \chaptertitlepage{Requirement Specifications}
