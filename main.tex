@@ -704,59 +704,12 @@ Exceptions &
 \end{tabularx}
 \end{table}
 
-% ---- Table 2.7.4 Reset Password ----
+
+
+% ---- Table 2.7.4 Create Project ----
 \begin{table}[H]
 \centering
-\caption{Table 2.7.4 Reset Password}
-\label{tab:req-reset-password}
-\begin{tabularx}{\textwidth}{|p{3cm}|X|}
-\hline
-\textbf{Field} & \textbf{Content} \\ \hline
-
-Requirement & Reset Password \\ \hline
-
-Actor & Land Appraiser \\ \hline
-
-Objective & Change the password. \\ \hline
-
-Precondition & Appraiser has a valid registered email. \\ \hline
-
-Scenario & 
-\begin{minipage}[t]{0.75\textwidth}
-\begin{enumerate}[leftmargin=*,label=\arabic*.]
-\item Appraiser clicks "Forgot Password" on the login page or selects "Change Password" from their profile.
-\item If "Forgot Password":
-  \begin{enumerate}[label*=\arabic*.]
-  \item System prompts for the registered email.
-  \item Appraiser enters email and submits.
-  \item System sends a password reset link or code to the email.
-  \item Appraiser clicks the link or enters the code, then sets a new password.
-  \end{enumerate}
-\item If "Change Password" from profile:
-  \begin{enumerate}[label*=\arabic*.]
-  \item Appraiser enters current password and new password.
-  \item System verifies the current password and updates it.
-  \end{enumerate}
-\item System confirms that the password has been successfully updated.
-\end{enumerate}
-\end{minipage} \\ \hline
-
-Exceptions & 
-\begin{minipage}[t]{0.75\textwidth}
-\begin{enumerate}[leftmargin=*,label=\arabic*.]
-\item Email not found in the system.
-\item Invalid or expired reset link/code.
-\item Incorrect current password (when changing from profile).
-\item Server or database error during update.
-\end{enumerate}
-\end{minipage} \\ \hline
-\end{tabularx}
-\end{table}
-
-% ---- Table 2.7.5 Create Project ----
-\begin{table}[H]
-\centering
-\caption{Table 2.7.5 Create Project}
+\caption{Table 2.7.4 Create Project}
 \label{tab:req-create-project}
 \begin{tabularx}{\textwidth}{|p{3cm}|X|}
 \hline
@@ -790,10 +743,10 @@ Exceptions &
 \end{tabularx}
 \end{table}
 
-% ---- Table 2.7.6 Estimate Price ----
+% ---- Table 2.7.5 Estimate Price ----
 \begin{table}[H]
 \centering
-\caption{Table 2.7.6 Estimate Price}
+\caption{Table 2.7.5 Estimate Price}
 \label{tab:req-estimate-price}
 \begin{tabularx}{\textwidth}{|p{3cm}|X|}
 \hline
@@ -827,312 +780,14 @@ Exceptions &
 \end{tabularx}
 \end{table}
 
-% ---- Table 2.7.7 View Projects ----
-\begin{table}[H]
-\centering
-\caption{Table 2.7.7 View Projects}
-\label{tab:req-view-projects}
-\begin{tabularx}{\textwidth}{|p{3cm}|X|}
-\hline
-\textbf{Field} & \textbf{Content} \\ \hline
-
-Requirement & View Projects \\ \hline
-
-Actor & Land Appraiser \\ \hline
-
-Objective & Access previously estimated land projects to view them. \\ \hline
-
-Precondition & Appraiser must be logged in. \\ \hline
-
-Scenario & 
-\begin{minipage}[t]{0.75\textwidth}
-\begin{enumerate}[leftmargin=*,label=\arabic*.]
-\item Appraiser selects ‘My Projects’.
-\item System displays a list of past projects.
-\item Appraiser can select any project to view.
-\end{enumerate}
-\end{minipage} \\ \hline
-
-Exceptions & 
-\begin{minipage}[t]{0.75\textwidth}
-\begin{enumerate}[leftmargin=*,label=\arabic*.]
-\item No saved projects.
-\item Database access failure.
-\item Network error.
-\end{enumerate}
-\end{minipage} \\ \hline
-\end{tabularx}
-\end{table}
-
-% ---- Table 2.7.8 Update Projects ----
-\begin{table}[H]
-\centering
-\caption{Table 2.7.8 Update Projects}
-\label{tab:req-update-projects}
-\begin{tabularx}{\textwidth}{|p{3cm}|X|}
-\hline
-\textbf{Field} & \textbf{Content} \\ \hline
-
-Requirement & Update Projects \\ \hline
-
-Actor & Land Appraiser \\ \hline
-
-Objective & Edit previously estimated land projects, perform new estimations, and keep a record of past estimations for the same project. \\ \hline
-
-Precondition & Appraiser must be logged in. \\ \hline
-
-Scenario & 
-\begin{minipage}[t]{0.75\textwidth}
-\begin{enumerate}[leftmargin=*,label=\arabic*.]
-\item Appraiser selects ‘My Projects’.
-\item System displays a list of past projects.
-\item Appraiser selects a project to update.
-\item Appraiser edits the project details.
-\item System generates a new estimation for the updated data.
-\item Previous estimations for the same project are saved and can be viewed.
-\end{enumerate}
-\end{minipage} \\ \hline
-
-Exceptions & 
-\begin{minipage}[t]{0.75\textwidth}
-\begin{enumerate}[leftmargin=*,label=\arabic*.]
-\item No saved projects.
-\item Database access failure.
-\item Network error.
-\end{enumerate}
-\end{minipage} \\ \hline
-\end{tabularx}
-\end{table}
-
-% ---- Table 2.7.9 View Profile ----
-\begin{table}[H]
-\centering
-\caption{Table 2.7.9 View Profile}
-\label{tab:req-view-profile}
-\begin{tabularx}{\textwidth}{|p{3cm}|X|}
-\hline
-\textbf{Field} & \textbf{Content} \\ \hline
-
-Requirement & View Profile \\ \hline
-
-Actor & Land Appraiser \\ \hline
-
-Objective & View the appraiser’s account information. \\ \hline
-
-Precondition & Appraiser must be logged in. \\ \hline
-
-Scenario & 
-\begin{minipage}[t]{0.75\textwidth}
-\begin{enumerate}[leftmargin=*,label=\arabic*.]
-\item Appraiser selects ‘Profile’.
-\item System displays current account information, including name, email, phone, and other profile details.
-\end{enumerate}
-\end{minipage} \\ \hline
-
-Exceptions & 
-\begin{minipage}[t]{0.75\textwidth}
-\begin{enumerate}[leftmargin=*,label=\arabic*.]
-\item Profile data not found.
-\item Database access failure.
-\item Network error.
-\end{enumerate}
-\end{minipage} \\ \hline
-\end{tabularx}
-\end{table}
-
-% ---- Table 2.7.10 Edit Profile ----
-\begin{table}[H]
-\centering
-\caption{Table 2.7.10 Edit Profile}
-\label{tab:req-edit-profile}
-\begin{tabularx}{\textwidth}{|p{3cm}|X|}
-\hline
-\textbf{Field} & \textbf{Content} \\ \hline
-
-Requirement & Edit Profile \\ \hline
-
-Actor & Land Appraiser \\ \hline
-
-Objective & Update appraiser’s account information. \\ \hline
-
-Precondition & Appraiser must be logged in and in the profile. \\ \hline
-
-Scenario & 
-\begin{minipage}[t]{0.75\textwidth}
-\begin{enumerate}[leftmargin=*,label=\arabic*.]
-\item Appraiser selects ‘Edit Profile’.
-\item Updates name, email, phone number, or password.
-\item Clicks ‘Save Changes’.
-\end{enumerate}
-\end{minipage} \\ \hline
-
-Exceptions & 
-\begin{minipage}[t]{0.75\textwidth}
-\begin{enumerate}[leftmargin=*,label=\arabic*.]
-\item Invalid email or password.
-\item Server error during update.
-\item Network or server error.
-\end{enumerate}
-\end{minipage} \\ \hline
-\end{tabularx}
-\end{table}
-
-% ---- Table 2.7.11 Rate Estimation Result ----
-\begin{table}[H]
-\centering
-\caption{Table 2.7.11 Rate Estimation Result}
-\label{tab:req-rate-estimation}
-\begin{tabularx}{\textwidth}{|p{3cm}|X|}
-\hline
-\textbf{Field} & \textbf{Content} \\ \hline
-
-Requirement & Rate Estimation Result \\ \hline
-
-Actor & Land Appraiser \\ \hline
-
-Objective & Provide feedback on the quality of the estimated result to help evaluate model performance. \\ \hline
-
-Precondition & An estimation result must be displayed. \\ \hline
-
-Scenario & 
-\begin{minipage}[t]{0.75\textwidth}
-\begin{enumerate}[leftmargin=*,label=\arabic*.]
-\item After viewing the estimation result, the appraiser is prompted to provide feedback.
-\item The appraiser selects a rating option (e.g., Thumbs Up or Thumbs Down).
-\item The appraiser can provide a more logical/accurate estimation in case of negative rating.
-\item The system saves the rating along with the estimation details and corrected estimation for the current project.
-\end{enumerate}
-\end{minipage} \\ \hline
-
-Exceptions & 
-\begin{minipage}[t]{0.75\textwidth}
-\begin{enumerate}[leftmargin=*,label=\arabic*.]
-\item Rating submission fails due to network error.
-\item Database save error.
-\end{enumerate}
-\end{minipage} \\ \hline
-\end{tabularx}
-\end{table}
-
-
 
 \section{Admin’s Functional Requirements Tables}
-% ---- Table 2.8.1 Login ----
+
+
+% ---- Table 2.8.1 Manage Users ----
 \begin{table}[H]
 \centering
-\caption{Table 2.8.1 Login}
-\label{tab:admin-login}
-\begin{tabularx}{\textwidth}{|p{3cm}|X|}
-\hline
-\textbf{Field} & \textbf{Content} \\ \hline
-
-Requirement & Login \\ \hline
-
-Actor & Admin \\ \hline
-
-Objective & Allow admin to securely log in to the system. \\ \hline
-
-Precondition & Admin must be registered and approved as an administrator by an existing admin. \\ \hline
-
-Scenario & 
-\begin{minipage}[t]{0.75\textwidth}
-\begin{enumerate}[leftmargin=*,label=\arabic*.]
-\item Admin visits login page.
-\item Enters email and password.
-\item Clicks "Login".
-\item The system verifies credentials and grants access.
-\end{enumerate}
-\end{minipage} \\ \hline
-
-Exceptions &
-\begin{minipage}[t]{0.75\textwidth}
-\begin{enumerate}[leftmargin=*,label=\arabic*.]
-\item Invalid email or password — system displays an error message.
-\item Server or network error — system prompts the user to try again later.
-\end{enumerate}
-\end{minipage} \\ \hline
-
-\end{tabularx}
-\end{table}
-
-% ---- Table 2.8.2 Logout ----
-\begin{table}[H]
-\centering
-\caption{Table 2.8.2 Logout}
-\label{tab:admin-logout}
-\begin{tabularx}{\textwidth}{|p{3cm}|X|}
-\hline
-\textbf{Field} & \textbf{Content} \\ \hline
-
-Requirement & Logout \\ \hline
-
-Actor & Admin \\ \hline
-
-Objective & Securely end the current session and prevent unauthorized access to the account. \\ \hline
-
-Precondition & Admin is logged into the system. \\ \hline
-
-Scenario & 
-\begin{minipage}[t]{0.75\textwidth}
-\begin{enumerate}[leftmargin=*,label=\arabic*.]
-\item Admin clicks the Logout button from the system interface.
-\item The system ends the current session.
-\item Admin is sent to the login page.
-\end{enumerate}
-\end{minipage} \\ \hline
-
-Exceptions &
-\begin{minipage}[t]{0.75\textwidth}
-\begin{enumerate}[leftmargin=*,label=\arabic*.]
-\item Server or network error.
-\end{enumerate}
-\end{minipage} \\ \hline
-
-\end{tabularx}
-\end{table}
-
-% ---- Table 2.8.3 Creating Admin Account ----
-\begin{table}[H]
-\centering
-\caption{Table 2.8.3 Creating Admin Account}
-\label{tab:admin-create-account}
-\begin{tabularx}{\textwidth}{|p{3cm}|X|}
-\hline
-\textbf{Field} & \textbf{Content} \\ \hline
-
-Requirement & Creating Admin Accounts \\ \hline
-
-Actor & Existing Admin \\ \hline
-
-Objective & Create new admin accounts. \\ \hline
-
-Precondition & Existing Admin is authorized to create admins. \\ \hline
-
-Scenario & 
-\begin{minipage}[t]{0.75\textwidth}
-\begin{enumerate}[leftmargin=*,label=\arabic*.]
-\item Authorized admin accesses the admin management interface.
-\item Creates an admin and enters admin details.
-\item Account is activated.
-\end{enumerate}
-\end{minipage} \\ \hline
-
-Exceptions &
-\begin{minipage}[t]{0.75\textwidth}
-\begin{enumerate}[leftmargin=*,label=\arabic*.]
-\item Invitation link expires.
-\item Unauthorized requester attempts to create an admin.
-\item Failure in account setup due to system error.
-\end{enumerate}
-\end{minipage} \\ \hline
-
-\end{tabularx}
-\end{table}
-
-% ---- Table 2.8.4 Manage Users ----
-\begin{table}[H]
-\centering
-\caption{Table 2.8.4 Manage Users}
+\caption{Table 2.8.1 Manage Users}
 \label{tab:admin-manage-users}
 \begin{tabularx}{\textwidth}{|p{3cm}|X|}
 \hline
@@ -1171,85 +826,10 @@ Exceptions &
 \end{table}
 
 
-% ---- Table 2.8.5 Manage Form Data ----
+% ---- Table 2.8.2 Manage Backups ----
 \begin{table}[H]
 \centering
-\caption{Table 2.8.5 Manage Form Data}
-\label{tab:admin-manage-form-data}
-\begin{tabularx}{\textwidth}{|p{3cm}|X|}
-\hline
-\textbf{Field} & \textbf{Content} \\ \hline
-
-Requirement & Manage Form Data \\ \hline
-
-Actor & Admin \\ \hline
-
-Objective & Edit or add options (e.g., locations or classifications) available during project creation. \\ \hline
-
-Precondition & Admin has access rights. \\ \hline
-
-Scenario & 
-\begin{minipage}[t]{0.75\textwidth}
-\begin{enumerate}[leftmargin=*,label=\arabic*.]
-\item Admin selects ‘Manage Data’.
-\item Chooses data category (e.g., regions).
-\item Edits, adds, or deletes entries.
-\item Saves changes.
-\end{enumerate}
-\end{minipage} \\ \hline
-
-Exceptions &
-\begin{minipage}[t]{0.75\textwidth}
-\begin{enumerate}[leftmargin=*,label=\arabic*.]
-\item Input is invalid.
-\item Changes not saved due to a database error.
-\end{enumerate}
-\end{minipage} \\ \hline
-
-\end{tabularx}
-\end{table}
-
-% ---- Table 2.8.6 View System Logs ----
-\begin{table}[H]
-\centering
-\caption{Table 2.8.6 View System Logs}
-\label{tab:admin-view-logs}
-\begin{tabularx}{\textwidth}{|p{3cm}|X|}
-\hline
-\textbf{Field} & \textbf{Content} \\ \hline
-
-Requirement & View System Logs \\ \hline
-
-Actor & Admin \\ \hline
-
-Objective & Monitor system events and user activity. \\ \hline
-
-Precondition & System logging is enabled. \\ \hline
-
-Scenario &
-\begin{minipage}[t]{0.75\textwidth}
-\begin{enumerate}[leftmargin=*,label=\arabic*.]
-\item Admin navigates to the ‘Logs’ section.
-\item Filters by date or activity type.
-\item Views login, registration, or error logs.
-\end{enumerate}
-\end{minipage} \\ \hline
-
-Exceptions &
-\begin{minipage}[t]{0.75\textwidth}
-\begin{enumerate}[leftmargin=*,label=\arabic*.]
-\item Logs not available.
-\item Permission denied.
-\end{enumerate}
-\end{minipage} \\ \hline
-
-\end{tabularx}
-\end{table}
-
-% ---- Table 2.8.7 Manage Backups ----
-\begin{table}[H]
-\centering
-\caption{Table 2.8.7 Manage Backups}
+\caption{Table 2.8.2 Manage Backups}
 \label{tab:admin-manage-backups}
 \begin{tabularx}{\textwidth}{|p{3cm}|X|}
 \hline
@@ -1283,10 +863,10 @@ Exceptions &
 \end{tabularx}
 \end{table}
 
-% ---- Table 2.8.8 Create Activation Key ----
+% ---- Table 2.8.3 Create Activation Key ----
 \begin{table}[H]
 \centering
-\caption{Table 2.8.8 Create Activation Key}
+\caption{Table 2.8.3 Create Activation Key}
 \label{tab:admin-create-key}
 \begin{tabularx}{\textwidth}{|p{3cm}|X|}
 \hline
@@ -1321,255 +901,13 @@ Exceptions &
 \end{tabularx}
 \end{table}
 
-% ---- Table 2.8.9 Reset Password ----
-\begin{table}[H]
-\centering
-\caption{Table 2.8.9 Reset Password}
-\label{tab:admin-reset-password}
-\begin{tabularx}{\textwidth}{|p{3cm}|X|}
-\hline
-\textbf{Field} & \textbf{Content} \\ \hline
-
-Requirement & Reset Password \\ \hline
-
-Actor & Admin \\ \hline
-
-Objective & Change the password. \\ \hline
-
-Precondition & Admin has a registered account. \\ \hline
-
-Scenario &
-\begin{minipage}[t]{0.75\textwidth}
-\begin{enumerate}[leftmargin=*,label=\arabic*.]
-\item Admin clicks "Forgot Password" on the login page or selects "Change Password" from their profile.
-\item If "Forgot Password":
-    \begin{enumerate}[label*=\arabic*.]
-    \item System prompts for the registered email.
-    \item Admin enters email and submits.
-    \item System sends a password reset link or code to the email.
-    \item Admin clicks the link or enters the code, then sets a new password.
-    \end{enumerate}
-\item If "Change Password" from profile:
-    \begin{enumerate}[label*=\arabic*.]
-    \item Admin enters current password and new password.
-    \item System verifies the current password and updates it.
-    \end{enumerate}
-\item System confirms that the password has been successfully updated.
-\end{enumerate}
-\end{minipage} \\ \hline
-
-Exceptions &
-\begin{minipage}[t]{0.75\textwidth}
-\begin{enumerate}[leftmargin=*,label=\arabic*.]
-\item Email not found in the system.
-\item Invalid or expired reset link/code.
-\item Incorrect current password (when changing from profile).
-\item Server or database error during update.
-\end{enumerate}
-\end{minipage} \\ \hline
-
-\end{tabularx}
-\end{table}
-
-% ---- Table 2.8.10 View Profile ----
-\begin{table}[H]
-\centering
-\caption{Table 2.8.10 View Profile}
-\label{tab:admin-view-profile}
-\begin{tabularx}{\textwidth}{|p{3cm}|X|}
-\hline
-\textbf{Field} & \textbf{Content} \\ \hline
-
-Requirement & View Profile \\ \hline
-
-Actor & Admin \\ \hline
-
-Objective & View the admin’s account information. \\ \hline
-
-Precondition & Admin must be logged in. \\ \hline
-
-Scenario &
-\begin{minipage}[t]{0.75\textwidth}
-\begin{enumerate}[leftmargin=*,label=\arabic*.]
-\item Admin selects ‘Profile’.
-\item System displays current account information, including name, email, phone, and other profile details.
-\end{enumerate}
-\end{minipage} \\ \hline
-
-Exceptions &
-\begin{minipage}[t]{0.75\textwidth}
-\begin{enumerate}[leftmargin=*,label=\arabic*.]
-\item Profile data not found.
-\item Database access failure.
-\item Network error.
-\end{enumerate}
-\end{minipage} \\ \hline
-
-\end{tabularx}
-\end{table}
-
-% ---- Table 2.8.11 Edit Profile ----
-\begin{table}[H]
-\centering
-\caption{Table 2.8.11 Edit Profile}
-\label{tab:admin-edit-profile}
-\begin{tabularx}{\textwidth}{|p{3cm}|X|}
-\hline
-\textbf{Field} & \textbf{Content} \\ \hline
-
-Requirement & Edit Profile \\ \hline
-
-Actor & Admin \\ \hline
-
-Objective & Update Admin’s account information. \\ \hline
-
-Precondition & Admin must be logged in and in the profile. \\ \hline
-
-Scenario & 
-\begin{minipage}[t]{0.75\textwidth}
-\begin{enumerate}[leftmargin=*,label=\arabic*.]
-\item Admin selects ‘Edit Profile’.
-\item Updates name, email, phone number, or password.
-\item Clicks ‘Save Changes’.
-\end{enumerate}
-\end{minipage} \\ \hline
-
-Exceptions & 
-\begin{minipage}[t]{0.75\textwidth}
-\begin{enumerate}[leftmargin=*,label=\arabic*.]
-\item Invalid email or password.
-\item Server error during update.
-\item Network or server error.
-\end{enumerate}
-\end{minipage} \\ \hline
-
-\end{tabularx}
-\end{table}
-
 
 \section{Data Scientist’s Functional Requirements Tables}
-% ---- Table 2.9.1 Login ----
+
+% ---- Table 2.9.1 Test Model Accuracy ----
 \begin{table}[H]
 \centering
-\caption{Table 2.9.1 Login}
-\label{tab:ds-login}
-\begin{tabularx}{\textwidth}{|p{3cm}|X|}
-\hline
-\textbf{Field} & \textbf{Content} \\ \hline
-
-Requirement & Login \\ \hline
-
-Actor & Data Scientist \\ \hline
-
-Objective & Allow the data scientist to securely log in to the system. \\ \hline
-
-Precondition & The data scientist must be registered and approved as a data scientist by an admin. \\ \hline
-
-Scenario & 
-\begin{minipage}[t]{0.75\textwidth}
-\begin{enumerate}[leftmargin=*,label=\arabic*.]
-\item Data scientist visits login page.
-\item Enters a valid email and password.
-\item Clicks the Login button.
-\item The system verifies credentials and grants access.
-\end{enumerate}
-\end{minipage} \\ \hline
-
-Exceptions & 
-\begin{minipage}[t]{0.75\textwidth}
-\begin{enumerate}[leftmargin=*,label=\arabic*.]
-\item Invalid email or password — system displays an error message.
-\item Server or network error — system prompts the user to try again later.
-\end{enumerate}
-\end{minipage} \\ \hline
-
-\end{tabularx}
-\end{table}
-
-% ---- Table 2.9.2 Logout ----
-\begin{table}[H]
-\centering
-\caption{Table 2.9.2 Logout}
-\label{tab:ds-logout}
-\begin{tabularx}{\textwidth}{|p{3cm}|X|}
-\hline
-\textbf{Field} & \textbf{Content} \\ \hline
-
-Requirement & Logout \\ \hline
-
-Actor & Data Scientist \\ \hline
-
-Objective & Securely end the current session and prevent unauthorized access to the account. \\ \hline
-
-Precondition & The Data Scientist is logged into the system. \\ \hline
-
-Scenario & 
-\begin{minipage}[t]{0.75\textwidth}
-\begin{enumerate}[leftmargin=*,label=\arabic*.]
-\item The data scientist clicks the Logout button from the system.
-\item The system ends the current session.
-\item The data scientist is sent to the login page.
-\end{enumerate}
-\end{minipage} \\ \hline
-
-Exceptions & 
-\begin{minipage}[t]{0.75\textwidth}
-\begin{enumerate}[leftmargin=*,label=\arabic*.]
-\item Server or network error.
-\end{enumerate}
-\end{minipage} \\ \hline
-
-\end{tabularx}
-\end{table}
-
-% ---- Table 2.9.3 Register Account ----
-\begin{table}[H]
-\centering
-\caption{Table 2.9.3 Register Account}
-\label{tab:ds-register}
-\begin{tabularx}{\textwidth}{|p{3cm}|X|}
-\hline
-\textbf{Field} & \textbf{Content} \\ \hline
-
-Requirement & Register Account \\ \hline
-
-Actor & Data Scientist \\ \hline
-
-Objective & Create a new Data Scientist account. \\ \hline
-
-Precondition & The Data Scientist must have the activation key from the administrator. \\ \hline
-
-Scenario & 
-\begin{minipage}[t]{0.75\textwidth}
-\begin{enumerate}[leftmargin=*,label=\arabic*.]
-\item The Data Scientist selects ‘Register’.
-\item Data Scientist enters the activation code.
-\item The Data Scientist fills in required details (name, email, password).
-\item Verification code is sent to the entered email.
-\item Data Scientist clicks the link in the email to confirm the email.
-\item The Data Scientist submits the form.
-\item The system creates the account and confirms registration.
-\end{enumerate}
-\end{minipage} \\ \hline
-
-Exceptions &
-\begin{minipage}[t]{0.75\textwidth}
-\begin{enumerate}[leftmargin=*,label=\arabic*.]
-\item Email already in use.
-\item Weak or invalid password.
-\item Required fields missing.
-\item Activation code expired or incorrect.
-\item Server or network error.
-\end{enumerate}
-\end{minipage} \\ \hline
-
-\end{tabularx}
-\end{table}
-
-% ---- Table 2.9.4 Test Model Accuracy ----
-\begin{table}[H]
-\centering
-\caption{Table 2.9.4 Test Model Accuracy}
+\caption{Table 2.9.1 Test Model Accuracy}
 \label{tab:ds-test-model}
 \begin{tabularx}{\textwidth}{|p{3cm}|X|}
 \hline
@@ -1604,10 +942,10 @@ Exceptions &
 \end{tabularx}
 \end{table}
 
-% ---- Table 2.9.5 Review Feature Impact ----
+% ---- Table 2.9.2 Review Feature Impact ----
 \begin{table}[H]
 \centering
-\caption{Table 2.9.5 Review Feature Impact}
+\caption{Table 2.9.2 Review Feature Impact}
 \label{tab:ds-feature-impact}
 \begin{tabularx}{\textwidth}{|p{3cm}|X|}
 \hline
@@ -1651,10 +989,10 @@ Exceptions &
 \end{table}
 
 
-% ---- Table 2.9.6 Monitor Model Performance Over Time ----
+% ---- Table 2.9.3 Monitor Model Performance Over Time ----
 \begin{table}[H]
 \centering
-\caption{Table 2.9.6 Monitor Model Performance Over Time}
+\caption{Table 2.9.3 Monitor Model Performance Over Time}
 \label{tab:ds-monitor-model}
 \begin{tabularx}{\textwidth}{|p{3cm}|X|}
 \hline
@@ -1698,175 +1036,12 @@ Exceptions &
 \end{tabularx}
 \end{table}
 
-% ---- Table 2.9.7 Select Project to Analyze ----
-\begin{table}[H]
-\centering
-\caption{Table 2.9.7 Select Project to Analyze}
-\label{tab:ds-select-project}
-\begin{tabularx}{\textwidth}{|p{3cm}|X|}
-\hline
-\textbf{Field} & \textbf{Content} \\ \hline
 
-Requirement & Select Project to Analyze \\ \hline
+\section{Other less-related use cases}
+\noindent\justifying
+In addition to the functional requirements presented above, the system includes several additional use cases that are common across multiple user roles. These use cases—such as user login, logout, profile viewing, and profile editing—were omitted from the Admin and Data Scientist sections because they are already fully covered within the Normal User functional requirements and exhibit identical behavior across roles.
 
-Actor & Data Scientist \\ \hline
-
-Objective & Choose a specific project from the list of available projects to perform analysis on its estimations and related data. \\ \hline
-
-Precondition & 
-\begin{minipage}[t]{0.75\textwidth}
-\begin{enumerate}[leftmargin=*,label=\arabic*.]
-\item Data Scientist must be logged in.
-\item There must be at least one project available to analyze.
-\end{enumerate}
-\end{minipage} \\ \hline
-
-Scenario & 
-\begin{minipage}[t]{0.75\textwidth}
-\begin{enumerate}[leftmargin=*,label=\arabic*.]
-\item Data Scientist opens the “Projects” section.
-\item System displays a list of projects with basic details (e.g., project name, date, owner).
-\item Data Scientist searches, filters, or sorts projects if needed.
-\item Selects a project to open for detailed analysis.
-\end{enumerate}
-\end{minipage} \\ \hline
-
-Exceptions & 
-\begin{minipage}[t]{0.75\textwidth}
-\begin{enumerate}[leftmargin=*,label=\arabic*.]
-\item No available projects to analyze.
-\item Project data is incomplete or inaccessible.
-\item Network or server error while loading projects.
-\end{enumerate}
-\end{minipage} \\ \hline
-
-\end{tabularx}
-\end{table}
-
-% ---- Table 2.9.8 Reset Password ----
-\begin{table}[H]
-\centering
-\caption{Table 2.9.8 Reset Password}
-\label{tab:ds-reset-password}
-\begin{tabularx}{\textwidth}{|>{\raggedright\arraybackslash}p{3cm}|X|}
-\hline
-\textbf{Field} & \textbf{Content} \\ \hline
-
-Requirement & Reset Password \\ \hline
-Actor & Data Scientist \\ \hline
-Objective & Change the password. \\ \hline
-Precondition & The data scientist has a valid registered email. \\ \hline
-
-Scenario &
-\begin{minipage}[t]{\linewidth}
-\begin{enumerate}[leftmargin=*,label=\arabic*.,itemsep=0pt,topsep=2pt]
-  \item The data scientist clicks ``Forgot Password'' on the login page or selects ``Change Password'' from their profile.
-  \item If ``Forgot Password'':
-    \begin{enumerate}[label*=\arabic*.,itemsep=0pt,topsep=2pt]
-      \item System prompts for the registered email.
-      \item The data scientist enters the email and submits.
-      \item System sends a password reset link or code to the email.
-      \item The data scientist clicks the link or enters the code, then sets a new password.
-    \end{enumerate}
-  \item If ``Change Password'' from profile:
-    \begin{enumerate}[label*=\arabic*.,itemsep=0pt,topsep=2pt]
-      \item The data scientist enters current password and new password.
-      \item System verifies the current password and updates it.
-    \end{enumerate}
-  \item System confirms that the password has been successfully updated.
-\end{enumerate}
-\end{minipage}
-\\ \hline
-
-Exceptions &
-\begin{minipage}[t]{\linewidth}
-\begin{enumerate}[leftmargin=*,label=\arabic*.,itemsep=0pt,topsep=2pt]
-  \item Email not found in the system.
-  \item Invalid or expired reset link/code.
-  \item Incorrect current password (when changing from profile).
-  \item Server or database error during update.
-\end{enumerate}
-\end{minipage}
-\\ \hline
-
-\end{tabularx}
-\end{table}
-
-
-% ---- Table 2.9.9 View Profile ----
-\begin{table}[H]
-\centering
-\caption{Table 2.9.9 View Profile}
-\label{tab:ds-view-profile}
-\begin{tabularx}{\textwidth}{|p{3cm}|X|}
-\hline
-\textbf{Field} & \textbf{Content} \\ \hline
-
-Requirement & View Profile \\ \hline
-
-Actor & Data Scientist \\ \hline
-
-Objective & View the Data Scientist’s account information. \\ \hline
-
-Precondition & Data Scientist must be logged in. \\ \hline
-
-Scenario & 
-\begin{minipage}[t]{0.75\textwidth}
-\begin{enumerate}[leftmargin=*,label=\arabic*.]
-\item Data Scientist selects ‘Profile’.
-\item System displays current account information, including name, email, phone, and other profile details.
-\end{enumerate}
-\end{minipage} \\ \hline
-
-Exceptions & 
-\begin{minipage}[t]{0.75\textwidth}
-\begin{enumerate}[leftmargin=*,label=\arabic*.]
-\item Profile data not found.
-\item Database access failure.
-\item Network error.
-\end{enumerate}
-\end{minipage} \\ \hline
-
-\end{tabularx}
-\end{table}
-
-% ---- Table 2.9.10 Edit Profile ----
-\begin{table}[H]
-\centering
-\caption{Table 2.9.10 Edit Profile}
-\label{tab:ds-edit-profile}
-\begin{tabularx}{\textwidth}{|p{3cm}|X|}
-\hline
-\textbf{Field} & \textbf{Content} \\ \hline
-
-Requirement & Edit Profile \\ \hline
-
-Actor & Data Scientist \\ \hline
-
-Objective & Update Data Scientist’s account information. \\ \hline
-
-Precondition & Data Scientist must be logged in and in the profile. \\ \hline
-
-Scenario & 
-\begin{minipage}[t]{0.75\textwidth}
-\begin{enumerate}[leftmargin=*,label=\arabic*.]
-\item Data Scientist selects ‘Edit Profile’.
-\item Updates name, email, phone number, or password.
-\item Clicks ‘Save Changes’.
-\end{enumerate}
-\end{minipage} \\ \hline
-
-Exceptions & 
-\begin{minipage}[t]{0.75\textwidth}
-\begin{enumerate}[leftmargin=*,label=\arabic*.]
-\item Invalid email or password.
-\item Server error during update.
-\item Network or server error.
-\end{enumerate}
-\end{minipage} \\ \hline
-
-\end{tabularx}
-\end{table}
+Furthermore, certain administrative functions, including user management and system log viewing, were excluded from the detailed tables as they are not central to the core objectives of the Land Price Estimator system.
 
 
 % -------------------- Chapter 3 --------------------
