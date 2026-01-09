@@ -1348,8 +1348,6 @@ The Land Price Estimator system is developed using the \textbf{Django} web frame
 
 Django handles request processing, business logic, database operations, and dynamic page rendering. The system uses \textbf{server-side rendering} with Django templates, where HTML pages are generated on the server to ensure secure processing and consistent user experience.
 
-Database interactions are managed through Django’s \textbf{Object-Relational Mapping (ORM)}, allowing models to represent database tables and reducing reliance on raw SQL queries. This improves maintainability and helps prevent common security risks.
-
 User authentication and authorization are implemented using Django’s authentication system with a \textbf{custom user model} to support multiple roles, including normal users, data scientists, and administrators. Access control is enforced using login decorators and role-based redirection.
 
 The project follows a \textbf{modular multi-application structure}, where each major user role is implemented as a separate Django app, improving scalability and code organization. Overall, Django provides a secure, structured, and efficient foundation for the system.
@@ -1640,19 +1638,12 @@ The ML logic is isolated in a dedicated module to maintain separation between bu
 This section explains the database technology used in the Land Price Estimator system.
 It describes the selected database engine, the data access methodology, core entities,
 relationships, validation mechanisms, and schema management techniques.
-The database layer plays a critical role in maintaining data consistency,
-integrity, and reliability throughout the system.
-
 \subsection{Database Engine Selection}
 The system uses \textbf{SQLite} as its database management system.
 SQLite was selected due to its lightweight architecture, ease of deployment,
 and seamless integration with the Django framework.
 As a file-based database engine, SQLite does not require a separate database server,
 which makes it suitable for academic projects and prototype systems.
-
-The use of SQLite allows rapid development, straightforward testing,
-and efficient storage of structured relational data during the project lifecycle.
-
 \subsection{Database Access Using Django ORM}
 All interactions with the database are handled through the \textbf{Django Object-Relational Mapping (ORM)} layer.
 The ORM abstracts direct SQL queries and enables developers to manipulate database records
@@ -1660,8 +1651,7 @@ using Python objects and classes.
 
 Each database table is represented as a Django model, where fields correspond to table columns,
 and relationships are expressed using foreign key definitions.
-This approach improves code readability, simplifies maintenance,
-and reduces the risk of security vulnerabilities such as SQL injection.
+This approach reduces the risk of security vulnerabilities such as SQL injection.
 
 
 \subsection{Core Database Entities}
@@ -1705,9 +1695,6 @@ restricting null values for essential fields,
 and applying unique constraints on sensitive attributes such as email addresses.
 
 Primary and foreign key constraints further guarantee the consistency of relational data.
-This validation strategy minimizes invalid entries
-and preserves database reliability throughout system operation.
-
 \subsection{Database Migrations}
 The database schema is managed using Django’s built-in migration framework.
 Migrations allow controlled and incremental updates to the database structure
@@ -1725,27 +1712,10 @@ through an official land registry API,
 which would allow continuous updates
 and enhance prediction accuracy and system realism.
 
-\subsection{Design Considerations}
-The combination of SQLite and Django ORM provides a balanced solution
-between simplicity, maintainability, and performance.
-The database design allows smooth migration
-to more advanced database engines in future deployments
-without major architectural changes.
-
 % ==================== 4.6 ====================
 \section{System Integration}
 
-System integration ensures that all components of the Land Price Estimator system work together seamlessly. This includes the interaction between the frontend, backend, database, machine learning model, and email service. Proper integration allows users to submit data, receive estimations, and manage projects efficiently while maintaining security and role-based access.
-
-\subsection{Integration of Frontend and Backend}
-
-The frontend interface communicates with the backend through Django views using server-side rendering. When a user interacts with the interface, such as submitting a new project form, the following occurs:
-
-\begin{enumerate}[leftmargin=*]
-    \item The form data is sent via a POST request to the corresponding Django view (newProject).
-    \item The view validates the data using Django forms (ProjectForm) and performs the requested action, either saving as a draft or estimating the land price.
-    \item After processing, the user is redirected to the appropriate page (e.g., project list or dashboard).
-\end{enumerate}
+System integration ensures that all components of the Land Price Estimator system work together seamlessly. This includes the interaction between the frontend, backend, database, machine learning model, and email service.
 
 \subsection{Integration with the Machine Learning Model}
 
@@ -1790,22 +1760,6 @@ The email service is integrated for password resets:
     \includegraphics[width=0.6\textwidth]{images/Figure 4.6.3 Email service integration in settings.py.png}
 \end{figure}
 
-\subsection{Data Flow and Database Integration}
-
-All user actions and generated data are stored in the Project model, while user credentials and roles are managed in the Users\_Handling\_App models. The integration ensures:
-
-\begin{itemize}[leftmargin=*]
-    \item Data from forms is validated before saving.
-    \item ML predictions are stored alongside the project data.
-    \item Only authorized users can view or modify their own projects.
-\end{itemize}
-
-Data flow:
-
-\begin{center}
-User input $\rightarrow$ View (processing \& validation) $\rightarrow$ Database $\rightarrow$ Dashboard / Project List update
-\end{center}
-
 % ==================== 4.7 ====================
 % ==================== 4.7 ====================
 \section{Security Implementation}
@@ -1834,7 +1788,6 @@ Access to system functionality is restricted based on user roles (e.g., normal u
 \subsection{Authorization and Data Isolation}
 To ensure data privacy, users are restricted to viewing and managing only their own projects. Database queries are filtered at the view level to return records associated exclusively with the currently authenticated user.
 This approach prevents the user from attempting to access or manipulate another user’s data.
-
 \begin{figure}[H]
 \centering
 \captionsetup{position=top}
@@ -1844,10 +1797,9 @@ This approach prevents the user from attempting to access or manipulate another 
 \end{figure}
 
 \subsection{Password Management and Account Recovery}
-Passwords are securely stored using Django’s hashing framework, which applies industry-standard hashing algorithms. The system also supports password recovery through email-based password reset functionality, implemented using Django’s built-in password reset views.
+Passwords are securely stored using Django’s hashing framework. The system also supports password recovery through email-based password reset functionality, implemented using Django’s built-in password reset views.
 This ensures that users can safely recover access to their accounts without exposing sensitive credentials.
-In addition to password recovery via email, authenticated users are allowed to change their passwords from the profile editing interface. To enhance security, users are required to provide their current password before setting a new one. The system validates the old password server-side before applying any changes, preventing unauthorized password updates.
-
+In addition to password recovery via email, authenticated users are allowed to change their passwords from the profile editing interface.
 \begin{figure}[H]
 \centering
 \captionsetup{position=top}
@@ -1876,26 +1828,13 @@ This reduces the risk of invalid data entry and helps protect against common att
 \label{fig:security-modelform-validation}
 \end{figure}
 
-\subsection{Cross-Site Request Forgery (CSRF) Protection}
-All POST requests in the system are protected using Django’s CSRF middleware. CSRF tokens are embedded in all forms and verified on submission, ensuring that requests originate from legitimate users and not malicious third-party sources.
-This protection is enabled by default and requires no additional configuration beyond proper template usage.
-
-\begin{figure}[H]
-\centering
-\captionsetup{position=top}
-\caption{Figure 4.7.7 CSRF token usage example}
-\includegraphics[width=0.6\textwidth]{images/Figure 4.7.7 CSRF token usage example.png}
-\label{fig:security-csrf-token}
-\end{figure}
-
 \subsection{Error Handling and Safe Failure}
 The system includes structured error handling to prevent application crashes and avoid exposing sensitive internal information to users. For example, failures in machine learning prediction or missing model files are caught and handled gracefully, displaying user-friendly messages instead of system errors.
-This approach improves both system reliability and security by preventing information leakage.
 
 \begin{figure}[H]
 \centering
 \captionsetup{position=top}
-\caption{Figure 4.7.8 Exception handling during land price estimation}
+\caption{Figure 4.7.7 Exception handling during land price estimation}
 \includegraphics[width=0.7\textwidth]{images/Figure 4.7.8 Exception handling during land price estimation.png}
 \label{fig:security-exception-handling}
 \end{figure}
@@ -1910,7 +1849,7 @@ Unit testing was conducted to verify the correctness of individual system compon
 
 \subsection{Project Model Unit Test}
 
-A unit test was implemented to validate the correct creation of a Project instance. This test focuses on confirming that essential attributes—such as the associated user, land size, governorate, and project status—are correctly stored in the database.
+A unit test was implemented to validate the correct creation of a Project instance.
 
 Figure 5.1.1 shows the unit test implementation within the tests.py file of the Normal\_User\_Side application. The test uses Django’s TestCase class, which automatically provides a temporary test database and a clean environment for each test run.
 
@@ -2003,8 +1942,6 @@ The results confirm that all integration scenarios are working:
 % ==================== 5.3 ====================
 \section{End-to-End (E2E) Testing}
 End-to-end testing evaluates the system as a complete unit by simulating real user interactions from initial access to final output. This testing approach ensures that all system layers—user interface, backend logic, authentication, database operations, and machine learning integration—work together seamlessly.
-In this project, end-to-end testing was conducted manually, reflecting realistic usage scenarios performed by a normal user (land appraiser).
-
 \subsection{User Registration and Authentication}
 The testing process begins with the registration of a new normal user through the system’s registration interface.
 
@@ -2039,8 +1976,7 @@ Once authenticated, the user gains access to the main dashboard.
 \end{figure}
 
 Explanation:
-The dashboard serves as the central interface for project management, allowing the user to create new projects or view previously created ones. This confirms correct session handling and access control.
-
+The dashboard serves as the central interface for project management, allowing the user to create new projects or view previously created ones.
 \subsection{New Project Creation}
 The user initiates the creation of a new land price estimation project by navigating to the “New Project” interface.
 
@@ -2053,25 +1989,12 @@ The user initiates the creation of a new land price estimation project by naviga
 \end{figure}
 
 Explanation:
- The user fills in land-related attributes such as governorate, land size, land type, and political classification. These inputs represent the real-world data required for land price estimation.
-
-\subsection{Project Submission (Draft vs. Estimation)}
-At submission time, the user can choose between two actions:
-
+ The user fills in land-related attributes, These inputs represent the real-world data required for land price estimation, and after filling the form the user can either:
 \begin{itemize}[leftmargin=*]
     \item Save as Draft: Stores the project without running the machine learning model.
     \item Estimate Price: Triggers the machine learning prediction process. 
 \end{itemize}
-\begin{figure}[H]
-\centering
-\captionsetup{position=top}
-\caption{Figure 5.3.5 Save and Estimate buttons}
-\includegraphics[width=0.5\textwidth]{images/Figure 5.3.5 Save and Estimate buttons.png}
-\label{fig:e2e-save-estimate-buttons}
-\end{figure}
 
-Explanation:
- This step validates conditional backend logic based on user action. Draft projects are stored with a “draft” status, while estimated projects are marked as “completed” after prediction.
 
 \subsection{Project Viewing and Verification}
 After submission, the user is redirected to the projects list page.
@@ -2079,7 +2002,7 @@ After submission, the user is redirected to the projects list page.
 \begin{figure}[H]
 \centering
 \captionsetup{position=top}
-\caption{Figure 5.3.6 View the created project in the list of projects}
+\caption{Figure 5.3.5 View the created project in the list of projects}
 \includegraphics[width=0.5\textwidth]{images/Figure 5.3.6 View the created project in the list of projects.png}
 \label{fig:e2e-project-list}
 \end{figure}
