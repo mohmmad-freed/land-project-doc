@@ -1386,10 +1386,13 @@ The system uses Django server-side rendering, where pages are generated as compl
 
 A base template is used to provide a consistent layout and shared components across all pages, while individual templates extend it for specific functionality. Styling is implemented using CSS to achieve a responsive and uniform design. Minimal JavaScript is used to support basic interactivity and enhance usability.
 
-\subsection{Authentication Interfaces}
-The system provides authentication interfaces that control access to the platform and ensure that only authorized users can register and log in. These interfaces include the registration page and the login page.
+\subsection{Frontend Interfaces Overview}
 
-During registration, users are required to enter an activation code provided by the system administrator. This activation code determines the user role (such as appraiser, administrator, or data scientist) and controls which part of the system the user can access after registration. This approach ensures controlled user onboarding and role-based access from the moment the account is created.
+The frontend of the Land Price Estimator system provides a set of integrated user interfaces that allow users to authenticate, navigate the system, manage projects, and perform land price estimation tasks. These interfaces are designed to be clear, role-aware, and easy to use, ensuring smooth interaction between the user and the system’s core functionalities.
+
+\textbf{Authentication Interfaces:}  
+The system includes registration and login pages that control access to the platform. During registration, users are required to enter an activation code provided by the system administrator. This code determines the user role (such as appraiser, administrator, or data scientist) and ensures role-based access from the moment the account is created.  
+The login interface allows registered users to authenticate using their email and password. Upon successful login, users are automatically redirected to their respective dashboard based on their assigned role, while authentication errors are clearly communicated.
 
 \begin{figure}[H]
 \centering
@@ -1399,8 +1402,6 @@ During registration, users are required to enter an activation code provided by 
 \label{fig:frontend-registration}
 \end{figure}
 
-The login interface allows registered users to authenticate using their email and password. After successful login, users are automatically redirected to their respective dashboard based on their assigned role. If authentication fails, the system displays clear error messages to guide the user.
-
 \begin{figure}[H]
 \centering
 \captionsetup{position=top}
@@ -1409,20 +1410,8 @@ The login interface allows registered users to authenticate using their email an
 \label{fig:frontend-login}
 \end{figure}
 
-Both authentication interfaces are designed to be simple and user-friendly, with clear input fields, validation feedback, and consistent styling. This design helps users complete authentication tasks easily while maintaining security and proper access control.
-
-\subsection{User Dashboard (Home Page)}
-After successful authentication, users are redirected to their dashboard, which serves as the main entry point to the system. The dashboard provides an overview of the user’s activity and quick access to the system’s core features.
-
-The interface includes clear navigation options that allow the user to:
-\begin{itemize}[leftmargin=*]
-  \item View existing land price estimation projects.
-  \item Create a new project (land price estimation).
-  \item Access their profile and account settings.
-\end{itemize}
-
-The dashboard layout is designed to be simple and role-aware, meaning each user sees options relevant to their assigned role (e.g., appraiser or data scientist). This improves usability and prevents access to unauthorized features.
-
+\textbf{User Dashboard:}  
+After authentication, users are redirected to a role-aware dashboard that serves as the main entry point to the system. The dashboard provides access to core features such as viewing existing projects, creating new land price estimation projects, and managing profile settings.
 \begin{figure}[H]
 \centering
 \captionsetup{position=top}
@@ -1431,19 +1420,8 @@ The dashboard layout is designed to be simple and role-aware, meaning each user 
 \label{fig:frontend-homepage}
 \end{figure}
 
-Overall, the dashboard acts as a centralized control panel, enabling users to efficiently navigate the system and manage their land price estimation projects.
-
-\subsection{Project Management Interface (View Projects)}
-The Project Management Interface allows users to view and manage all previously created land price estimation projects in an organized manner. This page displays a list of the user’s projects, including key information such as project name, creation date, and current status.
-
-To improve usability and efficiency, the interface provides several tools that help users quickly locate specific projects:
-\begin{itemize}[leftmargin=*]
-  \item Search functionality to find projects by name or keyword.
-  \item Filtering options to narrow results based on project status or other attributes.
-  \item Sorting options to order projects by date.
-\end{itemize}
-
-Each project entry includes actions that allow the user to open the project, review its details, or continue working on it. This interface helps users manage multiple estimations efficiently without confusion.
+\textbf{Project Management Interface:}  
+The project management interface allows users to view and manage all previously created land price estimation projects. Projects are displayed in an organized list showing key details such as project name, creation date, and current status. The interface supports searching, filtering, and sorting to help users efficiently locate specific projects. Each project entry provides direct access to its detailed view.
 
 \begin{figure}[H]
 \centering
@@ -1453,20 +1431,9 @@ Each project entry includes actions that allow the user to open the project, rev
 \label{fig:frontend-project-management}
 \end{figure}
 
-The project management page plays a crucial role in organizing user data and ensuring easy access to land price estimation records.
-
-\subsection{New Project / Land Price Estimation Interface}
-The New Project / Land Price Estimation Interface allows users to create a new land evaluation project by entering detailed information about a land parcel. This page is centered around a structured form designed to collect all required attributes needed for price estimation.
-
-The form includes fields related to land characteristics such as location, area, zoning type, and other relevant parameters. Input validation is applied to ensure data accuracy before submission.
-
-Users are provided with two main actions:
-\begin{itemize}[leftmargin=*]
-  \item \textbf{Save Project:} Stores the entered data without performing price estimation, allowing users to complete or modify the project later.
-  \item \textbf{Estimate Price:} Submits the land data to the system, triggers the price estimation process, and automatically saves the project along with the estimated land price.
-\end{itemize}
-
-The interface is designed to be simple, guiding users step-by-step through the data entry process while minimizing errors. Clear labels and structured layout help ensure a smooth user experience.
+\textbf{New Project and Land Price Estimation Interface:}  
+The new project interface enables users to create a land evaluation project by entering land-related, Server-side validation is applied to ensure data correctness before submission.  
+Users can either save the project as a draft for later completion or submit the data for price estimation. When estimation is selected, the system processes the input data, performs price prediction, and stores the result along with the project details.
 
 \begin{figure}[H]
 \centering
@@ -1475,10 +1442,6 @@ The interface is designed to be simple, guiding users step-by-step through the d
 \includegraphics[width=0.6\textwidth]{images/Figure 4.3.5 New project form.png}
 \label{fig:frontend-new-project-form}
 \end{figure}
-
-This interface represents the core functionality of the system, connecting user input with the land price estimation process.
-
-
 
 % =========================
 % 4.4 Backend Implementation
