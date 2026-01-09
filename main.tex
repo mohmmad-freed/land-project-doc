@@ -1449,43 +1449,27 @@ Users can either save the project as a draft for later completion or submit the 
 
 \section{Backend Implementation}
 
-\subsection{Overview of Backend Architecture}
+\subsection{Backend Architecture and Application Structure}
 
-The backend of the Land Price Estimator system is implemented using the Django web framework and follows the Model–View–Template (MVT) architectural pattern. All core application logic, including authentication, project management, role-based access control, and machine learning inference, is handled on the server side.
+The backend of the Land Price Estimator system is implemented using the \textbf{Django} web framework and follows the \textbf{Model--View--Template (MVT)} architectural pattern. All core logic is handled on the server side, including user authentication, role-based access control, project management, and machine learning–based land price estimation.
 
-The backend is responsible for:
+The backend is responsible for managing users and permissions, handling project creation and storage, enforcing project ownership, integrating the trained machine learning model, and delivering validated data to frontend templates. All processing is performed internally within Django without relying on external API services.
+
+The system follows a \textbf{modular multi-application structure}, where each Django application has a clear responsibility:
 \begin{itemize}
-  \item Managing user authentication and authorization
-  \item Handling project creation, storage, and retrieval
-  \item Enforcing user ownership over projects
-  \item Integrating a trained machine learning model for land price estimation
-  \item Serving validated data to frontend templates
+  \item \textbf{Users\_Handling\_App}: Manages registration, login, activation codes, and role-based redirection.
+  \item \textbf{normal\_user}: Implements the core system features used by land appraisers, including project management and price estimation.
+  \item \textbf{data\_scientist and admin apps}: Reserved for future expansion; administrative tasks are currently handled through Django’s built-in admin panel.
 \end{itemize}
 
-The system does not rely on external API servers; all logic is processed internally within Django.
-
-\subsection{Application Structure and Separation of Concerns}
-
-The backend is organized into multiple Django applications, each responsible for a specific domain:
-\begin{itemize}
-  \item \textbf{Users\_Handling\_App}\\
-  Handles authentication, registration, activation codes, and user redirection based on roles.
-
-  \item \textbf{normal\_user}\\
-  Represents the main application used by land appraisers. It includes project creation, project listing, filtering, and machine learning–based price estimation.
-
-  \item \textbf{data\_scientist \& admin apps}\\
-  Planned for future work. Currently, administrative tasks are handled via Django’s built-in admin panel.
-\end{itemize}
-
-This modular structure improves maintainability, scalability, and clarity of responsibilities.
-
+This separation of concerns improves maintainability, scalability, and clarity of the backend design.
 
 \begin{figure}[H]
   \centering
-  \caption{Figure 4.4.1 Normal user side app structure}
-  \includegraphics[width=0.4\linewidth]{images/Figure 4.4.2 Normal user side app structure.png}
+  \caption{Figure 4.4.1 Normal User Application Structure}
+  \includegraphics[width=0.3\linewidth]{images/Figure 4.4.2 Normal user side app structure.png}
 \end{figure}
+
 
 \subsection{Data Models and Database Design}
 
@@ -1512,9 +1496,6 @@ Key attributes include:
   \item Project status (draft or completed)
   \item Creation date
 \end{itemize}
-
-This design enforces ownership and allows secure filtering of projects per user.
-
 
 \subsection{Forms and Server-Side Validation}
 
@@ -1601,20 +1582,11 @@ The ML logic is isolated in a dedicated module to maintain separation between bu
 This section explains the database technology used in the Land Price Estimator system.
 It describes the selected database engine, the data access methodology, core entities,
 relationships, validation mechanisms, and schema management techniques.
-\subsection{Database Engine Selection}
-The system uses \textbf{SQLite} as its database management system.
-SQLite was selected due to its lightweight architecture, ease of deployment,
-and seamless integration with the Django framework.
-As a file-based database engine, SQLite does not require a separate database server,
-which makes it suitable for academic projects and prototype systems.
-\subsection{Database Access Using Django ORM}
-All interactions with the database are handled through the \textbf{Django Object-Relational Mapping (ORM)} layer.
-The ORM abstracts direct SQL queries and enables developers to manipulate database records
-using Python objects and classes.
+\subsection{Database Engine and ORM Access}
 
-Each database table is represented as a Django model, where fields correspond to table columns,
-and relationships are expressed using foreign key definitions.
-This approach reduces the risk of security vulnerabilities such as SQL injection.
+The system uses \textbf{SQLite} as its database engine due to its lightweight, file-based design and seamless integration with the Django framework. SQLite does not require a separate database server, making it suitable for academic projects and prototype implementations.
+
+Database operations are performed using the \textbf{Django Object-Relational Mapping (ORM)} layer, which allows interaction with the database through Python objects instead of raw SQL queries. Each database table is defined as a Django model, improving code readability, maintainability, and security by reducing risks such as SQL injection.
 
 
 \subsection{Core Database Entities}
