@@ -496,7 +496,7 @@ Figure 2.3.1 illustrates the context diagram of the AI Land Price Estimation Sys
 
 \subsection{Admin's Side}
 \begin{enumerate}[leftmargin=*,label=\arabic*.,align=left]
-  \item \textbf{Login} — The admin can securely log in to the system using their credentials.
+  
 
   \item \textbf{Manage Users}
   \begin{itemize}[leftmargin=1.2em]
@@ -506,9 +506,7 @@ Figure 2.3.1 illustrates the context diagram of the AI Land Price Estimation Sys
     \item Activate / Deactivate accounts.
   \end{itemize}
 
-  \item \textbf{Creating Admin Accounts} — Create new admin accounts when necessary to expand system management.
-
-  \item \textbf{Manage Form Data} — Manage selectable regions and update system data fields relevant to land evaluation to keep the platform consistent with current geographic and regulatory information.
+ 
 
   \item \textbf{View System Logs} — See records of user activity and system events to monitor and diagnose issues.
 
@@ -518,13 +516,7 @@ Figure 2.3.1 illustrates the context diagram of the AI Land Price Estimation Sys
 
 \subsection{Data Scientist's Side}
 \begin{enumerate}[leftmargin=*,label=\arabic*.,align=left]
-  \item \textbf{User Registration and Login}
-  \begin{itemize}[leftmargin=1.2em]
-    \item Register using a valid email address and password.
-    \item Provide an activation code issued by the administrator to complete registration.
-    \item Log in securely using credentials once registered.
-    \item Reset password when needed.
-  \end{itemize}
+ 
 
   \item \textbf{Test Model Accuracy} — Run tests using known or sample land data to evaluate model accuracy.
 
@@ -532,7 +524,6 @@ Figure 2.3.1 illustrates the context diagram of the AI Land Price Estimation Sys
 
   \item \textbf{Monitor Model Performance Over Time} — Track model performance across time and compare older versions with newer ones.
 
-  \item \textbf{Select Any Project to Analyze} — Select any existing project in the system (including those created by any land appraiser) for analysis.
 \end{enumerate}
 
 % -------- Nonfunctional Requirements --------
@@ -547,11 +538,6 @@ The nonfunctional requirements describe how the system should behave to provide 
     \item The interface should support both desktop and mobile browsers.
   \end{itemize}
 
-  \item \textbf{Performance}
-  \begin{itemize}[leftmargin=1.2em]
-    \item The system should return land price estimation results in less than 5 seconds after submission.
-    \item Login and registration should complete in less than 3 seconds under normal load.
-  \end{itemize}
 
   \item \textbf{Availability}
   \begin{itemize}[leftmargin=1.2em]
@@ -1227,15 +1213,6 @@ The project will have multiple models to manage the data effectively within the 
   \item \texttt{note}: string; optional short label.
 \end{itemize}
 
-\subsection{Plot\_Feedback}
-\begin{itemize}[leftmargin=*,itemsep=2pt]
-  \item \texttt{id}: integer; PK; auto-increment.
-  \item \texttt{plot\_id}: UUID; FK $\rightarrow$ \texttt{plots.id}; not-null.
-  \item \texttt{user\_id}: integer; FK $\rightarrow$ \texttt{users.id}; not-null.
-  \item \texttt{is\_price\_accepted}: boolean; not-null.
-  \item \texttt{suggested\_price}: \texttt{decimal(12,2)}; required if not accepted.
-  \item \texttt{created\_at}: datetime; not-null.
-\end{itemize}
 
 \subsection{Governorates}
 \begin{itemize}[leftmargin=*,itemsep=2pt]
@@ -1265,38 +1242,6 @@ The project will have multiple models to manage the data effectively within the 
   \item \texttt{id}: integer; PK; auto-increment.
   \item \texttt{code}: string; unique; not-null.
   \item \texttt{label\_ar}: string; not-null.
-\end{itemize}
-
-\subsection{Ownership\_Document\_Type}
-\begin{itemize}[leftmargin=*,itemsep=2pt]
-  \item \texttt{id}: integer; PK; auto-increment.
-  \item \texttt{code}: string; unique; not-null.
-  \item \texttt{label\_ar}: string; not-null.
-\end{itemize}
-
-\subsection{Issuing\_Authority}
-\begin{itemize}[leftmargin=*,itemsep=2pt]
-  \item \texttt{id}: integer; PK; auto-increment.
-  \item \texttt{code}: string; unique; not-null.
-  \item \texttt{label\_ar}: string; not-null.
-\end{itemize}
-
-
-
-\subsection{Restriction\_Type}
-\begin{itemize}[leftmargin=*,itemsep=2pt]
-  \item \texttt{id}: integer; PK; auto-increment.
-  \item \texttt{code}: string; unique; not-null.
-  \item \texttt{label\_ar}: string; not-null.
-\end{itemize}
-
-
-
-\subsection{Plot\_Restrictions}
-\begin{itemize}[leftmargin=*,itemsep=2pt]
-  \item \texttt{id}: integer; PK; auto-increment.
-  \item \texttt{plot\_id}: UUID; FK $\rightarrow$ \texttt{plots.id}; not-null.
-  \item \texttt{restriction\_type\_id}: integer; FK $\rightarrow$ \texttt{restriction\_type.id}; not-null.
 \end{itemize}
 
 
@@ -1374,8 +1319,6 @@ The project will have multiple models to manage the data effectively within the 
 This chapter presents the implementation details of the Land Price Estimator system.
 It describes the software environment, frontend and backend development, database technology,
 system integration, and security mechanisms.
-Each section focuses on how the theoretical design presented in previous chapters
-was translated into a working and functional system.
 
 \section{Software Environment}
 
@@ -1401,21 +1344,15 @@ The Land Price Estimator system is built using a combination of programming and 
 
 \subsection{Web Framework}
 
-The Land Price Estimator system is developed using the \textbf{Django} web framework. Django is a high-level Python framework that follows the \textbf{Model--View--Template (MVT)} architectural pattern and is designed to support rapid development, scalability, and secure web applications.
+The Land Price Estimator system is developed using the \textbf{Django} web framework, a high-level Python framework based on the \textbf{Model--View--Template (MVT)} architecture. Django was selected for its rapid development capabilities, strong security features, and suitability for data-driven web applications.
 
-Django serves as the core backend framework of the system. It handles HTTP requests, implements business logic, manages database interactions, and renders dynamic web pages. The MVT architecture is clearly reflected in the project structure, where models define the data schema, views contain application logic, and templates generate the user interface.
+Django handles request processing, business logic, database operations, and dynamic page rendering. The system uses \textbf{server-side rendering} with Django templates, where HTML pages are generated on the server to ensure secure processing and consistent user experience.
 
-The system adopts a \textbf{server-side rendering} approach using Django’s template engine. Dynamic content is generated on the server and delivered to users as fully rendered HTML pages, ensuring better security, simpler logic flow, and broad browser compatibility.
+Database interactions are managed through Django’s \textbf{Object-Relational Mapping (ORM)}, allowing models to represent database tables and reducing reliance on raw SQL queries. This improves maintainability and helps prevent common security risks.
 
-Django’s built-in \textbf{Object-Relational Mapping (ORM)} is used to interact with the database using Python objects instead of raw SQL queries. This abstraction improves code readability and maintainability while reducing the risk of SQL injection attacks.
+User authentication and authorization are implemented using Django’s authentication system with a \textbf{custom user model} to support multiple roles, including normal users, data scientists, and administrators. Access control is enforced using login decorators and role-based redirection.
 
-User authentication and authorization are implemented using Django’s authentication framework with a \textbf{custom user model}. This allows the system to support multiple user roles, including normal users, data scientists, and administrators. Role-based access control is enforced using decorators such as \texttt{@login\_required}, and users are redirected to the appropriate system section after successful login based on their role.
-
-Django Forms and ModelForms are used to handle user input, perform server-side validation, manage file uploads, and securely process sensitive data such as passwords. Password handling relies on Django’s built-in hashing mechanisms to ensure secure credential storage.
-
-The project follows a \textbf{modular multi-application structure}, where each user role is implemented as a separate Django application. This design improves scalability, code organization, and long-term maintainability.
-
-Overall, Django was selected due to its strong security features, clear architectural structure, built-in authentication system, and excellent support for data-driven web applications.
+The project follows a \textbf{modular multi-application structure}, where each major user role is implemented as a separate Django app, improving scalability and code organization. Overall, Django provides a secure, structured, and efficient foundation for the system.
 
 \subsection{Development Tools}
 
@@ -1440,19 +1377,6 @@ Overall, Django was selected due to its strong security features, clear architec
 
 In addition to the main frameworks and tools, several supporting libraries were used to facilitate backend development, form handling, authentication, and machine learning:
 
-\begin{itemize}[leftmargin=*]
-  \item \textbf{Django Built-in Libraries:}\\
-  Django’s built-in libraries were used for authentication, authorization, request handling, and form processing. These utilities ensure that only authorized users can access restricted system features.
-
-  \item \textbf{Django Forms:}\\
-  Django’s ModelForm system was used to automatically generate forms based on database models. This simplifies form creation, enforces server-side validation, and ensures consistency between user input and stored data.
-
-  \item \textbf{Machine Learning Libraries:}\\
-  Scikit-learn was used to implement the Decision Tree Regression algorithm. The \texttt{train\_test\_split} function was used to divide the dataset into training and testing sets to ensure proper model evaluation.
-
-  \item \textbf{Data Processing Library:}\\
-  Pandas was used for data manipulation and preprocessing during model development. It was utilized to load datasets, handle missing values, and prepare structured data suitable for training the regression model.
-\end{itemize}
 
 
 \section{Frontend Implementation}
@@ -1595,16 +1519,11 @@ The backend is organized into multiple Django applications, each responsible for
 
 This modular structure improves maintainability, scalability, and clarity of responsibilities.
 
-\begin{figure}[H]
-  \centering
-  \caption{Figure 4.4.1 Project structure}
-  \includegraphics[width=0.6\linewidth]{images/Figure 4.4.1 Project structure.png}
-\end{figure}
 
 \begin{figure}[H]
   \centering
-  \caption{Figure 4.4.2 Normal user side app structure}
-  \includegraphics[width=0.6\linewidth]{images/Figure 4.4.2 Normal user side app structure.png}
+  \caption{Figure 4.4.1 Normal user side app structure}
+  \includegraphics[width=0.4\linewidth]{images/Figure 4.4.2 Normal user side app structure.png}
 \end{figure}
 
 \subsection{Data Models and Database Design}
@@ -1619,11 +1538,6 @@ Key features:
   \item Custom user manager for controlled user creation
 \end{itemize}
 
-\begin{figure}[H]
-  \centering
-  \caption{Figure 4.4.3 Custom user model}
-  \includegraphics[width=0.6\linewidth]{images/Figure 4.4.3 Custom user model.png}
-\end{figure}
 
 \textbf{Project Model}\\
 The Project model represents a land valuation request created by a land appraiser. Each project is associated with exactly one user, while each user may have multiple projects.
@@ -1640,11 +1554,6 @@ Key attributes include:
 
 This design enforces ownership and allows secure filtering of projects per user.
 
-\begin{figure}[H]
-  \centering
-  \caption{Figure 4.4.4 Project model}
-  \includegraphics[width=0.6\linewidth]{images/Figure 4.4.4 Project model.png}
-\end{figure}
 
 \subsection{Forms and Server-Side Validation}
 
@@ -1667,13 +1576,13 @@ Server-side validation ensures:
 
 \begin{figure}[H]
   \centering
-  \caption{Figure 4.4.5 Project form}
+  \caption{Figure 4.4.2 Project form}
   \includegraphics[width=0.6\linewidth]{images/Figure 4.4.5 Project form.png}
 \end{figure}
 
 \begin{figure}[H]
   \centering
-  \caption{Figure 4.4.6 User form}
+  \caption{Figure 4.4.3 User form}
   \includegraphics[width=0.6\linewidth]{images/Figure 4.4.6 User form.png}
 \end{figure}
 
@@ -1692,7 +1601,7 @@ This logic is handled within the Django view by detecting the submitted button n
 
 \begin{figure}[H]
   \centering
-  \caption{Figure 4.4.7 newProject view}
+  \caption{Figure 4.4.4newProject view}
   \includegraphics[width=0.6\linewidth]{images/Figure 4.4.7 newProject view.png}
 \end{figure}
 
@@ -1714,33 +1623,16 @@ The ML logic is isolated in a dedicated module to maintain separation between bu
 
 \begin{figure}[H]
   \centering
-  \caption{Figure 4.4.8 Import the ML model}
+  \caption{Figure 4.4.5Import the ML model}
   \includegraphics[width=0.6\linewidth]{images/Figure 4.4.8 Import the ML model.png}
 \end{figure}
 
 \begin{figure}[H]
   \centering
-  \caption{Figure 4.4.9 Prediction function}
+  \caption{Figure 4.4.6 Prediction function}
   \includegraphics[width=0.6\linewidth]{images/Figure 4.4.9 Prediction function.png}
 \end{figure}
 
-\subsection{Access Control and Data Security}
-
-The backend enforces strict access control rules:
-\begin{itemize}
-  \item Users can only view and manage their own projects
-  \item Authentication is required for all protected views
-  \item Role-based redirection ensures users are sent to the correct interface
-  \item Django’s built-in authentication and session management mechanisms are used
-\end{itemize}
-
-Filtering and sorting operations are processed on the server side to prevent unauthorized data exposure.
-
-\begin{figure}[H]
-  \centering
-  \caption{Figure 4.4.10 Filtering logic in the view}
-  \includegraphics[width=0.6\linewidth]{images/Figure 4.4.10 Filtering logic in the view.png}
-\end{figure}
 
 % ==================== 4.5 ====================
 \section{Database Technology Implementation}
@@ -1771,12 +1663,6 @@ and relationships are expressed using foreign key definitions.
 This approach improves code readability, simplifies maintenance,
 and reduces the risk of security vulnerabilities such as SQL injection.
 
-\begin{figure}[H]
-\centering
-\captionsetup{position=top}
-\caption{Figure 4.5.1 Django Models Definition}
-\includegraphics[width=0.6\textwidth]{images/Figure 4.5.1 Django Models Definition.png}
-\end{figure}
 
 \subsection{Core Database Entities}
 The database schema is centered around two main entities:
@@ -1808,7 +1694,7 @@ providing secure and unpredictable identifiers for account activation purposes.
 \begin{figure}[H]
 \centering
 \captionsetup{position=top}
-\caption{Figure 4.5.2 Primary and Foreign Key Relationships}
+\caption{Figure 4.5.1 Primary and Foreign Key Relationships}
 \includegraphics[width=0.6\textwidth]{images/Figure 4.5.2 Primary and Foreign Key Relationships.png}
 \end{figure}
 
@@ -1832,10 +1718,7 @@ are used to synchronize model definitions with the SQLite database schema.
 
 
 \subsection{Dataset Usage}
-The current implementation relies on \textbf{synthetic data}
-generated for development, testing, and model evaluation.
-This approach enables controlled experimentation
-without dependency on sensitive or unavailable real-world datasets.
+The model is trained using real land data collected for the project. Due to the limited size of the original dataset, the SMOTE technique was applied to increase the number of samples and improve data balance. This helps enhance model performance while preserving the characteristics of the original data.
 
 Future work includes integrating real land data
 through an official land registry API,
@@ -1956,7 +1839,7 @@ This approach prevents the user from attempting to access or manipulate another 
 \centering
 \captionsetup{position=top}
 \caption{Figure 4.7.3 User-based query filtering in viewProjects view}
-\includegraphics[width=0.6\textwidth]{images/Figure 4.7.3 User-based query filtering in viewProjects view.png}
+\includegraphics[width=0.7\textwidth]{images/Figure 4.7.3 User-based query filtering in viewProjects view.png}
 \label{fig:security-query-filtering}
 \end{figure}
 
@@ -2017,9 +1900,6 @@ This approach improves both system reliability and security by preventing inform
 \label{fig:security-exception-handling}
 \end{figure}
 
-\subsection{Deployment and Future Security Enhancements}
-The current system is developed in a local environment; however, it is designed to be production-ready. Future deployment plans include enabling HTTPS, secure email credentials, environment-based configuration, and stricter logging and monitoring.
-These measures will further strengthen system security when deployed in a production environment.
 
 % -------------------- Chapter 5 --------------------
 \chaptertitlepage{Testing}
@@ -2207,8 +2087,6 @@ After submission, the user is redirected to the projects list page.
 Explanation:
  The projects page displays all projects created by the authenticated user. This confirms correct database persistence, user-based data filtering, and real-time dashboard updates.
 
-Summary:
-The successful completion of these end-to-end scenarios confirms that the system satisfies its functional and user requirements. All critical user actions—from account creation and authentication to land price estimation and project review—behaved as expected, thereby validating the system from an acceptance testing perspective.
 
 % -------------------- References --------------------
 \chapter*{References}
