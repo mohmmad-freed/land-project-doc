@@ -1281,33 +1281,7 @@ The project will have multiple models to manage the data effectively within the 
   \item \texttt{label\_ar}: string; not-null.
 \end{itemize}
 
-\subsection{Soil\_Type}
-\begin{itemize}[leftmargin=*,itemsep=2pt]
-  \item \texttt{id}: integer; PK; auto-increment.
-  \item \texttt{code}: string; unique; not-null.
-  \item \texttt{label\_ar}: string; not-null.
-\end{itemize}
 
-\subsection{Rock\_Type}
-\begin{itemize}[leftmargin=*,itemsep=2pt]
-  \item \texttt{id}: integer; PK; auto-increment.
-  \item \texttt{code}: string; unique; not-null.
-  \item \texttt{label\_ar}: string; not-null.
-\end{itemize}
-
-\subsection{Crop\_Type}
-\begin{itemize}[leftmargin=*,itemsep=2pt]
-  \item \texttt{id}: integer; PK; auto-increment.
-  \item \texttt{code}: string; unique; not-null.
-  \item \texttt{label\_ar}: string; not-null.
-\end{itemize}
-
-\subsection{Nuisance\_Type}
-\begin{itemize}[leftmargin=*,itemsep=2pt]
-  \item \texttt{id}: integer; PK; auto-increment.
-  \item \texttt{code}: string; unique; not-null.
-  \item \texttt{label\_ar}: string; not-null.
-\end{itemize}
 
 \subsection{Restriction\_Type}
 \begin{itemize}[leftmargin=*,itemsep=2pt]
@@ -1316,22 +1290,7 @@ The project will have multiple models to manage the data effectively within the 
   \item \texttt{label\_ar}: string; not-null.
 \end{itemize}
 
-\subsection{Plot\_Crops}
-\begin{itemize}[leftmargin=*,itemsep=2pt]
-  \item \texttt{id}: integer; PK; auto-increment.
-  \item \texttt{plot\_id}: UUID; FK $\rightarrow$ \texttt{plots.id}; not-null.
-  \item \texttt{crop\_type\_id}: integer; FK $\rightarrow$ \texttt{crop\_type.id}; not-null.
-  \item \texttt{coverage\_pct}: \texttt{decimal(5,2)}; 0–100; nullable.
-  \item \texttt{tree\_count}: integer; $\geq 0$; nullable.
-\end{itemize}
 
-\subsection{Plot\_Nuisances}
-\begin{itemize}[leftmargin=*,itemsep=2pt]
-  \item \texttt{id}: integer; PK; auto-increment.
-  \item \texttt{plot\_id}: UUID; FK $\rightarrow$ \texttt{plots.id}; not-null.
-  \item \texttt{nuisance\_type\_id}: integer; FK $\rightarrow$ \texttt{nuisance\_type.id}; not-null.
-  \item \texttt{severity}: enum \{LOW, MEDIUM, HIGH\}; not-null.
-\end{itemize}
 
 \subsection{Plot\_Restrictions}
 \begin{itemize}[leftmargin=*,itemsep=2pt]
@@ -1348,7 +1307,7 @@ The project will have multiple models to manage the data effectively within the 
 \centering
 \captionsetup{position=top}
 \caption{Figure 3.6.1 Account Registration}
-\includegraphics[width=1\textwidth]{images/Register.png} 
+\includegraphics[width=0.7\textwidth]{images/Register.png} 
 \label{fig:account-registration}
 \end{figure}
 
@@ -1359,7 +1318,7 @@ The project will have multiple models to manage the data effectively within the 
 \centering
 \captionsetup{position=top}
 \caption{Figure 3.6.2 Create New Project}
-\includegraphics[width=1\textwidth]{images/Create_new_project.png} 
+\includegraphics[width=0.7\textwidth]{images/Create_new_project.png} 
 \label{fig:Create_New_Project}
 \end{figure}
 
@@ -1373,21 +1332,21 @@ The project will have multiple models to manage the data effectively within the 
 \centering
 \captionsetup{position=top}
 \caption{Figure 3.6.3 Test Model Accuracy}
-\includegraphics[width=1\textwidth]{images/Model_testing.png}
+\includegraphics[width=0.7\textwidth]{images/Model_testing.png}
 \end{figure}
 
 \begin{figure}[H]
 \centering
 \captionsetup{position=top}
 \caption{Figure 3.6.4 Review Feature Impact}
-\includegraphics[width=1\textwidth]{images/Feature_impact_2.png}
+\includegraphics[width=0.7\textwidth]{images/Feature_impact_2.png}
 \end{figure}
 
 \begin{figure}[H]
 \centering
 \captionsetup{position=top}
 \caption{Figure 3.6.5 Monitor Model Performance Over Time}
-\includegraphics[width=1\textwidth]{images/Model_history.png}
+\includegraphics[width=0.7\textwidth]{images/Model_history.png}
 \end{figure}
 
 
@@ -1396,7 +1355,7 @@ The project will have multiple models to manage the data effectively within the 
 \centering
 \captionsetup{position=top}
 \caption{Figure 3.6.6 View And Manage Users}
-\includegraphics[width=1\textwidth]{images/User_management.png}
+\includegraphics[width=0.7\textwidth]{images/User_management.png}
 \end{figure}
 
 
@@ -1405,7 +1364,7 @@ The project will have multiple models to manage the data effectively within the 
 \centering
 \captionsetup{position=top}
 \caption{Figure 3.6.7 Manage Backups}
-\includegraphics[width=1\textwidth]{images/Backup_management.png}
+\includegraphics[width=0.7\textwidth]{images/Backup_management.png}
 \end{figure}
 
 % -------------------- Chapter 4 --------------------
@@ -1514,7 +1473,7 @@ During registration, users are required to enter an activation code provided by 
 \centering
 \captionsetup{position=top}
 \caption{Figure 4.3.1 Registration Page}
-\includegraphics[width=\textwidth]{images/Figure 4.3.1 Registration page.png}
+\includegraphics[width=0.6\textwidth]{images/Figure 4.3.1 Registration page.png}
 \label{fig:frontend-registration}
 \end{figure}
 
@@ -1524,7 +1483,7 @@ The login interface allows registered users to authenticate using their email an
 \centering
 \captionsetup{position=top}
 \caption{Figure 4.3.2 Login Page}
-\includegraphics[width=\textwidth]{images/Figure 4.3.2 Login page.png}
+\includegraphics[width=0.6\textwidth]{images/Figure 4.3.2 Login page.png}
 \label{fig:frontend-login}
 \end{figure}
 
@@ -1546,7 +1505,7 @@ The dashboard layout is designed to be simple and role-aware, meaning each user 
 \centering
 \captionsetup{position=top}
 \caption{Figure 4.3.3 Home Page}
-\includegraphics[width=\textwidth]{images/Figure 4.3.3 Homepage.png}
+\includegraphics[width=0.6\textwidth]{images/Figure 4.3.3 Homepage.png}
 \label{fig:frontend-homepage}
 \end{figure}
 
@@ -1568,7 +1527,7 @@ Each project entry includes actions that allow the user to open the project, rev
 \centering
 \captionsetup{position=top}
 \caption{Figure 4.3.4 Project Management Interface}
-\includegraphics[width=\textwidth]{images/Figure 4.3.4 Project Management Interface.png}
+\includegraphics[width=0.6\textwidth]{images/Figure 4.3.4 Project Management Interface.png}
 \label{fig:frontend-project-management}
 \end{figure}
 
@@ -1591,7 +1550,7 @@ The interface is designed to be simple, guiding users step-by-step through the d
 \centering
 \captionsetup{position=top}
 \caption{Figure 4.3.5 New Project Form}
-\includegraphics[width=\textwidth]{images/Figure 4.3.5 New project form.png}
+\includegraphics[width=0.6\textwidth]{images/Figure 4.3.5 New project form.png}
 \label{fig:frontend-new-project-form}
 \end{figure}
 
@@ -1639,13 +1598,13 @@ This modular structure improves maintainability, scalability, and clarity of res
 \begin{figure}[H]
   \centering
   \caption{Figure 4.4.1 Project structure}
-  \includegraphics[width=0.9\linewidth]{images/Figure 4.4.1 Project structure.png}
+  \includegraphics[width=0.6\linewidth]{images/Figure 4.4.1 Project structure.png}
 \end{figure}
 
 \begin{figure}[H]
   \centering
   \caption{Figure 4.4.2 Normal user side app structure}
-  \includegraphics[width=0.9\linewidth]{images/Figure 4.4.2 Normal user side app structure.png}
+  \includegraphics[width=0.6\linewidth]{images/Figure 4.4.2 Normal user side app structure.png}
 \end{figure}
 
 \subsection{Data Models and Database Design}
@@ -1663,7 +1622,7 @@ Key features:
 \begin{figure}[H]
   \centering
   \caption{Figure 4.4.3 Custom user model}
-  \includegraphics[width=0.9\linewidth]{images/Figure 4.4.3 Custom user model.png}
+  \includegraphics[width=0.6\linewidth]{images/Figure 4.4.3 Custom user model.png}
 \end{figure}
 
 \textbf{Project Model}\\
@@ -1684,7 +1643,7 @@ This design enforces ownership and allows secure filtering of projects per user.
 \begin{figure}[H]
   \centering
   \caption{Figure 4.4.4 Project model}
-  \includegraphics[width=0.9\linewidth]{images/Figure 4.4.4 Project model.png}
+  \includegraphics[width=0.6\linewidth]{images/Figure 4.4.4 Project model.png}
 \end{figure}
 
 \subsection{Forms and Server-Side Validation}
@@ -1709,13 +1668,13 @@ Server-side validation ensures:
 \begin{figure}[H]
   \centering
   \caption{Figure 4.4.5 Project form}
-  \includegraphics[width=0.9\linewidth]{images/Figure 4.4.5 Project form.png}
+  \includegraphics[width=0.6\linewidth]{images/Figure 4.4.5 Project form.png}
 \end{figure}
 
 \begin{figure}[H]
   \centering
   \caption{Figure 4.4.6 User form}
-  \includegraphics[width=0.9\linewidth]{images/Figure 4.4.6 User form.png}
+  \includegraphics[width=0.6\linewidth]{images/Figure 4.4.6 User form.png}
 \end{figure}
 
 \subsection{Project Creation and State Management}
@@ -1734,7 +1693,7 @@ This logic is handled within the Django view by detecting the submitted button n
 \begin{figure}[H]
   \centering
   \caption{Figure 4.4.7 newProject view}
-  \includegraphics[width=0.9\linewidth]{images/Figure 4.4.7 newProject view.png}
+  \includegraphics[width=0.6\linewidth]{images/Figure 4.4.7 newProject view.png}
 \end{figure}
 
 \subsection{Machine Learning Model Integration}
@@ -1756,13 +1715,13 @@ The ML logic is isolated in a dedicated module to maintain separation between bu
 \begin{figure}[H]
   \centering
   \caption{Figure 4.4.8 Import the ML model}
-  \includegraphics[width=0.9\linewidth]{images/Figure 4.4.8 Import the ML model.png}
+  \includegraphics[width=0.6\linewidth]{images/Figure 4.4.8 Import the ML model.png}
 \end{figure}
 
 \begin{figure}[H]
   \centering
   \caption{Figure 4.4.9 Prediction function}
-  \includegraphics[width=0.9\linewidth]{images/Figure 4.4.9 Prediction function.png}
+  \includegraphics[width=0.6\linewidth]{images/Figure 4.4.9 Prediction function.png}
 \end{figure}
 
 \subsection{Access Control and Data Security}
@@ -1780,7 +1739,7 @@ Filtering and sorting operations are processed on the server side to prevent una
 \begin{figure}[H]
   \centering
   \caption{Figure 4.4.10 Filtering logic in the view}
-  \includegraphics[width=0.9\linewidth]{images/Figure 4.4.10 Filtering logic in the view.png}
+  \includegraphics[width=0.6\linewidth]{images/Figure 4.4.10 Filtering logic in the view.png}
 \end{figure}
 
 % ==================== 4.5 ====================
@@ -1816,7 +1775,7 @@ and reduces the risk of security vulnerabilities such as SQL injection.
 \centering
 \captionsetup{position=top}
 \caption{Figure 4.5.1 Django Models Definition}
-\includegraphics[width=\textwidth]{images/Figure 4.5.1 Django Models Definition.png}
+\includegraphics[width=0.6\textwidth]{images/Figure 4.5.1 Django Models Definition.png}
 \end{figure}
 
 \subsection{Core Database Entities}
@@ -1850,7 +1809,7 @@ providing secure and unpredictable identifiers for account activation purposes.
 \centering
 \captionsetup{position=top}
 \caption{Figure 4.5.2 Primary and Foreign Key Relationships}
-\includegraphics[width=0.9\textwidth]{images/Figure 4.5.2 Primary and Foreign Key Relationships.png}
+\includegraphics[width=0.6\textwidth]{images/Figure 4.5.2 Primary and Foreign Key Relationships.png}
 \end{figure}
 
 \subsection{Data Validation and Constraints}
@@ -1871,12 +1830,6 @@ while preserving existing data.
 Commands such as \texttt{makemigrations} and \texttt{migrate}
 are used to synchronize model definitions with the SQLite database schema.
 
-\begin{figure}[H]
-\centering
-\captionsetup{position=top}
-\caption{Figure 4.5.3 Database Migration Process}
-\includegraphics[width=0.85\textwidth]{images/Figure 4.5.3 Database Migration Process.png}
-\end{figure}
 
 \subsection{Dataset Usage}
 The current implementation relies on \textbf{synthetic data}
@@ -1951,7 +1904,7 @@ The email service is integrated for password resets:
     \centering
     \caption{Figure 4.6.1 Email service integration in settings.py}
     \vspace{6pt}
-    \includegraphics[width=\textwidth]{images/Figure 4.6.3 Email service integration in settings.py.png}
+    \includegraphics[width=0.6\textwidth]{images/Figure 4.6.3 Email service integration in settings.py.png}
 \end{figure}
 
 \subsection{Data Flow and Database Integration}
@@ -1983,7 +1936,7 @@ Access to system functionality is restricted based on user roles (e.g., normal u
 \centering
 \captionsetup{position=top}
 \caption{Figure 4.7.1 Authentication form}
-\includegraphics[width=0.9\textwidth]{images/Figure 4.7.1 Authentication form.png}
+\includegraphics[width=0.6\textwidth]{images/Figure 4.7.1 Authentication form.png}
 \label{fig:security-auth-form}
 \end{figure}
 
@@ -1991,7 +1944,7 @@ Access to system functionality is restricted based on user roles (e.g., normal u
 \centering
 \captionsetup{position=top}
 \caption{Figure 4.7.2 Authentication in loginPage view}
-\includegraphics[width=0.9\textwidth]{images/Figure 4.7.2 Authentication in loginPage view.png}
+\includegraphics[width=0.6\textwidth]{images/Figure 4.7.2 Authentication in loginPage view.png}
 \label{fig:security-auth-loginpage}
 \end{figure}
 
@@ -2003,7 +1956,7 @@ This approach prevents the user from attempting to access or manipulate another 
 \centering
 \captionsetup{position=top}
 \caption{Figure 4.7.3 User-based query filtering in viewProjects view}
-\includegraphics[width=0.9\textwidth]{images/Figure 4.7.3 User-based query filtering in viewProjects view.png}
+\includegraphics[width=0.6\textwidth]{images/Figure 4.7.3 User-based query filtering in viewProjects view.png}
 \label{fig:security-query-filtering}
 \end{figure}
 
@@ -2016,7 +1969,7 @@ In addition to password recovery via email, authenticated users are allowed to c
 \centering
 \captionsetup{position=top}
 \caption{Figure 4.7.4 Change Password section in edit\_profile page}
-\includegraphics[width=0.9\textwidth]{images/Figure 4.7.4 Change Password section in edit_profile page.png}
+\includegraphics[width=0.6\textwidth]{images/Figure 4.7.4 Change Password section in edit_profile page.png}
 \label{fig:security-change-password}
 \end{figure}
 
@@ -2024,7 +1977,7 @@ In addition to password recovery via email, authenticated users are allowed to c
 \centering
 \captionsetup{position=top}
 \caption{Figure 4.7.5 Reset password via email}
-\includegraphics[width=0.9\textwidth]{images/Figure 4.7.5 Reset password via email.png}
+\includegraphics[width=0.6\textwidth]{images/Figure 4.7.5 Reset password via email.png}
 \label{fig:security-reset-password-email}
 \end{figure}
 
@@ -2036,7 +1989,7 @@ This reduces the risk of invalid data entry and helps protect against common att
 \centering
 \captionsetup{position=top}
 \caption{Figure 4.7.6 ModelForm validation}
-\includegraphics[width=0.9\textwidth]{images/Figure 4.7.6 ModelForm validation.png}
+\includegraphics[width=0.6\textwidth]{images/Figure 4.7.6 ModelForm validation.png}
 \label{fig:security-modelform-validation}
 \end{figure}
 
@@ -2048,7 +2001,7 @@ This protection is enabled by default and requires no additional configuration b
 \centering
 \captionsetup{position=top}
 \caption{Figure 4.7.7 CSRF token usage example}
-\includegraphics[width=0.9\textwidth]{images/Figure 4.7.7 CSRF token usage example.png}
+\includegraphics[width=0.6\textwidth]{images/Figure 4.7.7 CSRF token usage example.png}
 \label{fig:security-csrf-token}
 \end{figure}
 
@@ -2060,7 +2013,7 @@ This approach improves both system reliability and security by preventing inform
 \centering
 \captionsetup{position=top}
 \caption{Figure 4.7.8 Exception handling during land price estimation}
-\includegraphics[width=0.9\textwidth]{images/Figure 4.7.8 Exception handling during land price estimation.png}
+\includegraphics[width=0.7\textwidth]{images/Figure 4.7.8 Exception handling during land price estimation.png}
 \label{fig:security-exception-handling}
 \end{figure}
 
@@ -2085,7 +2038,7 @@ Figure 5.1.1 shows the unit test implementation within the tests.py file of the 
     \centering
     \caption{Figure 5.1.1 Unit test implementation for the Project model}
     \vspace{6pt}
-    \includegraphics[width=\textwidth]{images/Figure 5.1.1 Unit test implementation for the Project model.png}
+    \includegraphics[width=0.6\textwidth]{images/Figure 5.1.1 Unit test implementation for the Project model.png}
 \end{figure}
 
 The test setup creates a sample user and a project instance, then applies assertions to verify that:
@@ -2106,7 +2059,7 @@ The unit test was executed using Django’s test runner. Figure 5.1.2 illustrate
     \centering
     \caption{Figure 5.1.2 Unit test result}
     \vspace{6pt}
-    \includegraphics[width=\textwidth]{images/Figure 5.1.2 Unit test result.png}
+    \includegraphics[width=0.7\textwidth]{images/Figure 5.1.2 Unit test result.png}
 \end{figure}
 
 The successful test result confirms that the Project model functions correctly in isolation and that the system’s foundational data layer is stable.
@@ -2132,7 +2085,7 @@ We created a simplified integration test in Normal\_User\_Side/tests.py that cov
     \centering
     \caption{Figure 5.2.1 Project Integration Test}
     \vspace{6pt}
-    \includegraphics[width=\textwidth]{images/Figure 5.2.1 Project Integration Test.png}
+    \includegraphics[width=0.7\textwidth]{images/Figure 5.2.1 Project Integration Test.png}
 \end{figure}
 
 \subsection{Explanation}
@@ -2154,7 +2107,7 @@ This ensures that the end-to-end workflow of project creation and listing works 
     \centering
     \caption{Figure 5.2.2 Integration Test Result}
     \vspace{6pt}
-    \includegraphics[width=\textwidth]{images/Figure 5.2.2 Integration Test Result.png}
+    \includegraphics[width=0.6\textwidth]{images/Figure 5.2.2 Integration Test Result.png}
 \end{figure}
 
 \subsection{Explanation}
@@ -2179,7 +2132,7 @@ The testing process begins with the registration of a new normal user through th
 \centering
 \captionsetup{position=top}
 \caption{Figure 5.3.1 Registration}
-\includegraphics[width=0.9\textwidth]{images/Figure 5.3.1 Registration.png}
+\includegraphics[width=0.5\textwidth]{images/Figure 5.3.1 Registration.png}
 \label{fig:e2e-registration}
 \end{figure}
 
@@ -2190,7 +2143,7 @@ The user creates an account by providing required information and upon successfu
 \centering
 \captionsetup{position=top}
 \caption{Figure 5.3.2 Registration successful}
-\includegraphics[width=0.9\textwidth]{images/Figure 5.3.2 Registration successful.png}
+\includegraphics[width=0.5\textwidth]{images/Figure 5.3.2 Registration successful.png}
 \label{fig:e2e-registration-success}
 \end{figure}
 
@@ -2201,7 +2154,7 @@ Once authenticated, the user gains access to the main dashboard.
 \centering
 \captionsetup{position=top}
 \caption{Figure 5.3.3 Dashboard}
-\includegraphics[width=0.9\textwidth]{images/Figure 5.3.3 Dashboard.png}
+\includegraphics[width=0.5\textwidth]{images/Figure 5.3.3 Dashboard.png}
 \label{fig:e2e-dashboard}
 \end{figure}
 
@@ -2215,7 +2168,7 @@ The user initiates the creation of a new land price estimation project by naviga
 \centering
 \captionsetup{position=top}
 \caption{Figure 5.3.4 New Project form filled with data}
-\includegraphics[width=0.9\textwidth]{images/Figure 5.3.4 New Project form filled with data.png}
+\includegraphics[width=0.5\textwidth]{images/Figure 5.3.4 New Project form filled with data.png}
 \label{fig:e2e-new-project-form}
 \end{figure}
 
@@ -2233,7 +2186,7 @@ At submission time, the user can choose between two actions:
 \centering
 \captionsetup{position=top}
 \caption{Figure 5.3.5 Save and Estimate buttons}
-\includegraphics[width=0.9\textwidth]{images/Figure 5.3.5 Save and Estimate buttons.png}
+\includegraphics[width=0.5\textwidth]{images/Figure 5.3.5 Save and Estimate buttons.png}
 \label{fig:e2e-save-estimate-buttons}
 \end{figure}
 
@@ -2247,7 +2200,7 @@ After submission, the user is redirected to the projects list page.
 \centering
 \captionsetup{position=top}
 \caption{Figure 5.3.6 View the created project in the list of projects}
-\includegraphics[width=0.9\textwidth]{images/Figure 5.3.6 View the created project in the list of projects.png}
+\includegraphics[width=0.5\textwidth]{images/Figure 5.3.6 View the created project in the list of projects.png}
 \label{fig:e2e-project-list}
 \end{figure}
 
