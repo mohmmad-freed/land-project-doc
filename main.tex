@@ -392,7 +392,6 @@ There are several alternative methods for evaluating the land prices, but the mo
 
 Although this method is commonly used, it is less accurate and less effective than the machine learning method, and also more complicated to justify the result because the CMA method relies heavily on the subjective judgment of experts rather than objective land statistics, which can introduce bias and inconsistency.
 
-In contrast, this project leverages machine learning models, which can automatically learn from data and adapt to changing market and political conditions to provide faster, more accurate predictions and justifiable, transparent results.
 
 % -------------------- Chapter 2 --------------------
 \chaptertitlepage{Requirement Specifications}
@@ -412,7 +411,7 @@ The system has three main actors, each with distinct responsibilities:
   
   \item \textbf{Admin} — Manages user accounts and system configuration (view roles/emails, activate/deactivate, update or remove users). Maintains a safe, secure, and smooth operation of the platform.
   
-  \item \textbf{Data Scientist} — Ensures model and platform quality. Prepares/curates datasets, tests and validates the ML model with real or synthetic data, monitors accuracy and performance, and suggests improvements.
+  \item \textbf{Data Scientist} — Ensures model and platform quality. Prepares/creates datasets, tests and validates the ML model with real or synthetic data, monitors accuracy and performance, and suggests improvements.
 \end{enumerate}
 
 Together, these actors keep the system reliable and continuously improving.
@@ -635,8 +634,6 @@ Scenario &
 \item The appraiser selects `Register`.
 \item The appraiser enters the activation code.
 \item The appraiser fills in required details (name, email, phone, password).
-\item Verification code is sent to the entered email.
-\item The appraiser clicks the link in the email to confirm the email.
 \item The appraiser submits the form.
 \item The system creates the account and confirms registration.
 \end{enumerate}
@@ -713,8 +710,7 @@ Scenario &
 \begin{minipage}[t]{0.75\textwidth}
 \begin{enumerate}[leftmargin=*,label=\arabic*.]
 \item Appraiser selects ‘New Project’.
-\item Names the Project.
-\item Fills in land details.
+\item Fills in project and land details.
 \item The system checks and validates the input data.
 \end{enumerate}
 \end{minipage} \\ \hline
@@ -759,7 +755,6 @@ Exceptions &
 \begin{minipage}[t]{0.75\textwidth}
 \begin{enumerate}[leftmargin=*,label=\arabic*.]
 \item System error in model execution.
-\item Timeout or delay in result.
 \item Server or network error.
 \end{enumerate}
 \end{minipage} \\ \hline
@@ -801,7 +796,6 @@ Scenario &
 Exceptions &
 \begin{minipage}[t]{0.75\textwidth}
 \begin{enumerate}[leftmargin=*,label=\arabic*.]
-\item No users found in the system.
 \item Server error when retrieving user data.
 \item Database connection failure.
 \item Failure of action.
@@ -1317,74 +1311,11 @@ The project will have multiple models to manage the data effectively within the 
 
 \section{Overview}
 This chapter presents the implementation details of the Land Price Estimator system.
-It describes the software environment, frontend and backend development, database technology,
+It describes the frontend and backend development, database technology,
 system integration, and security mechanisms.
-
-\section{Software Environment}
-
-\subsection{Programming Languages}
-
-The Land Price Estimator system is built using a combination of programming and markup languages to efficiently handle both backend and frontend functionalities. The selected languages and their roles are described below:
-
-\begin{itemize}[leftmargin=*]
-  \item \textbf{Python:}\\
-  Python is the main programming language used for the backend of the system. It is primarily utilized through the Django framework to implement the Model--View--Template (MVT) architecture, handle business logic, manage the database using the Object-Relational Mapper (ORM), and process user requests.
-
-  \item \textbf{HTML (HyperText Markup Language):}\\
-  HTML is used to structure the content of the web pages. It defines elements such as forms, links, buttons, and headings, providing the foundation for all frontend interfaces presented to users.
-
-  \item \textbf{CSS (Cascading Style Sheets):}\\
-  CSS is responsible for styling HTML elements, including layout, colors, fonts, spacing, and responsiveness. It ensures a consistent and visually appealing interface across different devices and browsers.
-
-  \item \textbf{JavaScript:}\\
-  JavaScript is used to implement interactive features on the frontend, such as dynamic form validation, responsive components, and user interface enhancements that improve overall usability.
-
- 
-\end{itemize}
-
-\subsection{Web Framework}
-
-The Land Price Estimator system is developed using the \textbf{Django} web framework, a high-level Python framework based on the \textbf{Model--View--Template (MVT)} architecture. Django was selected for its rapid development capabilities, strong security features, and suitability for data-driven web applications.
-
-Django handles request processing, business logic, database operations, and dynamic page rendering. The system uses \textbf{server-side rendering} with Django templates, where HTML pages are generated on the server to ensure secure processing and consistent user experience.
-
-User authentication and authorization are implemented using Django’s authentication system with a \textbf{custom user model} to support multiple roles, including normal users, data scientists, and administrators. Access control is enforced using login decorators and role-based redirection.
-
-The project follows a \textbf{modular multi-application structure}, where each major user role is implemented as a separate Django app, improving scalability and code organization. Overall, Django provides a secure, structured, and efficient foundation for the system.
-
-\subsection{Development Tools}
-
-\begin{itemize}[leftmargin=*]
-  \item \textbf{Integrated Development Environment (IDE):}\\
-  Visual Studio Code (VS Code) was used as the primary IDE. It provides robust support for Python and Django development, including syntax highlighting, debugging tools, code formatting, and extensibility through plugins. Its lightweight and flexible design made it suitable for managing both frontend and backend code.
-
-  \item \textbf{Version Control System:}\\
-  Git was used for version control to track code changes and manage development history. The project repository was hosted on GitHub, enabling centralized code management, backups, and collaboration.
-
-  \item \textbf{Database Management:}\\
-  SQLite was used during development as the default database system provided by Django. It is lightweight and easy to configure. Database interactions were handled using Django’s ORM without writing raw SQL queries.
-
-  \item \textbf{Web Browser and Testing Tools:}\\
-  Modern web browsers such as Brave and Comet were used for frontend testing and debugging. Built-in developer tools were used to inspect HTML elements, debug JavaScript, and test responsiveness across different screen sizes.
-
-  \item \textbf{Machine Learning Development Environment:}\\
-  Google Colab was used to develop, train, and validate the machine learning model for land price prediction. Using Python libraries such as scikit-learn, a Decision Tree Regression model was trained on historical land data. The trained model was then exported and integrated into the Django backend to provide real-time price predictions based on user input.
-\end{itemize}
-
-\subsection{Supporting Libraries}
-
-In addition to the main frameworks and tools, several supporting libraries were used to facilitate backend development, form handling, authentication, and machine learning:
-
-
 
 \section{Frontend Implementation}
 
-\subsection{General Frontend Design}
-The frontend of the Land Price Estimator system is a web-based interface accessed through a standard web browser, requiring no additional software. It is designed to be simple, clear, and accessible across different devices.
-
-The system uses Django server-side rendering, where pages are generated as complete HTML documents. This approach ensures reliable performance and seamless integration with backend features such as authentication and form processing.
-
-A base template is used to provide a consistent layout and shared components across all pages, while individual templates extend it for specific functionality. Styling is implemented using CSS to achieve a responsive and uniform design. Minimal JavaScript is used to support basic interactivity and enhance usability.
 
 \subsection{Frontend Interfaces Overview}
 
@@ -1751,9 +1682,9 @@ In addition to password recovery via email, authenticated users are allowed to c
 \label{fig:security-reset-password-email}
 \end{figure}
 
-\subsection{Form Validation and Input Protection}
-All user inputs are validated on the server side using Django forms and model validation. This includes checking required fields, validating data formats, and enforcing business rules before any data is stored in the database.
-This reduces the risk of invalid data entry and helps protect against common attacks such as malformed input and unintended data manipulation.
+\subsection{Input Validation and Error Handling}
+
+All user inputs are validated on the server side using Django Forms and ModelForms to ensure required fields, correct data formats, and business rules are enforced before storing data. This helps prevent invalid input and reduces the risk of common input-based attacks.
 
 \begin{figure}[H]
 \centering
@@ -1763,8 +1694,7 @@ This reduces the risk of invalid data entry and helps protect against common att
 \label{fig:security-modelform-validation}
 \end{figure}
 
-\subsection{Error Handling and Safe Failure}
-The system includes structured error handling to prevent application crashes and avoid exposing sensitive internal information to users. For example, failures in machine learning prediction or missing model files are caught and handled gracefully, displaying user-friendly messages instead of system errors.
+The system also applies structured error handling to ensure safe failure. Runtime errors, such as machine learning prediction failures or missing resources, are handled gracefully and presented to users as clear, user-friendly messages without exposing internal system details.
 
 \begin{figure}[H]
 \centering
@@ -1773,6 +1703,7 @@ The system includes structured error handling to prevent application crashes and
 \includegraphics[width=0.7\textwidth]{images/Figure 4.7.8 Exception handling during land price estimation.png}
 \label{fig:security-exception-handling}
 \end{figure}
+
 
 
 % -------------------- Chapter 5 --------------------
