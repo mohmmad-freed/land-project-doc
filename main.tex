@@ -21,6 +21,7 @@
 \usepackage[hidelinks]{hyperref}
 \usepackage{polyglossia}
 \usepackage{ragged2e} % للضبط الكامل داخل الأعمدة
+\usepackage{pdfpages}
 
 \setmainlanguage{english}
 \setotherlanguage{arabic}
@@ -29,6 +30,8 @@
 \setmainfont{Times New Roman}
 \newfontfamily\arabicfont[Script=Arabic]{Times New Roman}
 \newfontfamily\arialfont{Arial}
+\newfontfamily\arabicarial[Script=Arabic]{Arial}
+
 
 % ----- FIX: dummy definition for \tbl_save_outer_table_cols: to avoid bidi+tabularx error -----
 \ExplSyntaxOn
@@ -225,7 +228,7 @@ This project represents the first step in automating the process of real estate 
 \end{center}
 
 \begin{ARcentercol}
-\singlespacing
+{\arabicarial\singlespacing
 في عصر نهضة الذكاء الاصطناعي والتطور الملحوظ لا تزال عملية تخمين (أو تثمين) أسعار الأراضي تُنفّذ بأساليب تقليدية تعتمد على التقدير البشري؛ فهذا يجعلها عرضة للتحيّز والتفاوت في النتائج.
 استجابةً لهذه التحديات، يهدف هذا المشروع إلى تطوير نظام ذكي يعتمد على تعلم الآلة لتقدير أسعار الأراضي بموضوعية ودقة أعلى، وفي زمن أقل مقارنةً بالأساليب التقليدية، وذلك بالاعتماد على بيانات واقعية تم جمعها. وقد تم اختيار بلدة بني نعيم الواقعة في محافظة الخليل، فلسطين، كنموذج أولي لتطبيق النظام. نظراً لتوفر بيانات كافية حول أراضيها، وتعاون مخمني الأراضي من خلال تزويدنا بها.
 تم تصميم النظام بواجهة مستخدم تفاعلية تتيح إدخال خصائص الأرض مثل المساحة، والموقع، والتصنيف السياسي، وغيرها من العوامل المؤثرة، ليحصل المستخدم على سعر تقديري فوري.
@@ -233,6 +236,7 @@ This project represents the first step in automating the process of real estate 
 تضمنت البيانات المستخدمة خصائص عددية وأخرى تصنيفية وتم تدريب النموذج عليها لتقدير السعر بناءً على العوامل المدخلة.
 وقد تم تحصيل هذه البيانات من مصادر متنوعة أهمها مخمنو الأراضي في بلدة بني نعيم، بجانب الرجوع إلى خرائط رسمية ومخططات هيكلية لاستخلاص معلومات تنظيمية عن الأراضي مثل موقعها وتصنيفها وشكلها، وسعرها، وذلك لإدخالها يدويًا إلى النظام. ساعد هذا التنوع في بناء قاعدة بيانات واقعية، وعزّز من موثوقية النموذج وارتباطه بالميدان العملي. ورغم محدودية البيانات المتوفرة، تم ضبط النموذج لتحقيق توازن فعّال بين الدقة وسرعة التنفيذ، مما يجعله أداة مساعدة فعالة لقرارات المخمّنين العقاريين، كونهم الفئة المستفيدة منه بشكل رئيسي.
 يمثّل هذا المشروع الخطوة الأولى في أتمتة عملية التثمين العقاري، ويُخطط لتطويره لاحقًا باستخدام خوارزميات أكثر تقدمًا مثل CatBoost وRandom Forest، بما يتماشى مع الازدياد في حجم وتنوع البيانات المتوفرة.
+}
 \end{ARcentercol}
 
 
@@ -1082,43 +1086,53 @@ This structured method ensures that each layer is independent but still connecte
 
 \subsection{Example Models in the System}
 
-The project will have multiple models to manage the data effectively within the MVT architecture. Each model represents an entity of the Land-Price Prediction system and has its own attributes. Example models include:
+The system is implemented using Django's Model--View--Template (MVT) architecture and includes several database models that represent the main entities of the Land-Price Prediction platform. Example models include:
 
 \begin{enumerate}
-    \item \textbf{User:} Represents a system user. Attributes include \texttt{id}, \texttt{full\_name}, \texttt{email}, \texttt{password}, \texttt{role}, and \texttt{created\_at}.
-    
-    \item \textbf{Project:} Represents a land estimation project. Attributes include \texttt{id}, \texttt{name}, \texttt{description}, \texttt{created\_by}, \texttt{created\_at}, and \texttt{status}.
-    
-    \item \textbf{Plot (Land Parcel):} Represents a land parcel. Attributes include \texttt{id}, \texttt{plot\_code}, \texttt{governorate\_id}, \texttt{town\_id}, \texttt{neighborhood\_id}, \texttt{area\_m2}, \texttt{slope}, \texttt{soil\_type\_id}, \texttt{rock\_type\_id}, \texttt{current\_land\_use}, \texttt{planned\_land\_use}, \texttt{far}, \texttt{coverage\_ratio}, \texttt{is\_current}, \texttt{version\_no}, \texttt{created\_by}, and \texttt{created\_at}.
-    
-    \item \textbf{Plot Document:} Represents documents related to a plot. Attributes include \texttt{id}, \texttt{plot\_id}, \texttt{doc\_type\_id}, \texttt{issuing\_authority\_id}, \texttt{doc\_number}, \texttt{issue\_date}, \texttt{share\_type}, and \texttt{share\_ratio}.
-    
-    \item \textbf{Model:} Represents a machine learning model. Attributes include \texttt{id}, \texttt{name}, \texttt{version}, \texttt{description}, \texttt{created\_by}, \texttt{created\_at}, and \texttt{is\_active}.
-    
-    \item \textbf{Valuation:} Represents the output of a model prediction for a plot in a project. Attributes include \texttt{id}, \texttt{project\_id}, \texttt{plot\_id}, \texttt{model\_id}, \texttt{predicted\_price}, \texttt{created\_at}, and \texttt{created\_by}.
-    
-    \item \textbf{Project Plot:} Represents the association between a project and its plots. Attributes include \texttt{id}, \texttt{project\_id}, \texttt{plot\_id}, \texttt{valuation\_id}, and \texttt{note}.
-    
-    \item \textbf{Plot Feedback:} Stores user feedback on a plot's estimated price. Attributes include \texttt{id}, \texttt{plot\_id}, \texttt{user\_id}, \texttt{is\_price\_accepted}, \texttt{suggested\_price}, and \texttt{created\_at}.
-    
-    \item \textbf{Governorate, Town, Neighborhood:} Represent geographical hierarchy. Attributes include \texttt{id}, \texttt{code}, \texttt{name\_ar}, and relevant foreign keys.
-    
-    \item \textbf{Supporting Lookup Tables:} Includes \texttt{Admin Zoning}, \texttt{Ownership Document Type}, \texttt{Issuing Authority}, \texttt{Soil Type}, \texttt{Rock Type}, \texttt{Crop Type}, \texttt{Nuisance Type}, and \texttt{Restriction Type} with their respective codes and labels.
-    
-    \item \textbf{Plot Crops, Plot Nuisances, Plot Restrictions:} Represent details of crops, nuisances, and restrictions on a plot. Attributes include plot foreign key, type foreign key, and specific measurements such as \texttt{coverage\_pct}, \texttt{tree\_count}, or \texttt{severity}.
+    \item \textbf{User:} Stores user accounts and roles (e.g., \texttt{SYSTEM\_ADMIN}, \texttt{DATA\_SCIENTIST}, \texttt{LAND\_ASSESSOR}).
+
+    \item \textbf{Geographic Hierarchy:} Includes \texttt{Governorate}, \texttt{Town}, \texttt{Area}, and \texttt{Neighborhood} to represent the location structure using codes, Arabic names, and foreign-key relationships.
+
+    \item \textbf{Project:} Represents a land estimation case created by a user, containing parcel identification, key land attributes, utilities, ownership document type, project status (e.g., \texttt{DRAFT}/\texttt{COMPLETED}), and the reference price per square meter.
+
+    \item \textbf{Lookup Tables:} Stores standardized codes and labels used in the system, such as \texttt{LandUseType}, \texttt{FacilityType}, and \texttt{EnvironmentalFactorType}.
+
+    \item \textbf{Project Associations:} Connects projects to multi-select features using models such as \texttt{ProjectLandUse}, \texttt{ProjectFacility}, and \texttt{ProjectEnvironmentalFactor}.
+
+    \item \textbf{ProjectRoad:} Stores road-related information linked to a project (e.g., status, ownership, width, and paving).
+
+    \item \textbf{MLModel:} Stores trained machine learning models and their metadata (name, version, and file path).
+
+    \item \textbf{Settings:} Stores global system configuration, including the currently active ML model.
+
+    \item \textbf{Valuation:} Stores the prediction output of an ML model for a project (predicted price per m\textsuperscript{2}).
 \end{enumerate}
 
 \clearpage
 \section{ER Diagram}
+
 \begin{figure}[H]
   \captionsetup{position=top,labelformat=empty,labelsep=none}
   \centering
-  \vspace{6pt}
-  \includegraphics[width=0.7\textheight]{images/ER.png}
+
+  \vspace*{\fill} % يدفع الشكل للوسط عمودياً
+
+  \makebox[\textwidth][c]{%
+    \includegraphics[
+      page=2,
+      width=\textwidth,
+      trim=0 80mm 0 80mm,
+      clip
+    ]{images/ER.pdf}%
+  }
+
+  \vspace*{\fill} % يكمل التوسيط العمودي
+
   \caption{Figure 3.4.1 ER Diagram}
   \label{fig:erd}
 \end{figure}
 \clearpage
+
 
 \section{Database Description}
 
