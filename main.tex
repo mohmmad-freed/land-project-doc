@@ -271,7 +271,7 @@ Another need is reducing subjectivity, it is crucial to avoid the human bias in 
 The main goal of the project is to develop a machine learning model capable of accurately estimating land prices in Bani Na’im and to achieve this goal, the project has the following objectives:
 
 \begin{enumerate}[leftmargin=*, label=\arabic*-, align=left]
-    \item Data collection: Gather all relevant land data like the area, location, suitability for agriculture and more.
+    \item Data collection: Gather all relevant land data like the area, location and more.
     \item Data cleaning: After collecting the raw data, data cleaning is performed, where the data’s quality will be enhanced by removing duplicate and irrelevant data entries, and correcting inconsistencies.
     \item Model development: Train machine learning algorithms with the cleaned data and compare them to select the most suitable algorithm in predicting the prices.
     \item Model evaluation: Test the model and evaluate it by comparing the results of the model with the actual results of traditional pricing methods.
@@ -284,14 +284,19 @@ The project aims to increase the efficiency and transparency of the land price e
 This project aims to predict land prices in the town of Bani Na'im using machine learning techniques depending on available real Bani Na'im land data.
 The scope of the project includes developing a predictive machine learning model that predicts land prices depending on features like:
 
-\begin{itemize}[leftmargin=*]
-    \item Location
-    \item Political classification of the land (area A, B, or C)
-    \item Intended land use (e.g., residential, commercial)
-    \item Land area
-    \item Availability of infrastructure
-    \item Proximity to essential public services (e.g., hospitals)
-\end{itemize}
+\begin{tabularx}{\textwidth}{X X}
+\textbullet\ Location &
+\textbullet\ Political classification of the land \\
+
+\textbullet\ Intended land use (e.g., residential) &
+\textbullet\ Land area \\
+
+\textbullet\ Availability of infrastructure &
+\textbullet\ Road access \\
+
+\textbullet\ View quality &
+\end{tabularx}
+
 
 The project also involves designing a user-friendly interface that allows authorized users such as land appraisers, system admins, and data scientists to use the system — everyone as allowed to.
 
@@ -425,9 +430,9 @@ Figure 2.3.1 illustrates the context diagram of the AI Land Price Estimation Sys
 
 \begin{figure}[H]
   \centering
-  \caption{Figure 2.3.1 Context Diagram}
   \vspace{6pt}
   \includegraphics[width=\textwidth,height=1\textheight,keepaspectratio]{images/Context diagram.png}
+  \caption{Figure 2.3.1 Context Diagram}
   \label{fig:context-diagram}
 \end{figure}
 \clearpage
@@ -519,7 +524,7 @@ Figure 2.3.1 illustrates the context diagram of the AI Land Price Estimation Sys
 
   \item \textbf{Test Model Accuracy} — Run tests using known or sample land data to evaluate model accuracy.
 
-  \item \textbf{Review Feature Impact} — View which land features (e.g., area, location) most influence the predicted price based on the model’s analysis.
+  \item \textbf{Train ML Model} — Creates and tains the ML model on the selected datasets
 
   \item \textbf{Monitor Model Performance Over Time} — Track model performance across time and compare older versions with newer ones.
 
@@ -563,9 +568,9 @@ The nonfunctional requirements describe how the system should behave to provide 
 \section{Use-Case Diagram}
 \begin{figure}[H]
   \centering
-  \caption{Figure 2.5.1 Use Case Diagram}
   \vspace{6pt}
   \includegraphics[width=\textwidth,height=0.8\textheight,keepaspectratio]{images/use case diagram.png}
+  \caption{Figure 2.5.1 Use Case Diagram}
   \label{fig:use-case-diagram}
 \end{figure}
 \clearpage
@@ -922,46 +927,40 @@ Exceptions &
 \end{tabularx}
 \end{table}
 
-% ---- Table 2.9.2 Review Feature Impact ----
+% ---- Table 2.9.2 Machine Learning Model Training ----
 \begin{table}[H]
 \centering
-\caption{Table 2.9.2 Review Feature Impact}
-\label{tab:ds-feature-impact}
+\caption{Table 2.9.2 Machine Learning Model Training}
+\label{tab:ds-train-model}
 \begin{tabularx}{\textwidth}{|p{3cm}|X|}
 \hline
 \textbf{Field} & \textbf{Content} \\ \hline
 
-Requirement & Review Feature Impact \\ \hline
+Requirement & Train the machine learning model on available dataset. \\ \hline
 
 Actor & Data Scientist \\ \hline
 
-Objective & Analyze which features had the most influence on the land price prediction for a specific project. \\ \hline
+Objective & Enable the data scientist to create and train a machine learning model for predicting land prices. \\ \hline
 
-Precondition & 
-\begin{minipage}[t]{0.75\textwidth}
-\begin{enumerate}[leftmargin=*,label=\arabic*.]
-\item The model must be trained and support feature importance analysis.
-\item The project must have completed the estimation.
-\end{enumerate}
-\end{minipage} \\ \hline
+Precondition & The system must have a dataset available for training, and preprocessing steps configured. \\ \hline
 
 Scenario &
 \begin{minipage}[t]{0.75\textwidth}
 \begin{enumerate}[leftmargin=*,label=\arabic*.]
-\item Access the “Projects” section.
-\item Select a specific project from the list.
-\item Open the “Feature Importance” view for that project.
-\item View ranked list of features by their impact on the project’s prediction.
-\item Export or download the report if needed.
+\item The data scientist selects the "Model Training" section.
+\item Chooses or configures the dataset for training.
+\item Selects the model type and hyperparameters (e.g., Decision Tree, max\_depth, min\_samples\_leaf).
+\item Runs the training process.
+\item The system creates and stores the trained model for future predictions and evaluation.
 \end{enumerate}
 \end{minipage} \\ \hline
 
 Exceptions &
 \begin{minipage}[t]{0.75\textwidth}
 \begin{enumerate}[leftmargin=*,label=\arabic*.]
-\item Feature analysis tool is unavailable or unsupported for that project.
-\item Insufficient project data to generate meaningful insights.
-\item Selected project not found or inaccessible.
+\item Dataset is missing or invalid.
+\item Preprocessing steps are not configured.
+\item Model fails to train due to invalid hyperparameters.
 \end{enumerate}
 \end{minipage} \\ \hline
 
@@ -1074,8 +1073,8 @@ This structured method ensures that each layer is independent but still connecte
   \captionsetup{position=top, labelformat=empty, labelsep=none}
   \centering
   \vspace{1cm}
-   \caption{Figure 3.3.1 MVT Architecture}
   \includegraphics[width=\textwidth]{images/MVT.png}
+   \caption{Figure 3.3.1 MVT Architecture}
   \label{fig:mvt}
 \end{figure}
 
@@ -1114,9 +1113,9 @@ The project will have multiple models to manage the data effectively within the 
 \begin{figure}[H]
   \captionsetup{position=top,labelformat=empty,labelsep=none}
   \centering
-  \caption{Figure 3.4.1 ER Diagram}
   \vspace{6pt}
   \includegraphics[width=0.7\textheight]{images/ER.png}
+  \caption{Figure 3.4.1 ER Diagram}
   \label{fig:erd}
 \end{figure}
 \clearpage
@@ -1222,8 +1221,8 @@ The project will have multiple models to manage the data effectively within the 
 \begin{figure}[H]
 \centering
 \captionsetup{position=top}
-\caption{Figure 3.6.1 Account Registration}
 \includegraphics[width=0.7\textwidth]{images/Register.png} 
+\caption{Figure 3.6.1 Account Registration}
 \label{fig:account-registration}
 \end{figure}
 
@@ -1233,8 +1232,8 @@ The project will have multiple models to manage the data effectively within the 
 \begin{figure}[H]
 \centering
 \captionsetup{position=top}
-\caption{Figure 3.6.2 Create New Project}
 \includegraphics[width=0.7\textwidth]{images/Create_new_project.png} 
+\caption{Figure 3.6.2 Create New Project}
 \label{fig:Create_New_Project}
 \end{figure}
 
@@ -1247,22 +1246,22 @@ The project will have multiple models to manage the data effectively within the 
 \begin{figure}[H]
 \centering
 \captionsetup{position=top}
-\caption{Figure 3.6.3 Test Model Accuracy}
 \includegraphics[width=0.7\textwidth]{images/Model_testing.png}
+\caption{Figure 3.6.3 Test Model Accuracy}
 \end{figure}
 
 \begin{figure}[H]
 \centering
 \captionsetup{position=top}
-\caption{Figure 3.6.4 Review Feature Impact}
-\includegraphics[width=0.7\textwidth]{images/Feature_impact_2.png}
+\includegraphics[width=0.7\textwidth]{images/Model training complete}
+\caption{Figure 3.6.4 Model Training}
 \end{figure}
 
 \begin{figure}[H]
 \centering
 \captionsetup{position=top}
-\caption{Figure 3.6.5 Monitor Model Performance Over Time}
 \includegraphics[width=0.7\textwidth]{images/Model_history.png}
+\caption{Figure 3.6.5 Monitor Model Performance Over Time}
 \end{figure}
 
 
@@ -1270,8 +1269,8 @@ The project will have multiple models to manage the data effectively within the 
 \begin{figure}[H]
 \centering
 \captionsetup{position=top}
-\caption{Figure 3.6.6 View And Manage Users}
 \includegraphics[width=0.7\textwidth]{images/User_management.png}
+\caption{Figure 3.6.6 View And Manage Users}
 \end{figure}
 
 
@@ -1279,8 +1278,8 @@ The project will have multiple models to manage the data effectively within the 
 \begin{figure}[H]
 \centering
 \captionsetup{position=top}
-\caption{Figure 3.6.7 Manage Backups}
 \includegraphics[width=0.7\textwidth]{images/Backup_management.png}
+\caption{Figure 3.6.7 Manage Backups}
 \end{figure}
 
 % -------------------- Chapter 4 --------------------
@@ -1305,16 +1304,16 @@ The login interface allows registered users to authenticate using their email an
 \begin{figure}[H]
 \centering
 \captionsetup{position=top}
-\caption{Figure 4.3.1 Registration Page}
 \includegraphics[width=0.6\textwidth]{images/Figure 4.3.1 Registration page.png}
+\caption{Figure 4.3.1 Registration Page}
 \label{fig:frontend-registration}
 \end{figure}
 
 \begin{figure}[H]
 \centering
 \captionsetup{position=top}
-\caption{Figure 4.3.2 Login Page}
 \includegraphics[width=0.6\textwidth]{images/Figure 4.3.2 Login page.png}
+\caption{Figure 4.3.2 Login Page}
 \label{fig:frontend-login}
 \end{figure}
 
@@ -1323,8 +1322,8 @@ After authentication, users are redirected to a role-aware dashboard that serves
 \begin{figure}[H]
 \centering
 \captionsetup{position=top}
-\caption{Figure 4.3.3 Home Page}
 \includegraphics[width=0.6\textwidth]{images/Figure 4.3.3 Homepage.png}
+\caption{Figure 4.3.3 Home Page}
 \label{fig:frontend-homepage}
 \end{figure}
 
@@ -1334,8 +1333,8 @@ The project management interface allows users to view and manage all previously 
 \begin{figure}[H]
 \centering
 \captionsetup{position=top}
-\caption{Figure 4.3.4 Project Management Interface}
 \includegraphics[width=0.6\textwidth]{images/Figure 4.3.4 Project Management Interface.png}
+\caption{Figure 4.3.4 Project Management Interface}
 \label{fig:frontend-project-management}
 \end{figure}
 
@@ -1346,8 +1345,8 @@ Users can either save the project as a draft for later completion or submit the 
 \begin{figure}[H]
 \centering
 \captionsetup{position=top}
-\caption{Figure 4.3.5 New Project Form}
 \includegraphics[width=0.6\textwidth]{images/Figure 4.3.5 New project form.png}
+\caption{Figure 4.3.5 New Project Form}
 \label{fig:frontend-new-project-form}
 \end{figure}
 
@@ -1374,8 +1373,8 @@ This separation of concerns improves maintainability, scalability, and clarity o
 
 \begin{figure}[H]
   \centering
-  \caption{Figure 4.4.1 Normal User Application Structure}
   \includegraphics[width=0.3\linewidth]{images/Figure 4.4.2 Normal user side app structure.png}
+  \caption{Figure 4.4.1 Normal User Application Structure}
 \end{figure}
 
 
@@ -1426,14 +1425,14 @@ Server-side validation ensures:
 
 \begin{figure}[H]
   \centering
-  \caption{Figure 4.4.2 Project form}
   \includegraphics[width=0.6\linewidth]{images/Figure 4.4.5 Project form.png}
+  \caption{Figure 4.4.2 Project form}
 \end{figure}
 
 \begin{figure}[H]
   \centering
-  \caption{Figure 4.4.3 User form}
   \includegraphics[width=0.6\linewidth]{images/Figure 4.4.6 User form.png}
+  \caption{Figure 4.4.3 User form}
 \end{figure}
 
 \subsection{Project Creation and State Management}
@@ -1451,8 +1450,8 @@ This logic is handled within the Django view by detecting the submitted button n
 
 \begin{figure}[H]
   \centering
-  \caption{Figure 4.4.4newProject view}
   \includegraphics[width=0.6\linewidth]{images/Figure 4.4.7 newProject view.png}
+  \caption{Figure 4.4.4newProject view}
 \end{figure}
 
 \subsection{Machine Learning Model Integration}
@@ -1473,14 +1472,14 @@ The ML logic is isolated in a dedicated module to maintain separation between bu
 
 \begin{figure}[H]
   \centering
-  \caption{Figure 4.4.5Import the ML model}
   \includegraphics[width=0.6\linewidth]{images/Figure 4.4.8 Import the ML model.png}
+  \caption{Figure 4.4.5Import the ML model}
 \end{figure}
 
 \begin{figure}[H]
   \centering
-  \caption{Figure 4.4.6 Prediction function}
   \includegraphics[width=0.6\linewidth]{images/Figure 4.4.9 Prediction function.png}
+  \caption{Figure 4.4.6 Prediction function}
 \end{figure}
 
 
@@ -1527,8 +1526,8 @@ providing secure and unpredictable identifiers for account activation purposes.
 \begin{figure}[H]
 \centering
 \captionsetup{position=top}
-\caption{Figure 4.5.1 Primary and Foreign Key Relationships}
 \includegraphics[width=0.6\textwidth]{images/Figure 4.5.2 Primary and Foreign Key Relationships.png}
+\caption{Figure 4.5.1 Primary and Foreign Key Relationships}
 \end{figure}
 
 \subsection{Data Validation and Constraints}
@@ -1548,12 +1547,7 @@ are used to synchronize model definitions with the SQLite database schema.
 
 
 \subsection{Dataset Usage}
-The model is trained using real land data collected for the project. Due to the limited size of the original dataset, the SMOTE technique was applied to increase the number of samples and improve data balance. This helps enhance model performance while preserving the characteristics of the original data.
-
-Future work includes integrating real land data
-through an official land registry API,
-which would allow continuous updates
-and enhance prediction accuracy and system realism.
+The model is trained using real land data only. Despite the limited dataset size, no data augmentation techniques were applied, with plans to expand the dataset in future work through professional appraisers or official data sources (e.g. , geomlog) via APIs.
 
 % ==================== 4.6 ====================
 \section{System Integration}
@@ -1598,9 +1592,9 @@ The email service is integrated for password resets:
 
 \begin{figure}[H]
     \centering
-    \caption{Figure 4.6.1 Email service integration in settings.py}
     \vspace{6pt}
     \includegraphics[width=0.6\textwidth]{images/Figure 4.6.3 Email service integration in settings.py.png}
+    \caption{Figure 4.6.1 Email service integration in settings.py}
 \end{figure}
 
 % ==================== 4.7 ====================
@@ -1615,16 +1609,16 @@ Access to system functionality is restricted based on user roles (e.g., normal u
 \begin{figure}[H]
 \centering
 \captionsetup{position=top}
-\caption{Figure 4.7.1 Authentication form}
 \includegraphics[width=0.6\textwidth]{images/Figure 4.7.1 Authentication form.png}
+\caption{Figure 4.7.1 Authentication form}
 \label{fig:security-auth-form}
 \end{figure}
 
 \begin{figure}[H]
 \centering
 \captionsetup{position=top}
-\caption{Figure 4.7.2 Authentication in loginPage view}
 \includegraphics[width=0.6\textwidth]{images/Figure 4.7.2 Authentication in loginPage view.png}
+\caption{Figure 4.7.2 Authentication in loginPage view}
 \label{fig:security-auth-loginpage}
 \end{figure}
 
@@ -1634,8 +1628,8 @@ This approach prevents the user from attempting to access or manipulate another 
 \begin{figure}[H]
 \centering
 \captionsetup{position=top}
-\caption{Figure 4.7.3 User-based query filtering in viewProjects view}
 \includegraphics[width=0.7\textwidth]{images/Figure 4.7.3 User-based query filtering in viewProjects view.png}
+\caption{Figure 4.7.3 User-based query filtering in viewProjects view}
 \label{fig:security-query-filtering}
 \end{figure}
 
@@ -1646,16 +1640,16 @@ In addition to password recovery via email, authenticated users are allowed to c
 \begin{figure}[H]
 \centering
 \captionsetup{position=top}
-\caption{Figure 4.7.4 Change Password section in edit\_profile page}
 \includegraphics[width=0.6\textwidth]{images/Figure 4.7.4 Change Password section in edit_profile page.png}
+\caption{Figure 4.7.4 Change Password section in edit\_profile page}
 \label{fig:security-change-password}
 \end{figure}
 
 \begin{figure}[H]
 \centering
 \captionsetup{position=top}
-\caption{Figure 4.7.5 Reset password via email}
 \includegraphics[width=0.6\textwidth]{images/Figure 4.7.5 Reset password via email.png}
+\caption{Figure 4.7.5 Reset password via email}
 \label{fig:security-reset-password-email}
 \end{figure}
 
@@ -1666,8 +1660,8 @@ All user inputs are validated on the server side using Django Forms and ModelFor
 \begin{figure}[H]
 \centering
 \captionsetup{position=top}
-\caption{Figure 4.7.6 ModelForm validation}
 \includegraphics[width=0.6\textwidth]{images/Figure 4.7.6 ModelForm validation.png}
+\caption{Figure 4.7.6 ModelForm validation}
 \label{fig:security-modelform-validation}
 \end{figure}
 
@@ -1676,8 +1670,8 @@ The system also applies structured error handling to ensure safe failure. Runtim
 \begin{figure}[H]
 \centering
 \captionsetup{position=top}
-\caption{Figure 4.7.7 Exception handling during land price estimation}
 \includegraphics[width=0.7\textwidth]{images/Figure 4.7.8 Exception handling during land price estimation.png}
+\caption{Figure 4.7.7 Exception handling during land price estimation}
 \label{fig:security-exception-handling}
 \end{figure}
 
@@ -1698,9 +1692,9 @@ Figure 5.1.1 shows the unit test implementation within the tests.py file of the 
 
 \begin{figure}[H]
     \centering
-    \caption{Figure 5.1.1 Unit test implementation for the Project model}
     \vspace{6pt}
     \includegraphics[width=0.6\textwidth]{images/Figure 5.1.1 Unit test implementation for the Project model.png}
+    \caption{Figure 5.1.1 Unit test implementation for the Project model}
 \end{figure}
 
 The test setup creates a sample user and a project instance, then applies assertions to verify that:
@@ -1719,9 +1713,9 @@ The unit test was executed using Django’s test runner. Figure 5.1.2 illustrate
 
 \begin{figure}[H]
     \centering
-    \caption{Figure 5.1.2 Unit test result}
     \vspace{6pt}
     \includegraphics[width=0.7\textwidth]{images/Figure 5.1.2 Unit test result.png}
+    \caption{Figure 5.1.2 Unit test result}
 \end{figure}
 
 The successful test result confirms that the Project model functions correctly in isolation and that the system’s foundational data layer is stable.
@@ -1745,9 +1739,9 @@ We created a simplified integration test in Normal\_User\_Side/tests.py that cov
 
 \begin{figure}[H]
     \centering
-    \caption{Figure 5.2.1 Project Integration Test}
     \vspace{6pt}
     \includegraphics[width=0.7\textwidth]{images/Figure 5.2.1 Project Integration Test.png}
+    \caption{Figure 5.2.1 Project Integration Test}
 \end{figure}
 
 \subsection{Explanation}
@@ -1767,9 +1761,9 @@ This ensures that the end-to-end workflow of project creation and listing works 
 
 \begin{figure}[H]
     \centering
-    \caption{Figure 5.2.2 Integration Test Result}
     \vspace{6pt}
     \includegraphics[width=0.6\textwidth]{images/Figure 5.2.2 Integration Test Result.png}
+    \caption{Figure 5.2.2 Integration Test Result}
 \end{figure}
 
 \subsection{Explanation}
@@ -1791,8 +1785,8 @@ The testing process begins with the registration of a new normal user through th
 \begin{figure}[H]
 \centering
 \captionsetup{position=top}
-\caption{Figure 5.3.1 Registration}
 \includegraphics[width=0.5\textwidth]{images/Figure 5.3.1 Registration.png}
+\caption{Figure 5.3.1 Registration}
 \label{fig:e2e-registration}
 \end{figure}
 
@@ -1802,8 +1796,8 @@ The user creates an account by providing required information and upon successfu
 \begin{figure}[H]
 \centering
 \captionsetup{position=top}
-\caption{Figure 5.3.2 Registration successful}
 \includegraphics[width=0.5\textwidth]{images/Figure 5.3.2 Registration successful.png}
+\caption{Figure 5.3.2 Registration successful}
 \label{fig:e2e-registration-success}
 \end{figure}
 
@@ -1813,8 +1807,8 @@ Once authenticated, the user gains access to the main dashboard.
 \begin{figure}[H]
 \centering
 \captionsetup{position=top}
-\caption{Figure 5.3.3 Dashboard}
 \includegraphics[width=0.5\textwidth]{images/Figure 5.3.3 Dashboard.png}
+\caption{Figure 5.3.3 Dashboard}
 \label{fig:e2e-dashboard}
 \end{figure}
 
@@ -1826,8 +1820,8 @@ The user initiates the creation of a new land price estimation project by naviga
 \begin{figure}[H]
 \centering
 \captionsetup{position=top}
-\caption{Figure 5.3.4 New Project form filled with data}
 \includegraphics[width=0.5\textwidth]{images/Figure 5.3.4 New Project form filled with data.png}
+\caption{Figure 5.3.4 New Project form filled with data}
 \label{fig:e2e-new-project-form}
 \end{figure}
 
@@ -1845,13 +1839,44 @@ After submission, the user is redirected to the projects list page.
 \begin{figure}[H]
 \centering
 \captionsetup{position=top}
-\caption{Figure 5.3.5 View the created project in the list of projects}
 \includegraphics[width=0.5\textwidth]{images/Figure 5.3.6 View the created project in the list of projects.png}
+\caption{Figure 5.3.5 View the created project in the list of projects}
 \label{fig:e2e-project-list}
 \end{figure}
 
 Explanation:
  The projects page displays all projects created by the authenticated user. This confirms correct database persistence, user-based data filtering, and real-time dashboard updates.
+
+\section{Machine Learning Model Testing}
+
+The machine learning model was evaluated using the cross-validation and train-test split techniques to measure the Mean Absolute Error (MAE) on unseen data. Additionally, visual analysis was performed using predicted prices versus residuals and a decision tree visualization to better understand model behavior.
+
+The obtained results are influenced by the limited size of the available dataset. With only a small number of data samples, the model’s ability to generalize is constrained, which impacts prediction accuracy. It is expected that model performance will improve as more data becomes available. In the coming days, additional land price data will be collected to use in the training process to enhance accuracy and overall predictive capability.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{images/Figure 5.4.1 CV performance.png}
+    \caption{Figure 5.4.1 Cross-validation performance (Mean MAE) of the ML model}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{images/Figure 5.4.2 Train-test performance.png}
+    \caption{Figure 5.4.2 Train-test split performance of the ML model}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{images/Figure 5.4.3 Predicted vs Residuals.png}
+    \caption{Figure 5.4.3 Predicted prices vs residuals for the ML model}
+\end{figure}
+
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{images/Figure 5.4.4 Decesion tree}
+    \caption{Figure 5.4.4 Trained Decision Tree visualization showing the main splits and feature importance}
+\end{figure}
 
 % -------------------- Chapter 6 --------------------
 \chapter*{\centering Future Work}
