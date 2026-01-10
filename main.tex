@@ -1123,120 +1123,97 @@ The project will have multiple models to manage the data effectively within the 
 
 \section{Database Description}
 
+% ========= Database Schema (Condensed) =========
+
+\subsection{General Notes}
+\begin{itemize}[leftmargin=*,itemsep=2pt]
+  \item All main tables include auditing fields: \texttt{created\_\allowbreak at}, \texttt{updated\_\allowbreak at} (nullable), and soft-delete \texttt{deleted\_\allowbreak at} (nullable).
+  \item Uniqueness is enforced among active records only (i.e., where \texttt{deleted\_\allowbreak at IS NULL}) where applicable.
+\end{itemize}
+
 \subsection{Users}
 \begin{itemize}[leftmargin=*,itemsep=2pt]
   \item \texttt{id}: integer; PK; auto-increment.
-  \item \texttt{full\_name}: string; not-null.
-  \item \texttt{email}: string; unique; not-null.
-  \item \texttt{password}: string; not-null; $\geq$ 8 chars.
-  \item \texttt{role}: enum \{ADMIN, ASSESSOR, DATA\_SCIENTIST\}; not-null.
-  \item \texttt{created\_at}: datetime; not-null.
+  \item \texttt{full\_\allowbreak name}: \texttt{varchar(150)}; not-null.
+  \item \texttt{email}: \texttt{varchar(255)}; unique; not-null.
+  \item \texttt{role}: \texttt{varchar(32)}; not-null; values \{SYSTEM\_ADMIN, DATA\_SCIENTIST, LAND\_\allowbreak ASSESSOR\}.
+  \item \texttt{password}: \texttt{varchar(255)}; not-null; hashed.
+  \item Django authentication flags are used (e.g., \texttt{is\_\allowbreak active}, \texttt{is\_\allowbreak staff}, \texttt{is\_\allowbreak superuser}, \texttt{last\_\allowbreak login}).
+\end{itemize}
+
+\subsection{Location Tables}
+\begin{itemize}[leftmargin=*,itemsep=2pt]
+  \item \texttt{governorates}(\texttt{id}, \texttt{code}, \texttt{name\_\allowbreak ar})
+  \item \texttt{towns}(\texttt{id}, \texttt{governorate\_\allowbreak id}, \texttt{code}, \texttt{name\_\allowbreak ar})
+  \item \texttt{areas}(\texttt{id}, \texttt{town\_\allowbreak id}, \texttt{code}, \texttt{name\_\allowbreak ar})
+  \item \texttt{neighborhoods}(\texttt{id}, \texttt{area\_\allowbreak id}, \texttt{code}, \texttt{name\_\allowbreak ar})
+\end{itemize}
+\textbf{Constraints and Business Rules:}
+\begin{itemize}[leftmargin=*,itemsep=2pt]
+  \item \texttt{governorates}: \texttt{code} is unique among active records.
+  \item \texttt{towns}: \texttt{(governorate\_\allowbreak id, code)} is unique among active records.
+  \item \texttt{areas}: \texttt{(town\_\allowbreak id, code)} is unique among active records.
+  \item \texttt{neighborhoods}: \texttt{(area\_\allowbreak id, code)} is unique among active records.
+\end{itemize}
+
+\subsection{Reference Tables}
+\begin{itemize}[leftmargin=*,itemsep=2pt]
+  \item \texttt{land\_\allowbreak use\_\allowbreak types}(\texttt{id}, \texttt{code}, \texttt{label}); e.g., \{RESIDENTIAL, COMMERCIAL, AGRICULTURAL, INDUSTRIAL\}.
+  \item \texttt{facility\_\allowbreak types}(\texttt{id}, \texttt{code}, \texttt{label}); e.g., \{SCHOOLS, HOSPITALS, MUNICIPALITY, POLICE\}.
+  \item \texttt{environmental\_\allowbreak factor\_\allowbreak types}(\texttt{id}, \texttt{code}, \texttt{label}); e.g., \{LANDFILL\_NEARBY, FACTORIES\_NEARBY, NOISY\_FACILITIES, ANIMAL\_FARMS\}.
+\end{itemize}
+\textbf{Constraints and Business Rules:}
+\begin{itemize}[leftmargin=*,itemsep=2pt]
+  \item For all reference tables, \texttt{code} is unique among active records.
 \end{itemize}
 
 \subsection{Projects}
 \begin{itemize}[leftmargin=*,itemsep=2pt]
-  \item \texttt{id}: UUID; PK.
-  \item \texttt{name}: string; not-null.
-  \item \texttt{description}: string; not-null.
-  \item \texttt{created\_by}: integer; FK $\rightarrow$ \texttt{users.id}; not-null.
-  \item \texttt{created\_at}: datetime; not-null.
-  \item \texttt{status}: enum \{ACTIVE, ARCHIVED\}; not-null.
-\end{itemize}
-
-\subsection{Plots (Land Parcels)}
-\begin{itemize}[leftmargin=*,itemsep=2pt]
-  \item \texttt{id}: UUID; PK.
-  \item \texttt{plot\_code}: string; unique; not-null.
-  \item \texttt{governorate\_id}: integer; FK $\rightarrow$ \texttt{governorates.id}; not-null.
-  \item \texttt{town\_id}: integer; FK $\rightarrow$ \texttt{towns.id}; not-null.
-  \item \texttt{neighborhood\_id}: integer; FK $\rightarrow$ \texttt{neighborhoods.id}; not-null.
-  \item \texttt{area\_m2}: \texttt{decimal(12,2)}; $\geq 0$; not-null.
-  \item \texttt{slope}: enum \{FLAT, SLIGHT, MODERATE, STEEP\}; not-null.
-  \item \texttt{soil\_type\_id}: integer; FK $\rightarrow$ \texttt{soil\_type.id}; nullable.
-  \item \texttt{rock\_type\_id}: integer; FK $\rightarrow$ \texttt{rock\_type.id}; nullable.
-  \item \texttt{current\_land\_use}: enum \{RES, COM, AGR, IND, MIX, VACANT\}; not-null.
-  \item \texttt{planned\_land\_use}: enum \{RES, COM, AGR, IND, MIX, VACANT\}; nullable.
-  \item \texttt{far}: \texttt{decimal(6,3)}; $\geq 0$; nullable.
-  \item \texttt{coverage\_ratio}: \texttt{decimal(4,2)}; 0–1; nullable.
-  \item \texttt{is\_current}: boolean; not-null.
-  \item \texttt{version\_no}: integer; not-null.
-  \item \texttt{created\_by}: integer; FK $\rightarrow$ \texttt{users.id}; not-null.
-  \item \texttt{created\_at}: datetime; not-null.
-\end{itemize}
-
-\subsection{Plot\_Documents}
-\begin{itemize}[leftmargin=*,itemsep=2pt]
   \item \texttt{id}: integer; PK; auto-increment.
-  \item \texttt{plot\_id}: UUID; FK $\rightarrow$ \texttt{plots.id}; not-null.
-  \item \texttt{doc\_type\_id}: integer; FK $\rightarrow$ \texttt{ownership\_document\_type.id}; not-null.
-  \item \texttt{issuing\_authority\_id}: integer; FK $\rightarrow$ \texttt{issuing\_authority.id}; not-null.
-  \item \texttt{doc\_number}: string; not-null.
-  \item \texttt{issue\_date}: date; not-null.
-  \item \texttt{share\_type}: enum \{INDIVIDUAL, MUSHA\}; not-null.
-  \item \texttt{share\_ratio}: string (e.g., “3/8”); nullable if \texttt{INDIVIDUAL}.
+  \item \texttt{created\_\allowbreak by}: FK $\rightarrow$ \texttt{users.id}; not-null.
+  \item \texttt{project\_\allowbreak name}: \texttt{varchar(150)}; not-null; \texttt{description}: text; nullable.
+  \item \texttt{status}: \texttt{varchar(20)}; values \{DRAFT, COMPLETED\}.
+  \item \textbf{Location:} \texttt{neighborhood\_\allowbreak id} FK $\rightarrow$ \texttt{neighborhoods.id}.
+  \item \textbf{Parcel:} \texttt{neighborhood\_\allowbreak no}, \texttt{parcel\_\allowbreak no} (\texttt{varchar(50)}; not-null).
+  \item \textbf{Attributes:}
+        \texttt{land\_\allowbreak type} \{PRIVATE, COMMON\_SHARE, PUBLIC\},
+        \texttt{political\_\allowbreak classification} \{AREA\_A, AREA\_B, AREA\_C\},
+        \texttt{slope} \{FLAT, MILD, MODERATE, STEEP\}.
+  \item \textbf{Attributes (cont.):}
+        \texttt{view\_\allowbreak quality} \{BAD, GOOD, FANTASTIC\},
+        \texttt{parcel\_\allowbreak shape} \{SQUARE, RECTANGLE, TRIANGLE, IRREGULAR\},
+        \texttt{area\_\allowbreak m2} \texttt{decimal(12,2)} ($>0$).
+  \item \textbf{Utilities:}
+        \texttt{electricity} \{YES\_3PHASE, YES\_1PHASE, NO\},
+        \texttt{water} \{YES, NO\},
+        \texttt{sewage} \{YES\_PRIVATE, YES\_PUBLIC, NO\}.
+  \item \textbf{Ownership:} \texttt{ownership\_\allowbreak document\_\allowbreak type} \{TABU, FINAL\_SETTLEMENT, ONGOING\_SETTLEMENT, DURABLE\_POA, SALE\_CONTRACT, HUJJA, GIFT\}.
+  \item \textbf{Reference price:} \texttt{actual\_\allowbreak price\_\allowbreak per\_\allowbreak m2} \texttt{decimal(12,2)}; currency: JOD.
 \end{itemize}
-
-\subsection{Models}
+\textbf{Constraints and Business Rules:}
 \begin{itemize}[leftmargin=*,itemsep=2pt]
-  \item \texttt{id}: UUID; PK.
-  \item \texttt{name}: string; not-null.
-  \item \texttt{version}: string; not-null.
-  \item \texttt{description}: string; not-null.
-  \item \texttt{created\_by}: integer; FK $\rightarrow$ \texttt{users.id}; not-null.
-  \item \texttt{created\_at}: datetime; not-null.
-  \item \texttt{is\_active}: boolean; not-null.
+  \item \texttt{(neighborhood\_\allowbreak id, neighborhood\_\allowbreak no, parcel\_\allowbreak no)} is unique among active records.
 \end{itemize}
 
-\subsection{Valuations}
+\subsection{Project Relations}
 \begin{itemize}[leftmargin=*,itemsep=2pt]
-  \item \texttt{id}: UUID; PK.
-  \item \texttt{project\_id}: UUID; FK $\rightarrow$ \texttt{projects.id}; not-null.
-  \item \texttt{plot\_id}: UUID; FK $\rightarrow$ \texttt{plots.id}; not-null.
-  \item \texttt{model\_id}: UUID; FK $\rightarrow$ \texttt{models.id}; not-null.
-  \item \texttt{predicted\_price}: \texttt{decimal(12,2)}; not-null.
-  \item \texttt{created\_at}: datetime; not-null.
-  \item \texttt{created\_by}: integer; FK $\rightarrow$ \texttt{users.id}; not-null.
+  \item \texttt{project\_\allowbreak land\_\allowbreak uses}(\texttt{project\_\allowbreak id}, \texttt{land\_\allowbreak use\_\allowbreak type\_\allowbreak id}): unique per project among active records.
+  \item \texttt{project\_\allowbreak facilities}(\texttt{project\_\allowbreak id}, \texttt{facility\_\allowbreak type\_\allowbreak id}): unique per project among active records.
+  \item \texttt{project\_\allowbreak environmental\_\allowbreak factors}(\texttt{project\_\allowbreak id}, \texttt{environmental\_\allowbreak factor\_\allowbreak type\_\allowbreak id}): unique per project among active records.
+  \item \texttt{project\_\allowbreak roads}(\texttt{project\_\allowbreak id}, \texttt{road\_\allowbreak status}, \texttt{road\_\allowbreak ownership}, \texttt{is\_\allowbreak paved}, \texttt{width\_\allowbreak m}).
 \end{itemize}
 
-\subsection{Project\_Plots}
+\subsection{Machine Learning Tables}
 \begin{itemize}[leftmargin=*,itemsep=2pt]
-  \item \texttt{id}: integer; PK; auto-increment.
-  \item \texttt{project\_id}: UUID; FK $\rightarrow$ \texttt{projects.id}; not-null.
-  \item \texttt{plot\_id}: UUID; FK $\rightarrow$ \texttt{plots.id}; not-null.
-  \item \texttt{valuation\_id}: UUID; FK $\rightarrow$ \texttt{valuations.id}; nullable.
-  \item \texttt{note}: string; optional short label.
+  \item \texttt{ml\_\allowbreak models}(\texttt{id}, \texttt{name}, \texttt{version}, \texttt{description}, \texttt{model\_\allowbreak file\_\allowbreak path}, \texttt{created\_\allowbreak by}).
+  \item \texttt{settings}(\texttt{id}, \texttt{active\_\allowbreak ml\_\allowbreak model\_\allowbreak id}, \texttt{updated\_\allowbreak at}) (stores the currently active model).
+  \item \texttt{valuations}(\texttt{id}, \texttt{project\_\allowbreak id}, \texttt{model\_\allowbreak id}, \texttt{predicted\_\allowbreak price\_\allowbreak per\_\allowbreak m2}, \texttt{created\_\allowbreak by}).
 \end{itemize}
-
-
-\subsection{Governorates}
+\textbf{Constraints and Business Rules:}
 \begin{itemize}[leftmargin=*,itemsep=2pt]
-  \item \texttt{id}: integer; PK; auto-increment.
-  \item \texttt{code}: string; unique; not-null.
-  \item \texttt{name\_ar}: string; not-null.
+  \item One active valuation per project (unique \texttt{project\_\allowbreak id} among active records).
 \end{itemize}
 
-\subsection{Towns}
-\begin{itemize}[leftmargin=*,itemsep=2pt]
-  \item \texttt{id}: integer; PK; auto-increment.
-  \item \texttt{governorate\_id}: integer; FK $\rightarrow$ \texttt{governorates.id}; not-null.
-  \item \texttt{code}: string; unique; not-null.
-  \item \texttt{name\_ar}: string; not-null.
-\end{itemize}
-
-\subsection{Neighborhoods}
-\begin{itemize}[leftmargin=*,itemsep=2pt]
-  \item \texttt{id}: integer; PK; auto-increment.
-  \item \texttt{town\_id}: integer; FK $\rightarrow$ \texttt{towns.id}; not-null.
-  \item \texttt{code}: string; unique; not-null.
-  \item \texttt{name\_ar}: string; not-null.
-\end{itemize}
-
-\subsection{Admin\_Zoning}
-\begin{itemize}[leftmargin=*,itemsep=2pt]
-  \item \texttt{id}: integer; PK; auto-increment.
-  \item \texttt{code}: string; unique; not-null.
-  \item \texttt{label\_ar}: string; not-null.
-\end{itemize}
 
 
 \section{Interfaces}
