@@ -519,7 +519,7 @@ Figure 2.3.1 illustrates the context diagram of the AI Land Price Estimation Sys
 
   \item \textbf{Test Model Accuracy} — Run tests using known or sample land data to evaluate model accuracy.
 
-  \item \textbf{Review Feature Impact} — View which land features (e.g., area, location) most influence the predicted price based on the model’s analysis.
+  \item \textbf{Train ML Model} — Creates and tains the ML model on the selected datasets
 
   \item \textbf{Monitor Model Performance Over Time} — Track model performance across time and compare older versions with newer ones.
 
@@ -922,46 +922,40 @@ Exceptions &
 \end{tabularx}
 \end{table}
 
-% ---- Table 2.9.2 Review Feature Impact ----
+% ---- Table 2.9.2 Machine Learning Model Training ----
 \begin{table}[H]
 \centering
-\caption{Table 2.9.2 Review Feature Impact}
-\label{tab:ds-feature-impact}
+\caption{Table 2.9.2 Machine Learning Model Training}
+\label{tab:ds-train-model}
 \begin{tabularx}{\textwidth}{|p{3cm}|X|}
 \hline
 \textbf{Field} & \textbf{Content} \\ \hline
 
-Requirement & Review Feature Impact \\ \hline
+Requirement & Train the machine learning model on available dataset. \\ \hline
 
 Actor & Data Scientist \\ \hline
 
-Objective & Analyze which features had the most influence on the land price prediction for a specific project. \\ \hline
+Objective & Enable the data scientist to create and train a machine learning model for predicting land prices. \\ \hline
 
-Precondition & 
-\begin{minipage}[t]{0.75\textwidth}
-\begin{enumerate}[leftmargin=*,label=\arabic*.]
-\item The model must be trained and support feature importance analysis.
-\item The project must have completed the estimation.
-\end{enumerate}
-\end{minipage} \\ \hline
+Precondition & The system must have a dataset available for training, and preprocessing steps configured. \\ \hline
 
 Scenario &
 \begin{minipage}[t]{0.75\textwidth}
 \begin{enumerate}[leftmargin=*,label=\arabic*.]
-\item Access the “Projects” section.
-\item Select a specific project from the list.
-\item Open the “Feature Importance” view for that project.
-\item View ranked list of features by their impact on the project’s prediction.
-\item Export or download the report if needed.
+\item The data scientist selects the "Model Training" section.
+\item Chooses or configures the dataset for training.
+\item Selects the model type and hyperparameters (e.g., Decision Tree, max\_depth, min\_samples\_leaf).
+\item Runs the training process.
+\item The system creates and stores the trained model for future predictions and evaluation.
 \end{enumerate}
 \end{minipage} \\ \hline
 
 Exceptions &
 \begin{minipage}[t]{0.75\textwidth}
 \begin{enumerate}[leftmargin=*,label=\arabic*.]
-\item Feature analysis tool is unavailable or unsupported for that project.
-\item Insufficient project data to generate meaningful insights.
-\item Selected project not found or inaccessible.
+\item Dataset is missing or invalid.
+\item Preprocessing steps are not configured.
+\item Model fails to train due to invalid hyperparameters.
 \end{enumerate}
 \end{minipage} \\ \hline
 
@@ -1254,8 +1248,8 @@ The project will have multiple models to manage the data effectively within the 
 \begin{figure}[H]
 \centering
 \captionsetup{position=top}
-\caption{Figure 3.6.4 Review Feature Impact}
-\includegraphics[width=0.7\textwidth]{images/Feature_impact_2.png}
+\caption{Figure 3.6.4 Model Training}
+\includegraphics[width=0.7\textwidth]{images/Model training complete}
 \end{figure}
 
 \begin{figure}[H]
