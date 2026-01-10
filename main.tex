@@ -1853,6 +1853,35 @@ After submission, the user is redirected to the projects list page.
 Explanation:
  The projects page displays all projects created by the authenticated user. This confirms correct database persistence, user-based data filtering, and real-time dashboard updates.
 
+\section{Machine Learning Model Testing}
+
+The machine learning model was tested to evaluate its predictive performance and reliability. Figure 5.4.1 shows the results of the cross-validation performance test, providing the mean MAE across folds. Figure 5.4.2 presents the performance evaluation using a train-test split, illustrating the model’s accuracy on unseen data. Figure 5.4.3 visualizes the predicted prices versus residuals, highlighting the distribution of prediction errors. Figure 5.4.4 displays the trained decision tree, showing the main splits and feature importance.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{images/Figure 5.4.1 CV performance.png}
+    \caption{Figure 5.4.1 Cross-validation performance (Mean MAE) of the ML model}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{images/Figure 5.4.2 Train-test performance.png}
+    \caption{Figure 5.4.2 Train-test split performance of the ML model}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{images/Figure 5.4.3 Predicted vs Residuals.png}
+    \caption{Figure 5.4.3 Predicted prices vs residuals for the ML model}
+\end{figure}
+
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{images/Figure 5.4.4 Decesion tree}
+    \caption{Figure 5.4.4 Trained Decision Tree visualization showing the main splits and feature importance}
+\end{figure}
+
 % -------------------- Chapter 6 --------------------
 \chapter*{\centering Future Work}
 \addcontentsline{toc}{chapter}{Future Work}
