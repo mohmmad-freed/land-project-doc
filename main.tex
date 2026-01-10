@@ -271,7 +271,7 @@ Another need is reducing subjectivity, it is crucial to avoid the human bias in 
 The main goal of the project is to develop a machine learning model capable of accurately estimating land prices in Bani Na’im and to achieve this goal, the project has the following objectives:
 
 \begin{enumerate}[leftmargin=*, label=\arabic*-, align=left]
-    \item Data collection: Gather all relevant land data like the area, location, suitability for agriculture and more.
+    \item Data collection: Gather all relevant land data like the area, location and more.
     \item Data cleaning: After collecting the raw data, data cleaning is performed, where the data’s quality will be enhanced by removing duplicate and irrelevant data entries, and correcting inconsistencies.
     \item Model development: Train machine learning algorithms with the cleaned data and compare them to select the most suitable algorithm in predicting the prices.
     \item Model evaluation: Test the model and evaluate it by comparing the results of the model with the actual results of traditional pricing methods.
@@ -284,14 +284,19 @@ The project aims to increase the efficiency and transparency of the land price e
 This project aims to predict land prices in the town of Bani Na'im using machine learning techniques depending on available real Bani Na'im land data.
 The scope of the project includes developing a predictive machine learning model that predicts land prices depending on features like:
 
-\begin{itemize}[leftmargin=*]
-    \item Location
-    \item Political classification of the land (area A, B, or C)
-    \item Intended land use (e.g., residential, commercial)
-    \item Land area
-    \item Availability of infrastructure
-    \item Proximity to essential public services (e.g., hospitals)
-\end{itemize}
+\begin{tabularx}{\textwidth}{X X}
+\textbullet\ Location &
+\textbullet\ Political classification of the land \\
+
+\textbullet\ Intended land use (e.g., residential) &
+\textbullet\ Land area \\
+
+\textbullet\ Availability of infrastructure &
+\textbullet\ Road access \\
+
+\textbullet\ View quality &
+\end{tabularx}
+
 
 The project also involves designing a user-friendly interface that allows authorized users such as land appraisers, system admins, and data scientists to use the system — everyone as allowed to.
 
@@ -1542,12 +1547,7 @@ are used to synchronize model definitions with the SQLite database schema.
 
 
 \subsection{Dataset Usage}
-The model is trained using real land data collected for the project. Due to the limited size of the original dataset, the SMOTE technique was applied to increase the number of samples and improve data balance. This helps enhance model performance while preserving the characteristics of the original data.
-
-Future work includes integrating real land data
-through an official land registry API,
-which would allow continuous updates
-and enhance prediction accuracy and system realism.
+The model is trained using real land data only. Despite the limited dataset size, no data augmentation techniques were applied, with plans to expand the dataset in future work through professional appraisers or official data sources (e.g. , geomlog) via APIs.
 
 % ==================== 4.6 ====================
 \section{System Integration}
@@ -1849,7 +1849,9 @@ Explanation:
 
 \section{Machine Learning Model Testing}
 
-The machine learning model was tested to evaluate its predictive performance and reliability. Figure 5.4.1 shows the results of the cross-validation performance test, providing the mean MAE across folds. Figure 5.4.2 presents the performance evaluation using a train-test split, illustrating the model’s accuracy on unseen data. Figure 5.4.3 visualizes the predicted prices versus residuals, highlighting the distribution of prediction errors. Figure 5.4.4 displays the trained decision tree, showing the main splits and feature importance.
+The machine learning model was evaluated using the cross-validation and train-test split techniques to measure the Mean Absolute Error (MAE) on unseen data. Additionally, visual analysis was performed using predicted prices versus residuals and a decision tree visualization to better understand model behavior.
+
+The obtained results are influenced by the limited size of the available dataset. With only a small number of data samples, the model’s ability to generalize is constrained, which impacts prediction accuracy. It is expected that model performance will improve as more data becomes available. In the coming days, additional land price data will be collected to use in the training process to enhance accuracy and overall predictive capability.
 
 \begin{figure}[H]
     \centering
