@@ -1129,7 +1129,7 @@ The system is implemented using Django's Model--View--Template (MVT) architectur
   \vspace*{\fill} % يكمل التوسيط العمودي
 
   \caption{Figure 3.4.1 ER Diagram}
-  \label{fig:erd}
+  \label{figuerd}
 \end{figure}
 \clearpage
 
@@ -1690,7 +1690,57 @@ The system also applies structured error handling to ensure safe failure. Runtim
 \end{figure}
 
 
+\section{Machine Learning Model Training}
+This section describes the process followed to train the machine learning model used for land price prediction. It covers data collection, preprocessing steps, and the training of a Decision Tree Regression model using optimized parameters obtained through grid search to ensure reliable prediction performance.
 
+\subsection{Data Collection}
+The dataset used for training was collected from real land parcel evaluations provided by a professional land appraiser. 
+
+\begin{figure}[H]
+\centering
+\captionsetup{position=top}
+\includegraphics[width=0.9\textwidth]{images/dataformat.png}
+\caption{Figure 4.8.1 Data Format}
+\label{fig:Data Format}
+\end{figure}
+
+\subsection{Data Cleaning and Preprocessing}
+Before training, the dataset was cleaned to remove incomplete records and handle missing or inconsistent values. Relevant features were selected and formatted into a numerical structure suitable for machine learning.
+
+\begin{figure}[H]
+\centering
+\captionsetup{position=top}
+\includegraphics[width=0.35\textwidth]{images/cleaning1.png}
+\caption{Figure 4.8.2 Cleaning and Preprocessing}
+\label{fig:Cleaning and Preprocessing}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\captionsetup{position=top}
+\includegraphics[width=0.5\textwidth]{images/cleaning2.png}
+\caption{Figure 4.8.3 Cleaning and Preprocessing}
+\label{fig:Cleaning and Preprocessing}
+\end{figure}
+
+\subsection{Model Training Using Decision Tree Regression}
+The prediction model was trained using a Decision Tree Regression algorithm. Hyperparameters such as tree depth and minimum samples per split were optimized using a grid search approach. The best parameter combination was selected based on model performance, resulting in improved accuracy and generalization.
+
+\begin{figure}[H]
+\centering
+\captionsetup{position=top}
+\includegraphics[width=0.5\textwidth]{images/cleaning3.png}
+\caption{Figure 4.8.4 Training}
+\label{fig:Training}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\captionsetup{position=top}
+\includegraphics[width=0.5\textwidth]{images/cleaning4.png}
+\caption{Figure 4.8.5 Training}
+\label{fig:Training}
+\end{figure}
 % -------------------- Chapter 5 --------------------
 \chaptertitlepage{Testing}
 
@@ -1952,6 +2002,15 @@ https://docs.djangoproject.com/en/6.0/topics/auth/customizing/
 
 \item SQLite schema alteration limitations: 
 https://docs.djangoproject.com/en/stable/ref/databases/\#sqlite-notes
+
+
+\clearpage
+\includepdf[
+  pages=-,
+  pagecommand=\thispagestyle{empty}
+]{images/AI Useage.pdf}
+
+
 
 \end{enumerate}
 
